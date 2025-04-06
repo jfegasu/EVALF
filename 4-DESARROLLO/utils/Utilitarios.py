@@ -225,4 +225,10 @@ def Ejecutar(sql):
     output = cursor.fetchall() 
     conn.close()
     return output 
-
+def EjecutarUno(sql):
+    conn = sqlite3.connect('database/EVALF.db')
+    cursor = conn.cursor()
+    cursor.execute(sql)
+    output = cursor.fetchone() 
+    conn.close()
+    return output 

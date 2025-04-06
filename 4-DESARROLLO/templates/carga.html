@@ -1,6 +1,10 @@
 {% extends "base.html" %}
 {% block content %}
+{{datos}}
 {% if N==1 %}
-Nivel 1
+Nivel 1<br>
+{%for data in datos%}
+{{data[3]}}
+{%endfor%}
 {% endif%}
 {%endblock%}

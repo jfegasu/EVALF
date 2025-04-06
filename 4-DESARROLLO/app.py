@@ -2,7 +2,7 @@ from flask import Flask,Blueprint, render_template,session,request ,redirect,url
 from flask_session import Session
 import pandas as pd
 from flask_cors import CORS
-from admin.routes import admin 
+
 app = Flask(__name__) 
 @app.route('/') 
 def raiz():   

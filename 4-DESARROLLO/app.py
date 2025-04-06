@@ -23,6 +23,10 @@ def menu():
 @app.route('/login') 
 def login():   
     return render_template('login.html')
+@app.route('/valida' ,methods=['POST','GET']) 
+def valida():   
+    N=1
+    return render_template('carga.html',N=N)
 
 if __name__=='__main__':
     app.run(debug=True,port=5000,host='0.0.0.0')

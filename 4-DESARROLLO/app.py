@@ -34,6 +34,21 @@ def valida():
    
     print(hay)
     return render_template('carga.html',N=N,datos=datos)
+@app.route('/evalua/<N>/<F>/<I>/<A>' ,methods=['POST','GET']) 
+def evalua(N,F,I,A):   
+    if N==1:
+        datos=EjecutarUno('SELECT count(*) FROM VMOSTRAR WHERE FICHA=312746 AND DNI_APRENDIZ=1234')
+        datos=[N,F,I,A]
+        return render_template('carga.html',N=N,datos=datos)
+    if N=="2":
+        datos=[N,F,I,A]
+        preg=Ejecutar('SELECT * FROM PREGUNTA WHERE ESTADO=1')
+        return render_template('carga.html',N=N,datos=datos,preg=preg)
+    if N=="3":
+        msgito="Respuestas registrada"
+        regreso="/login"
+        return render_template("alertas.html",msgito=msgito,regreso=regreso)
+    return "Nada"    
 
 if __name__=='__main__':
     app.run(debug=True,port=5000,host='0.0.0.0')

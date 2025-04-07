@@ -1,10 +1,65 @@
 {% extends "base.html" %}
 {% block content %}
-{{datos}}
+
+
+
 {% if N==1 %}
-Nivel 1<br>
+<br>
+<div class="sena d-flex justify-content-center align-items-center  mx-auto" style="width:50%;">
+<table class="table table-striped ">
+    <th>INSTRUCTOR A EVALAUAR</th>
+    <th>ACCION</th>
 {%for data in datos%}
-{{data[3]}}<BR>
+<tr>
+    <td>
+        {{data[3]}}
+    </td>
+    <td width="12%"><center><a href="/evalua/2/{{data[0]}}/{{data[1]}}/{{data[6]}}" title="Evaluar"><i class="material-icons">menu</i></a></td>
+</tr>
 {%endfor%}
+</table>
+
+</div>
+<br><br>
 {% endif%}
+{% if N=="2" %}
+<br>
+<div class="sena d-flex justify-content-center align-items-center  mx-auto" style="width: 50%;padding-top: 20px;">
+<br><br>
+    <table  style="width: 100%;">
+        <form action="/evalua/3/{{datos[1]}}/{{datos[1]}}/{{datos[1]}}">
+        
+{%for data in preg%}
+            <tr>
+                <td>{{data[1]}}</td>
+                <td><select name="R">
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                    <option value="6">6</option>
+                    <option value="7">7</option>
+                    <option value="8">8</option>
+                    <option value="9">9</option>
+                    <option value="10">10</option>
+                </select></td>
+            </tr>
+{%endfor%}
+<tr>
+    <td colspan="2">
+        <br><br>
+        <input type="hidden" name=N value="3">
+        <input type="hidden" name=F value="1">
+        <input type="submit" class="button btn-primary btn-block" style="width:100%;" value="ENVIAR">
+
+    </td>
+</tr>
+        </table>
+        <br>
+             </form>
+     </div>
+    <br><br>
+{% endif%}
+
 {%endblock%}

@@ -5,6 +5,7 @@ from flask_cors import CORS
 from utils.Utilitarios import *
 
 app = Flask(__name__) 
+app.secret_key = 'BAD_SECRET_KEY'
 @app.route('/') 
 def raiz():   
     return render_template('index.html')
@@ -27,24 +28,57 @@ def login():
 @app.route('/valida' ,methods=['POST','GET']) 
 def valida():   
     N=1
-    hay=EjecutarUno('SELECT count(*) FROM VMOSTRAR WHERE FICHA=312746 AND DNI_APRENDIZ=1234')
+    usua=request.form.get('usua')
+    pw=request.form.get('pw')
+    hay=EjecutarUno(f"SELECT count(*) FROM FICHAPRENDIZ WHERE DNIA='{usua}' AND EMAIL='{pw}'".format(usua,pw))
     hay=hay[0]
+    if hay=="0":
+        return render_template("alertas.html",msgito="USUARIO O CLAVE INCORRECTO",regreso="/login")
+    sql=f"SELECT * FROM FICHAPRENDIZ WHERE EMAIL='{usua}' AND PWDAP='{pw}'".format(usua,pw)
+    aprendiz=EjecutarUno(sql)
+    session['ficha'] = aprendiz[0]
+    session['dnia'] = aprendiz[1]
+    session['nombreap'] = aprendiz[2]
+    F=session['ficha']
+    A=session['dnia']
+    N=1
+    sql=f"SELECT * FROM FICHAINSTRUCTOR WHERE DNI NOT IN(SELECT IDINSTRUCTOR FROM THEVAL WHERE IDFICHA='{F}' AND IDAPRENDIZ='{A}')".format(F,A)
+    datos=Ejecutar(sql)
 
-    datos=Ejecutar('SELECT * FROM VINSTRUCTOR WHERE idINSTRUCTOR NOT IN(SELECT IDINSTRUCTOR FROM VMOSTRAR WHERE FICHA=312746 AND DNI_APRENDIZ=1234)')
-   
-    print(hay)
     return render_template('carga.html',N=N,datos=datos)
-@app.route('/evalua/<N>/<F>/<I>/<A>' ,methods=['POST','GET']) 
-def evalua(N,F,I,A):   
-    if N==1:
-        datos=EjecutarUno('SELECT count(*) FROM VMOSTRAR WHERE FICHA=312746 AND DNI_APRENDIZ=1234')
+@app.route('/evalua/<N>/<I>' ,methods=['POST','GET']) 
+def evalua(N,I):   
+    if N=="1":
+        F=session['ficha']
+        A=session['dnia']
+        sql=f"SELECT * FROM THEVAL WHERE idFICHA={F} AND idAPRENDIZ={A}".format(F,A)
+        datos=EjecutarUno(sql)
+        print("nnnnn>",datos)
+        session['instructor']=datos[3]
+        I=session['instructor']
         datos=[N,F,I,A]
         return render_template('carga.html',N=N,datos=datos)
     if N=="2":
+        F=session['ficha']
+        A=session['dnia']
+        # I=session['instructor']
         datos=[N,F,I,A]
+        print("------------->",F,I,A)
         preg=Ejecutar('SELECT * FROM PREGUNTA WHERE ESTADO=1')
-        return render_template('carga.html',N=N,datos=datos,preg=preg)
+        hay=len(preg)
+        return render_template('carga.html',N=N,datos=datos,preg=preg,hay=hay)
     if N=="3":
+        F=session['ficha']
+        A=session['dnia']
+        # I=session['instructor']
+        print(F,I,A)
+        conta = int(request.form.get('conta'))
+        for i in range(1, conta + 1):  # Asegúrate de incluir el último valor
+            Resp=request.form.get('R' + str(i))
+            Preg=request.form.get('P' + str(i))
+            sql=f"insert into THEVAL(idINSTRUCTOR,idFICHA,idAPRENDIZ,PREGUNTA,RESPUESTA) VALUES({I},{F},{A},'{Preg}','{Resp}')".format(I,F,A,Preg,Resp,)
+            Insertar(sql)
+        
         msgito="Respuestas registrada"
         regreso="/login"
         return render_template("alertas.html",msgito=msgito,regreso=regreso)

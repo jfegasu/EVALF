@@ -218,6 +218,13 @@ def crearTabla(tabla,columns,condicion):
     # return row
     return sql
  
+def Insertar(sql):
+    conn = sqlite3.connect('database/EVALF.db')
+    cursor = conn.cursor()
+    cursor.execute(sql)
+    conn.commit()
+    conn.close()
+    return 'OK' 
 def Ejecutar(sql):
     conn = sqlite3.connect('database/EVALF.db')
     cursor = conn.cursor()

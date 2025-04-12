@@ -59,12 +59,15 @@ html {
   padding-bottom: 5px;
 	padding-right: 10px;
 	padding-left: 10px;
+  padding: 15px; 
+  margin-top: 20px;
   }
   sena>table{
     font-family: 'Roboto', Courier, monospace;
     font-size: x-small;
     font-weight: bold;
     font-stretch: condensed;
+    background: ##DAF7A6;
   }
   table>th{
     font-weight: bold;
@@ -80,6 +83,12 @@ html {
     background-color: #4CAF50;
     
   }
+  .sena .ovalo{
+    border-radius: 24px 24px 24px 24px;
+-moz-border-radius: 24px 24px 24px 24px;
+-webkit-border-radius: 24px 24px 24px 24px;
+border: 0px solid #000000;
+  }
   .texto3d {
     text-align: left; 
     font-family: Arial Black; 
@@ -90,8 +99,9 @@ html {
     }
     .sena{
       overflow: auto;
-      width: 83%;
-      
+padding-bottom: 10px;
+margin-bottom: 10px;
+     
 -webkit-box-shadow: 14px 10px 20px 11px rgba(0,0,0,0.75);
 -moz-box-shadow: 14px 10px 20px 11px rgba(0,0,0,0.75);
 box-shadow: 14px 10px 20px 11px rgba(0,0,0,0.75);
@@ -153,10 +163,10 @@ border-radius:.25rem;
 }
 
 
-  body::-webkit-scrollbar-track {
+.sena>  body::-webkit-scrollbar-track {
     background: var(--scrollbarBG);
   }
-  body::-webkit-scrollbar-thumb {
+  .sena>   body::-webkit-scrollbar-thumb {
     background-color: var(--thumbBG) ;
     border-radius: 8px;
     border: 3px solid var(--scrollbarBG);

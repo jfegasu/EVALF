@@ -34,12 +34,12 @@ def valida():
     N=1
     usua=request.form.get('usua')
     pw=request.form.get('pw')
-    hay=EjecutarUno(f"SELECT count(*) FROM FICHAPRENDIZ WHERE DNIA='{usua}' AND EMAIL='{pw}'".format(usua,pw))
+    hay=ConsultarUno(f"SELECT count(*) FROM FICHAPRENDIZ WHERE DNIA='{usua}' AND EMAIL='{pw}'".format(usua,pw))
     hay=hay[0]
     if hay=="0":
         return render_template("alertas.html",msgito="USUARIO O CLAVE INCORRECTO",regreso="/login")
     sql=f"SELECT * FROM FICHAPRENDIZ WHERE EMAIL='{usua}' AND PWDAP='{pw}'".format(usua,pw)
-    aprendiz=EjecutarUno(sql)
+    aprendiz=ConsultarUno(sql)
     session['ficha'] = aprendiz[0]
     session['dnia'] = aprendiz[1]
     session['nombreap'] = aprendiz[2]
@@ -49,20 +49,20 @@ def valida():
     A=session['dnia']
     N=1
     sql=f"SELECT * FROM FICHAINSTRUCTOR WHERE DNI NOT IN(SELECT IDINSTRUCTOR FROM THEVAL WHERE IDFICHA='{F}' AND IDAPRENDIZ='{A}')".format(F,A)
-    datos=Ejecutar(sql)
+    datos=Consultar(sql)
 
     return render_template('carga.html',N=N,datos=datos)
 
 @app.route('/otro' ,methods=['POST','GET']) 
 def otro():
-    hay=EjecutarUno(f"SELECT count(*) FROM FICHAPRENDIZ WHERE DNIA='{usua}' AND EMAIL='{pw}'".format(usua,pw))
+    hay=ConsultarUno(f"SELECT count(*) FROM FICHAPRENDIZ WHERE DNIA='{usua}' AND EMAIL='{pw}'".format(usua,pw))
     hay=hay[0]
     if hay=="0":
         session[usua]=usua
 
         return render_template("alertas.html",msgito="USUARIO O CLAVE INCORRECTO",regreso="/login")
     sql=f"SELECT * FROM FICHAPRENDIZ WHERE EMAIL='{usua}' AND PWDAP='{pw}'".format(usua,pw)
-    aprendiz=EjecutarUno(sql)
+    aprendiz=ConsultarUno(sql)
     session['ficha'] = aprendiz[0]
     session['dnia'] = aprendiz[1]
     session['nombreap'] = aprendiz[2]
@@ -71,7 +71,7 @@ def otro():
     A=session['dnia']
     N=1
     sql=f"SELECT * FROM FICHAINSTRUCTOR WHERE DNI NOT IN(SELECT IDINSTRUCTOR FROM THEVAL WHERE IDFICHA='{F}' AND IDAPRENDIZ='{A}')".format(F,A)
-    datos=Ejecutar(sql)
+    datos=Consultar(sql)
     session['instructor'] = datos[1]
     session['ninstructor'] = datos[0]
 
@@ -83,7 +83,7 @@ def evalua(N,I):
         F=session['ficha']
         A=session['dnia']
         sql=f"SELECT * FROM THEVAL WHERE idFICHA={F} AND idAPRENDIZ={A}".format(F,A)
-        datos=EjecutarUno(sql)
+        datos=ConsultarUno(sql)
         print("nnnnn>",datos)
         session['instructor']=datos[3]
         I=session['instructor']
@@ -95,23 +95,24 @@ def evalua(N,I):
         # I=session['instructor']
         datos=[N,F,I,A]
         print("------------->",F,I,A)
-        preg=Ejecutar('SELECT * FROM PREGUNTA WHERE ESTADO=1')
+        preg=Consultar('SELECT * FROM PREGUNTA WHERE ESTADO=1')
         hay=len(preg)
         return render_template('carga.html',N=N,datos=datos,preg=preg,hay=hay)
     if N=="3":
         F=session['ficha']
         A=session['dnia']
         T=session['titulacion']
-        I=session['titulacion']
+        I=session['instructor']
         
         # I=session['instructor']
         print(F,I,A)
         conta = int(request.form.get('conta'))
+
         for i in range(1, conta + 1):  # Asegúrate de incluir el último valor
             Resp=request.form.get('R' + str(i))
             Preg=request.form.get('P' + str(i))
             sql=f"insert into THEVAL(idINSTRUCTOR,idFICHA,idAPRENDIZ,PREGUNTA,RESPUESTA,TITULACION) VALUES({I},{F},{A},'{Preg}','{Resp}','{T}')".format(I,F,A,Preg,Resp,T)
-            # Insertar(sql)
+            # Ejecutar(sql)
             print(sql)
         
         msgito="Respuestas registrada"

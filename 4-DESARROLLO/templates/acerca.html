@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% block content %}
+    
+    <div style="width:70%;overflow:auto" class="w3-w3-green mx-auto">
+        <br>
+      <img loading="lazy" class="tabla" src="{{url_for('static',filename='images/cpsi.png')}}" style="border:true;width:95%; height: 200px;border-color:black;">
+      <br> <hr>
+      <b>
+        <p class="sena-sombra">AUTORES (DESARROLLADORES)</p>
+      <ul>
+        <li>GABRIEL MASETEUR</li>
+        <li>JOSE FERNANDO GALINDO SUAREZ</li>
+      </ul>
+      <BR>
+      </b>
+    </div>
+    <br><br>
+    <script>
+        function Voy(){
+        {% if regreso%}
+        location.href="{{regreso}}"
+        {% else %}
+        window.open("/","xxx")
+        {% endif %}
+        }
+        setTimeout('Voy()',5000)
+    </script>
+    {% endblock content %}

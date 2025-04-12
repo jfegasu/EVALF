@@ -2,20 +2,20 @@
 {% block content %}
 
 
--->{{N}}
+
 {% if N==1 %}
 
 <br>
 <div class="sena d-flex justify-content-center align-items-center  mx-auto" style="width:50%;">
 <table class="table table-striped ">
-    <th class="sena-sombra">INSTRUCTORES A EVALAUAR***</th>
-    <th class="sena-sombra">ACCION</th>
 {%for data in datos%}
-<tr>
+<th class="sena-sombra">INSTRUCTORES A EVALAUAR DE LA FICHA: {{datos[0][4]}}</th>
+<th class="sena-sombra">ACCION</th>
+</tr><tr>
     <td>
-        {{data[2]}}
+        {{data[0]}}
     </td>
-    <td width="12%"><center><a href="/evalua/2/{{data[3]}}" title="Evaluar"><i class="material-icons">menu</i></a></td>
+    <td width="8%"><a href="/evalua/2/{{data[3]}}" title="Evaluar"><p><i class="btn btn-primary material-icons" style="text-align: top;">menu</i></a></p></td>
 </tr>
 {%endfor%}
 </table>

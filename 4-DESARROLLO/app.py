@@ -102,7 +102,7 @@ def evalua(N,I):
         F=session['ficha']
         A=session['dnia']
         T=session['titulacion']
-        I=session['instructor']
+
         
         # I=session['instructor']
         print(F,I,A)
@@ -112,7 +112,7 @@ def evalua(N,I):
             Resp=request.form.get('R' + str(i))
             Preg=request.form.get('P' + str(i))
             sql=f"insert into THEVAL(idINSTRUCTOR,idFICHA,idAPRENDIZ,PREGUNTA,RESPUESTA,TITULACION) VALUES({I},{F},{A},'{Preg}','{Resp}','{T}')".format(I,F,A,Preg,Resp,T)
-            # Ejecutar(sql)
+            Ejecutar(sql)
             print(sql)
         
         msgito="Respuestas registrada"

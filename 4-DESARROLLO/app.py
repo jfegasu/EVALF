@@ -6,6 +6,8 @@ from utils.Utilitarios import *
 
 app = Flask(__name__) 
 app.secret_key = 'BAD_SECRET_KEY'
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+DATABASE = os.path.join(BASE_DIR, 'database', 'EVALF.db')
 @app.route('/') 
 def raiz():   
     return render_template('index.html')
@@ -34,12 +36,15 @@ def valida():
     N=1
     usua=request.form.get('usua')
     pw=request.form.get('pw')
-    hay=ConsultarUno(f"SELECT count(*) FROM FICHAPRENDIZ WHERE DNIA='{usua}' AND EMAIL='{pw}'".format(usua,pw))
+    # pw=str(hash(pw))
+    # print(pw)
+    hay=ConsultarUno(DATABASE,f"SELECT count(*) FROM FICHAPRENDIZ WHERE DNIA='{usua}' AND EMAIL='{pw}'".format(usua,pw))
     hay=hay[0]
     if hay=="0":
         return render_template("alertas.html",msgito="USUARIO O CLAVE INCORRECTO",regreso="/login")
     sql=f"SELECT * FROM FICHAPRENDIZ WHERE EMAIL='{usua}' AND PWDAP='{pw}'".format(usua,pw)
-    aprendiz=ConsultarUno(sql)
+    print("******",sql)
+    aprendiz=ConsultarUno(DATABASE,sql)
     session['ficha'] = aprendiz[0]
     session['dnia'] = aprendiz[1]
     session['nombreap'] = aprendiz[2]
@@ -48,21 +53,28 @@ def valida():
     F=session['ficha']
     A=session['dnia']
     N=1
-    sql=f"SELECT * FROM FICHAINSTRUCTOR WHERE DNI NOT IN(SELECT IDINSTRUCTOR FROM THEVAL WHERE IDFICHA='{F}' AND IDAPRENDIZ='{A}')".format(F,A)
-    datos=Consultar(sql)
+    sql=f"SELECT count(*) FROM FICHAINSTRUCTOR WHERE DNI NOT IN(SELECT IDINSTRUCTOR FROM THEVAL WHERE IDFICHA='{F}' AND IDAPRENDIZ='{A}')".format(F,A)
+    hay=ConsultarUno(DATABASE,sql)
 
-    return render_template('carga.html',N=N,datos=datos)
+    if hay[0]==0:
+        msgito="NO HAY INSTRUCTORES PARA EVALUAR"
+        regresa="/login"
+        return render_template('alertas.html',msgito=msgito,regreso=regresa)
+    else:
+        sql=f"SELECT * FROM FICHAINSTRUCTOR WHERE DNI NOT IN(SELECT IDINSTRUCTOR FROM THEVAL WHERE IDFICHA='{F}' AND IDAPRENDIZ='{A}')".format(F,A)
+        datos=Consultar(DATABASE,sql)
+        return render_template('carga.html',N=N,datos=datos)
 
 @app.route('/otro' ,methods=['POST','GET']) 
 def otro():
-    hay=ConsultarUno(f"SELECT count(*) FROM FICHAPRENDIZ WHERE DNIA='{usua}' AND EMAIL='{pw}'".format(usua,pw))
+    hay=ConsultarUno(DATABASE,f"SELECT count(*) FROM FICHAPRENDIZ WHERE DNIA='{usua}' AND EMAIL='{pw}'".format(usua,pw))
     hay=hay[0]
     if hay=="0":
         session[usua]=usua
 
         return render_template("alertas.html",msgito="USUARIO O CLAVE INCORRECTO",regreso="/login")
     sql=f"SELECT * FROM FICHAPRENDIZ WHERE EMAIL='{usua}' AND PWDAP='{pw}'".format(usua,pw)
-    aprendiz=ConsultarUno(sql)
+    aprendiz=ConsultarUno(DATABASE,sql)
     session['ficha'] = aprendiz[0]
     session['dnia'] = aprendiz[1]
     session['nombreap'] = aprendiz[2]
@@ -71,7 +83,7 @@ def otro():
     A=session['dnia']
     N=1
     sql=f"SELECT * FROM FICHAINSTRUCTOR WHERE DNI NOT IN(SELECT IDINSTRUCTOR FROM THEVAL WHERE IDFICHA='{F}' AND IDAPRENDIZ='{A}')".format(F,A)
-    datos=Consultar(sql)
+    datos=Consultar(DATABASE,sql)
     session['instructor'] = datos[1]
     session['ninstructor'] = datos[0]
 
@@ -83,7 +95,7 @@ def evalua(N,I):
         F=session['ficha']
         A=session['dnia']
         sql=f"SELECT * FROM THEVAL WHERE idFICHA={F} AND idAPRENDIZ={A}".format(F,A)
-        datos=ConsultarUno(sql)
+        datos=ConsultarUno(DATABASE,sql)
         print("nnnnn>",datos)
         session['instructor']=datos[3]
         I=session['instructor']
@@ -95,7 +107,7 @@ def evalua(N,I):
         # I=session['instructor']
         datos=[N,F,I,A]
         print("------------->",F,I,A)
-        preg=Consultar('SELECT * FROM PREGUNTA WHERE ESTADO=1')
+        preg=Consultar(DATABASE,'SELECT * FROM PREGUNTA WHERE ESTADO=1')
         hay=len(preg)
         return render_template('carga.html',N=N,datos=datos,preg=preg,hay=hay)
     if N=="3":
@@ -112,8 +124,8 @@ def evalua(N,I):
             Resp=request.form.get('R' + str(i))
             Preg=request.form.get('P' + str(i))
             sql=f"insert into THEVAL(idINSTRUCTOR,idFICHA,idAPRENDIZ,PREGUNTA,RESPUESTA,TITULACION) VALUES({I},{F},{A},'{Preg}','{Resp}','{T}')".format(I,F,A,Preg,Resp,T)
-            Ejecutar(sql)
-            print(sql)
+            Ejecutar(DATABASE,sql)
+            # print(sql)
         
         msgito="Respuestas registrada"
         regreso="/login"

@@ -218,22 +218,22 @@ def crearTabla(tabla,columns,condicion):
     # return row
     return sql
  
-def Ejecutar(sql):
-    conn = sqlite3.connect('databases/EVALF.db')
+def Ejecutar(db,sql):
+    conn = sqlite3.connect(db)
     cursor = conn.cursor()
     cursor.execute(sql)
     conn.commit()
     conn.close()
     return 'OK' 
-def Consultar(sql):
-    conn = sqlite3.connect('databases/EVALF.db')
+def Consultar(db,sql):
+    conn = sqlite3.connect(db)
     cursor = conn.cursor()
     cursor.execute(sql)
     output = cursor.fetchall() 
     conn.close()
     return output 
-def ConsultarUno(sql):
-    conn = sqlite3.connect('databases/EVALF.db')
+def ConsultarUno(db,sql):
+    conn = sqlite3.connect(db)
     cursor = conn.cursor()
     cursor.execute(sql)
     output = cursor.fetchone() 

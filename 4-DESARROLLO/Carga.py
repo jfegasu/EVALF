@@ -43,5 +43,8 @@ for index, row in preguntas.iterrows():
     sql=f"INSERT INTO PREGUNTA(DESCRIPCION,ESTADO,VALORES) VALUES('{row['ENUNCIADO']}',1,'{row['CATEGORIAS']}')".format(row['ENUNCIADO'],row['CATEGORIAS'])
     # print(sql)
     Ejecutar(DATABASE,sql)
+print('BORRANDO TABLA DE RESPUESTAS')
+sql="DELETE FROM THEVAL"
+Ejecutar(DATABASE,sql)
 
 print("PROCESO TERMINADO")

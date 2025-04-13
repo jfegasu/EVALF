@@ -218,7 +218,7 @@ def crearTabla(tabla,columns,condicion):
     # return row
     return sql
  
-def Ejecutar(sql):
+def Ejecutar(db,sql):
     conn = sqlite3.connect(db)
     cursor = conn.cursor()
     cursor.execute(sql)

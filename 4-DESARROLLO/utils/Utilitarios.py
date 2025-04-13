@@ -218,13 +218,24 @@ def crearTabla(tabla,columns,condicion):
     # return row
     return sql
  
-def Ejecutar(db,sql):
+def Ejecutar(sql):
     conn = sqlite3.connect(db)
     cursor = conn.cursor()
     cursor.execute(sql)
     conn.commit()
     conn.close()
     return 'OK' 
+def ConsultarD(db, sql):
+    conn = sqlite3.connect(db)
+    conn.row_factory = sqlite3.Row  # <- necesario para acceder por nombre de columna
+    cursor = conn.cursor()
+    cursor.execute(sql)
+    output = cursor.fetchall()
+    conn.close()
+    
+    resultados = [dict(row) for row in output]
+    return resultados
+
 def Consultar(db,sql):
     conn = sqlite3.connect(db)
     cursor = conn.cursor()

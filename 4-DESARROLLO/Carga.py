@@ -46,6 +46,5 @@ for index, row in preguntas.iterrows():
 print('BORRANDO TABLA DE RESPUESTAS')
 sql="DELETE FROM THEVAL"
 Ejecutar(DATABASE,sql)
-# **************************************************************************
-# **************************************************************************
+
 print("PROCESO TERMINADO")

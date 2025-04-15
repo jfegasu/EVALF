@@ -1,4 +1,4 @@
-from flask import Flask,Blueprint, render_template,session,request ,redirect,url_for
+from flask import Flask,Blueprint, render_template,session,request ,redirect,url_for,send_from_directory
 from flask_session import Session
 import pandas as pd
 from flask_cors import CORS
@@ -8,6 +8,8 @@ app = Flask(__name__)
 app.secret_key = 'BAD_SECRET_KEY'
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 DATABASE = os.path.join(BASE_DIR, 'database', 'EVALF.db')
+RESPUESTAS = os.path.join(BASE_DIR, 'static/archivos/RESPUESTAS.csv')
+
 @app.route('/') 
 def raiz():   
     return render_template('index.html')
@@ -131,6 +133,19 @@ def evalua(N,I):
         regreso="/login"
         return render_template("alertas.html",msgito=msgito,regreso=regreso)
     return "Nada"    
+@app.route('/descargar')
+def descargar():
+    return send_from_directory('static/archivos', 'RESPUESTAS.csv', as_attachment=True)
+@app.route('/resp') 
+def resp():   
+    print('DESCARGANDO RESPUESTAS')
+    sql="SELECT idFICHA,TITULACION,PREGUNTA,RESPUESTA FROM THEVAL"
+    datos=pd.DataFrame(ConsultarD(DATABASE,sql))
+    # Guardar el archivo
+    datos.to_csv(RESPUESTAS, index=False)
 
+# O cambia el nombre en send_from_directory a minúsculas
+    print("PROCESO TERMINADO")
+    return render_template('respuestas.html')
 if __name__=='__main__':
     app.run(debug=True,port=5000,host='0.0.0.0')

@@ -1,6 +1,7 @@
 import pandas as pd
 from utils.Utilitarios import *
 import os
+import glob
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 DATABASE = os.path.join(BASE_DIR, 'database', 'EVALF.db')
 XLS=os.path.join(BASE_DIR, 'CARGA.xlsx')
@@ -20,7 +21,7 @@ for index, row in aprendiz.iterrows():
     # x=hash(x)
     sql=f"INSERT INTO FICHAPRENDIZ(FICHA,DNIA,NOMBREAP,ESTADOAP,PWDAP,EMAIL,TITULACION) VALUES('{row['FICHA']}','{row['DNI']}','{row['NOMBRE']}',1,'{x}','{row['EMAIL']}','{row['TITULACION']}')".format(row['FICHA'],row['DNI'],row['NOMBRE'],1,x,row['EMAIL'],row['TITULACION'])
     Ejecutar(DATABASE,sql)
-os.remove("aprendiz.csv")
+# os.remove("aprendiz.csv")
 print('CARGANDO INSTRUCTORES')
 sql="DELETE FROM FICHAINSTRUCTOR"
 Ejecutar(DATABASE,sql)
@@ -33,7 +34,7 @@ for index, row in instructor.iterrows():
     sql=f"INSERT INTO FICHAINSTRUCTOR(FICHA,DNI,NOMINST,EMAIL) VALUES('{row['FICHA']}','{row['DNI']}','{row['NOMBRE']}','{row['EMAIL']}')".format(row['FICHA'],row['DNI'],row['NOMBRE'],row['EMAIL'])
     # print(sql)
     Ejecutar(DATABASE,sql)
-os.remove("instructor.csv")
+# os.remove("instructor.csv")
 
 print('CARGANDO PREGUNTAS')
 sql="DELETE FROM PREGUNTA"
@@ -47,10 +48,16 @@ for index, row in preguntas.iterrows():
     sql=f"INSERT INTO PREGUNTA(DESCRIPCION,ESTADO,VALORES) VALUES('{row['ENUNCIADO']}',1,'{row['CATEGORIAS']}')".format(row['ENUNCIADO'],row['CATEGORIAS'])
     # print(sql)
     Ejecutar(DATABASE,sql)
-os.remove("preguntas.csv")
+# os.remove("preguntas.csv")
 
 print('BORRANDO TABLA DE RESPUESTAS')
 sql="DELETE FROM THEVAL"
 Ejecutar(DATABASE,sql)
-
+archivos_csv = glob.glob("*.csv")
+for archivo in archivos_csv:
+    try:
+        os.remove(archivo)
+        print(f"Archivo eliminado: {archivo}")
+    except Exception as e:
+        print(f"No se pudo eliminar {archivo}: {e}")
 print("PROCESO TERMINADO")

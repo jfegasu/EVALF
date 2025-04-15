@@ -11,6 +11,13 @@
 .danger {background-image: linear-gradient(to right, #dc3545, #e0666e);} 
 .danger:hover {background-image: linear-gradient(to right, #d32838, #e0666e);}
 
+.sena>circulo{
+  width: 10px;
+  border-radius: 200px 200px 200px 200px;
+-moz-border-radius: 200px 200px 200px 200px;
+-webkit-border-radius: 200px 200px 200px 200px;
+border: 2px solid #000000;
+}
 .midiv{
   display:grid;
   grid-template-columns: 10px 150px 150px;

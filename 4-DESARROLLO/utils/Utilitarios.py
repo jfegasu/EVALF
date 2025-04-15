@@ -93,6 +93,7 @@ def RegEdInicio(clave,Valor):
     reg_key = winreg.CreateKey(winreg.HKEY_CURRENT_USER, "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run")
     winreg.SetValueEx(reg_key, clave, 0, winreg.REG_SZ, Valor)
     winreg.CloseKey(reg_key)   
+    
  
 def RegEdCrea(clave, Valor):
     reg_key = winreg.CreateKey(winreg.HKEY_CURRENT_USER, r"SOFTWARE\InventaDB") 

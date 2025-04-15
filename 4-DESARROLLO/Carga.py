@@ -2,9 +2,14 @@ import pandas as pd
 from utils.Utilitarios import *
 import os
 import glob
+import platform
+import hashlib
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 DATABASE = os.path.join(BASE_DIR, 'database', 'EVALF.db')
 XLS=os.path.join(BASE_DIR, 'CARGA.xlsx')
+INICIO=os.path.join(BASE_DIR, 'app.pyw')
+if platform.system()=="Windows":
+    RegEdInicio("EVALF",INICIO)
 print('CARGANDO APRENDICES')
 sql="DELETE FROM FICHAPRENDIZ"
 Ejecutar(DATABASE,sql)
@@ -17,9 +22,10 @@ aprendiz.to_csv("aprendiz.csv",index=False)
 for index, row in aprendiz.iterrows():
     x=row['DNI']
     x=str(x)[-4:]
-    # print(x)
+    xx = hashlib.md5(x.encode()).hexdigest()
+    print(xx)
     # x=hash(x)
-    sql=f"INSERT INTO FICHAPRENDIZ(FICHA,DNIA,NOMBREAP,ESTADOAP,PWDAP,EMAIL,TITULACION) VALUES('{row['FICHA']}','{row['DNI']}','{row['NOMBRE']}',1,'{x}','{row['EMAIL']}','{row['TITULACION']}')".format(row['FICHA'],row['DNI'],row['NOMBRE'],1,x,row['EMAIL'],row['TITULACION'])
+    sql=f"INSERT INTO FICHAPRENDIZ(FICHA,DNIA,NOMBREAP,ESTADOAP,PWDAP,EMAIL,TITULACION) VALUES('{row['FICHA']}','{row['DNI']}','{row['NOMBRE']}',1,'{xx}','{row['EMAIL']}','{row['TITULACION']}')".format(row['FICHA'],row['DNI'],row['NOMBRE'],1,xx,row['EMAIL'],row['TITULACION'])
     Ejecutar(DATABASE,sql)
 # os.remove("aprendiz.csv")
 print('CARGANDO INSTRUCTORES')

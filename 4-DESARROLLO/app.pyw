@@ -3,6 +3,8 @@ from flask_session import Session
 import pandas as pd
 from flask_cors import CORS
 from utils.Utilitarios import *
+import socket
+import hashlib
 
 app = Flask(__name__) 
 app.secret_key = 'BAD_SECRET_KEY'
@@ -25,7 +27,8 @@ def centro():
 
 @app.route('/menu') 
 def menu():   
-    return render_template('menu.html')
+    ip_local = socket.gethostbyname(socket.gethostname())
+    return render_template('menu.html',mip=ip_local)
 @app.route('/login') 
 def login():   
     return render_template('login.html')
@@ -38,14 +41,18 @@ def valida():
     N=1
     usua=request.form.get('usua')
     pw=request.form.get('pw')
-    # pw=str(hash(pw))
-    # print(pw)
-    hay=ConsultarUno(DATABASE,f"SELECT count(*) FROM FICHAPRENDIZ WHERE DNIA='{usua}' AND EMAIL='{pw}'".format(usua,pw))
+    
+    pw1=hashlib.md5(pw.encode()).hexdigest()
+    sql=f"SELECT count(*) FROM FICHAPRENDIZ WHERE PWDAP='{pw1}' AND EMAIL='{usua}'".format(usua,pw)
+    print(sql)
+  
+    hay=ConsultarUno(DATABASE,f"SELECT count(*) FROM FICHAPRENDIZ WHERE DNIA='{usua}' AND EMAIL='{pw1}'".format(usua,pw1))
     hay=hay[0]
     if hay=="0":
         return render_template("alertas.html",msgito="USUARIO O CLAVE INCORRECTO",regreso="/login")
-    sql=f"SELECT * FROM FICHAPRENDIZ WHERE EMAIL='{usua}' AND PWDAP='{pw}'".format(usua,pw)
-    print("******",sql)
+    sql=f"SELECT * FROM FICHAPRENDIZ WHERE EMAIL='{usua}' AND PWDAP='{pw1}'".format(usua,pw)
+    
+    
     aprendiz=ConsultarUno(DATABASE,sql)
     session['ficha'] = aprendiz[0]
     session['dnia'] = aprendiz[1]
@@ -56,6 +63,7 @@ def valida():
     A=session['dnia']
     N=1
     sql=f"SELECT count(*) FROM FICHAINSTRUCTOR WHERE DNI NOT IN(SELECT IDINSTRUCTOR FROM THEVAL WHERE IDFICHA='{F}' AND IDAPRENDIZ='{A}')".format(F,A)
+    
     hay=ConsultarUno(DATABASE,sql)
 
     if hay[0]==0:

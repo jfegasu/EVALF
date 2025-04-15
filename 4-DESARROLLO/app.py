@@ -136,6 +136,9 @@ def evalua(N,I):
 @app.route('/descargar')
 def descargar():
     return send_from_directory('static/archivos', 'RESPUESTAS.csv', as_attachment=True)
+@app.route('/cargar')
+def cargar():
+    return send_from_directory('static/archivos', 'CARGA.xlsx', as_attachment=True)
 @app.route('/resp') 
 def resp():   
     print('DESCARGANDO RESPUESTAS')

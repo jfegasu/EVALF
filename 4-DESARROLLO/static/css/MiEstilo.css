@@ -11,6 +11,10 @@
 .danger {background-image: linear-gradient(to right, #dc3545, #e0666e);} 
 .danger:hover {background-image: linear-gradient(to right, #d32838, #e0666e);}
 
+.icono1{
+  content: '\1f1f1f';
+}
+
 .sena>circulo{
   width: 10px;
   border-radius: 200px 200px 200px 200px;

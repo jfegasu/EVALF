@@ -2,11 +2,8 @@
 {% block content %}
 <nav class="navbar navbar-light bg-light sena-sombra">
   <form class="form-inline">
-    <span class="btn btn-sm btn-outline-success" onclick="window.open('/','xxx')" 
-    style="cursor: pointer; text-decoration: none;"><i class="material-icons">menu</i></span>
     {%for op in opci%}
-    <span class="btn btn-sm btn-outline-success ovalo" onclick="window.open('{{op[2]}}','centro')" 
-    style="cursor: pointer; text-decoration: none;height: 35px; text-align: center;padding-top: 10px;">{{op[1]}}</span>
+    <span class="btn btn-sm btn-outline-success ovalo" onclick="window.open('{{op[3]}}','centro')"><i class="material-icons " style="font-size:26px; color:tomato;">{{op[5]}}</i>{{op[2]}}</span>
     {%endfor%}
     
     {{mip}}

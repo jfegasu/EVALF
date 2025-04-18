@@ -27,7 +27,7 @@ def centro():
 
 @app.route('/menu') 
 def menu():   
-    sql="SELECT * FROM MENU WHERE ROL='APR'"
+    sql="SELECT * FROM MENU WHERE ROL='APR' order by 2"
     opci=Consultar(DATABASE,sql)
     ip_local = socket.gethostbyname(socket.gethostname())
     return render_template('menu.html',mip=ip_local,opci=opci)

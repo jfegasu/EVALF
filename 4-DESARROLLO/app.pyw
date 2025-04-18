@@ -45,21 +45,41 @@ def valida():
     pw=request.form.get('pw')
     
     pw1=hashlib.md5(pw.encode()).hexdigest()
-    sql=f"SELECT count(*) FROM FICHAPRENDIZ WHERE PWDAP='{pw1}' AND EMAIL='{usua}'".format(usua,pw)
-    print(sql)
-  
-    hay=ConsultarUno(DATABASE,f"SELECT count(*) FROM FICHAPRENDIZ WHERE DNIA='{usua}' AND EMAIL='{pw1}'".format(usua,pw1))
+    try:
+        sql=f"SELECT count(*) FROM FICHAPRENDIZ WHERE PWDAP='{pw1}' AND EMAIL='{usua}'".format(usua,pw)
+        print(sql)
+    except Exception as e:
+        msgito="USUARIO O CLAVE ERRADOS*"
+        regresa="/login"
+        return render_template('login.html',msgito=msgito,regreso=regresa)
+    
+    try:
+        hay=ConsultarUno(DATABASE,f"SELECT count(*) FROM FICHAPRENDIZ WHERE DNIA='{usua}' AND EMAIL='{pw1}'".format(usua,pw1))
+    except Exception as e:
+        msgito="USUARIO O CLAVE ERRADOS**"
+        regresa="/login"
+        return render_template('login.html',msgito=msgito,regreso=regresa)
+    
     hay=hay[0]
+    # return "->"+str(hay)
     if hay=="0":
-        return render_template("alertas.html",msgito="USUARIO O CLAVE INCORRECTO",regreso="/login")
-    sql=f"SELECT * FROM FICHAPRENDIZ WHERE EMAIL='{usua}' AND PWDAP='{pw1}'".format(usua,pw)
+        return render_template("alertas.html",msgito="USUARIO O CLAVE INCORRECTO***",regreso="/login")
     
     
-    aprendiz=ConsultarUno(DATABASE,sql)
-    session['ficha'] = aprendiz[0]
-    session['dnia'] = aprendiz[1]
-    session['nombreap'] = aprendiz[2]
-    session['titulacion'] = aprendiz[6]
+    
+    
+    try:
+        sql=f"SELECT * FROM FICHAPRENDIZ WHERE EMAIL='{usua}' AND PWDAP='{pw1}'".format(usua,pw)
+        aprendiz=ConsultarUno(DATABASE,sql)
+        session['ficha'] = aprendiz[0]
+        session['dnia'] = aprendiz[1]
+        session['nombreap'] = aprendiz[2]
+        session['titulacion'] = aprendiz[6]
+        
+    except:
+        msgito="USUARIO O CLAVE ERRADOS**"
+        regresa="/login"
+        return render_template('alertas.html',msgito=msgito,regreso=regresa)
     
     F=session['ficha']
     A=session['dnia']
@@ -68,7 +88,7 @@ def valida():
     
     hay=ConsultarUno(DATABASE,sql)
 
-    if hay[0]==0:
+    if hay[0]=="0":
         msgito="NO HAY INSTRUCTORES PARA EVALUAR"
         regresa="/login"
         return render_template('alertas.html',msgito=msgito,regreso=regresa)

@@ -13,7 +13,7 @@
         <script>
             function Voy(){
             {% if regreso%}
-            location.href="{{regreso}}"
+            window.open("{{regreso}}","centro")
             {% else %}
             location.href="/"
             {% endif %}

@@ -2,9 +2,12 @@
 {% block content %}
 <nav class="navbar navbar-light bg-light sena-sombra">
   <form class="form-inline">
-    <a class="btn btn-outline-success" href="/" target="xxx">INICIO</a>
-    <a class="btn btn-sm btn-outline-success" href="/login" target="centro">EVALUACION DE INSTRUCTORES</a>
-    <a class="btn btn-sm btn-outline-success" href="/acerca" target="centro">ACERCA DE..</a>
+    <span class="btn btn-sm btn-outline-success sena-sombra" onclick="window.open('/','xxx')" 
+    style="cursor: pointer; text-decoration: none;">INICIO</span>
+    <span class="btn btn-sm btn-outline-success sena-sombra" onclick="window.open('/login','centro')" 
+    style="cursor: pointer; text-decoration: none;">EVALUACION DE INSTRUCTORES</span>
+    <span class="btn btn-sm btn-outline-success sena-sombra" onclick="window.open('/acerca','centro')" 
+    style="cursor: pointer; text-decoration: none;">ACERCA DE..</span>
     {{mip}}
     <h3>EVALUACION DE INSTRUCTORES </h3>
   </form>

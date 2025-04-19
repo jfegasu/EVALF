@@ -1,12 +1,17 @@
 {% extends "base.html" %}
 {% block content %}
+<!--https://fontawesome.com/v4/icons/-->
 <nav class="navbar navbar-light bg-light sena-sombra">
   <form class="form-inline">
     {%for op in opci%}
     <span class="btn btn-sm btn-outline-success ovalo" 
     onclick="window.open('{{op[3]}}','centro')">
-    <i class="material-icons " style="font-size:26px; color:tomato;border:none;">{{op[5]}}</i>&nbsp;{{op[2]}}
+    <!--<i class="material-icons " style="font-size:26px; color:tomato;border:none;">{{op[5]}}</i>--> 
+    <i class="{{op[5]}}" style="font-size:26px; color:tomato;border:none;" aria-hidden="true"></i>
+    &nbsp;{{op[2]}}
     </span>
+    
+
     {%endfor%}
     
     {{mip}}

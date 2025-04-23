@@ -4,13 +4,14 @@
 
 
 {% if N==1 %}
-
+{% if datos|length>0%}
 <br>
 <div class="sena d-flex justify-content-center align-items-center  mx-auto" style="width:50%;">
 <table class="table table-striped ">
 <th class="sena-sombra">INSTRUCTORES A EVALAUAR DE LA FICHA: {{datos[0][4]}}</th>
 <th class="sena-sombra">ACCION</th>
 </tr>
+
 {%for data in datos%}
 <tr>
     <td>
@@ -20,12 +21,16 @@
        <!-- <i class="btn btn-primary material-icons" style="text-align: top;">menu</i>-->
     <img class="circulo " src="{{url_for('static',filename='images/silueta.png')}}" style="width: 30px;border: 3;border-color: black;"></a></p></td>
 </tr>
-
 {%endfor%}
 </table>
 
 </div>
 <br><br>
+{%else%}
+<div class="alert alert-danger" role="alert">
+<h1>NO HAY INSTRUCTORES PARA EVALUAR</h1>
+</div>
+{% endif%}
 {% endif%}
 {% if N=="2" %}
 

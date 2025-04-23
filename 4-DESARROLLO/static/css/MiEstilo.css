@@ -14,7 +14,12 @@
 .icono1{
   content: '\1f1f1f';
 }
-
+.header {
+  position: relative;
+  width: 100%;
+  top: 0;
+  background: #015dca;
+}
 .sena>circulo{
   width: 10px;
   border-radius: 200px 200px 200px 200px;

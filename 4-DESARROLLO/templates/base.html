@@ -14,7 +14,7 @@
 <link rel="icon" type="image/x-icon" href="./static/images/favicon.ico">
 <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-<TITLE>SISTEMA REGISTRO DE NOVEDADES EN AMBIENTES DE FORMACION</TITLE>
+<TITLE>SISTEMA DE EVALUACION DE INSTRUCTORES DEL SENA</TITLE>
 {% endblock %}
   </head>
   <body style="background-image: url({{url_for('static',filename='images/logosena.png')}});">
@@ -22,7 +22,11 @@
 
     <div style="overflow:auto">
     {% block content %}
+ 
     {% endblock content %}
+    {%include 'footer.html'%}   
+
+
     <link href="{{url_for('static',filename='css/MiEstilo.css')}}" rel="stylesheet">
  
 

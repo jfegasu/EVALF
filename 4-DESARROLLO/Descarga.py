@@ -5,5 +5,5 @@ DATABASE = os.path.join(BASE_DIR, 'database', 'EVALF.db')
 print('DESCARGANDO RESPUESTAS')
 sql="SELECT idFICHA,TITULACION,PREGUNTA,RESPUESTA FROM THEVAL"
 datos=pd.DataFrame(ConsultarD(DATABASE,sql))
-datos.to_csv("RESPUESTAS.csv",index=False)
+datos.to_csv("./RESPUESTAS1.csv",index=False)
 print("PROCESO TERMINADO")

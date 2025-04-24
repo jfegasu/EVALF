@@ -16,7 +16,7 @@
 
     {% with im = url_for('static', filename='images/dni/' ~ data[1] ~ '.png') %}
 <span style="cursor: pointer;" onclick="window.open('/evalua/2/{{data[1]}}','centro')">
-<img class="sena-circulo" src="{{ im }}"
+<img class="ovalo" src="{{ im }}"
      onerror="this.onerror=null; this.src='{{ url_for('static', filename='images/dni/silueta.png') }}';"
      style="width: 70px; border: 3px solid black;">
 

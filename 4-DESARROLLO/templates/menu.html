@@ -4,11 +4,10 @@
 <nav class="navbar navbar-light bg-light">
   <form class="form-inline">
     {%for op in opci%}
-    <span class="btn btn-sm btn-outline-light ovalo" 
+    <span class=" ovalo"  style="cursor: pointer;color:rgb(202, 199, 199);"
     onclick="window.open('{{op[3]}}','centro')">
-    <!--<i class="material-icons " style="font-size:26px; color:tomato;border:none;">{{op[5]}}</i>--> 
-    <i class="{{op[5]}}" style="font-size:26px; color:rgb(201, 187, 187);border:none;" aria-hidden="true"></i>
-    &nbsp;<font color=rgb(201, 187, 187)><b>{{op[2]}}</b></font>
+    <i class="{{op[5]}}" style="padding-left: 30px;  font-size:26px; border:none;" aria-hidden="true"></i>
+    &nbsp;<font color= gray ><b>{{op[2]}}</b></font>
     </span>
     
 

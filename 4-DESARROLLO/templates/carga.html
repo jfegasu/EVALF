@@ -6,32 +6,27 @@
 {% if N==1 %}
 {% if datos|length>0%}
 <br>
-<div class="sena d-flex justify-content-center align-items-center  mx-auto" style="width:50%;">
+<div class="sena d-flex justify-content-center align-items-center  mx-auto" style="width:40%;">
 <table class="table table-striped ">
-<th class="sena-sombra">INSTRUCTORES A EVALAUAR DE LA FICHA: {{datos[0][4]}}</th>
-<th class="sena-sombra">EVALUAR</th>
-</tr>
+<th class="sena-sombra">INSTRUCTORES A EVALAUAR DE LA FICHA: {{datos[0][4]}}</th></tr>
 
 {%for data in datos%}
 <tr>
     <td>
-        {{data[0]}}
-    </td>
 
     {% with im = url_for('static', filename='images/dni/' ~ data[1] ~ '.png') %}
-    <td>
 <span style="cursor: pointer;" onclick="window.open('/evalua/2/{{data[1]}}','centro')">
 <img class="sena-circulo" src="{{ im }}"
      onerror="this.onerror=null; this.src='{{ url_for('static', filename='images/dni/silueta.png') }}';"
      style="width: 70px; border: 3px solid black;">
 
+{{data[0]}}
 </span>
    </td> 
     
     
      {% endwith %}
-           <!-- <i class="btn btn-primary material-icons" style="text-align: top;">menu</i>-->
-    </tr>
+     </tr>
 {%endfor%}
 </table>
 

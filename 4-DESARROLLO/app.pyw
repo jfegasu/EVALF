@@ -95,7 +95,17 @@ def valida():
     else:
         sql=f"SELECT * FROM FICHAINSTRUCTOR WHERE DNI NOT IN(SELECT IDINSTRUCTOR FROM THEVAL WHERE IDFICHA='{F}' AND IDAPRENDIZ='{A}')".format(F,A)
         datos=Consultar(DATABASE,sql)
-        return render_template('carga.html',N=N,datos=datos)
+        apr={
+            "ficha":session['ficha'],
+            "aprendiz":session['nombreap'],
+            "titulacion":session['titulacion']
+        }
+        session['apr']=apr
+        return render_template('carga.html',N=N,datos=datos,apr=apr)
+def getInstructor(id):
+    sql=f"SELECT NOMINST FROM FICHAINSTRUCTOR WHERE  dni='{id}'".format(str(id))
+    datos=ConsultarUno(DATABASE,sql)
+    return datos[0]
 
 @app.route('/otro' ,methods=['POST','GET']) 
 def otro():
@@ -141,7 +151,7 @@ def evalua(N,I):
         print("------------->",F,I,A)
         preg=Consultar(DATABASE,'SELECT * FROM PREGUNTA WHERE ESTADO=1')
         hay=len(preg)
-        return render_template('carga.html',N=N,datos=datos,preg=preg,hay=hay)
+        return render_template('carga.html',N=N,datos=datos,preg=preg,hay=hay,nomi=getInstructor(I))
     if N=="3":
         F=session['ficha']
         A=session['dnia']

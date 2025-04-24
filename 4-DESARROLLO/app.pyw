@@ -14,7 +14,7 @@ RESPUESTAS = os.path.join(BASE_DIR, 'static/archivos/RESPUESTAS.csv')
 
 @app.route('/') 
 def raiz():   
-    return render_template('index.html')
+    return render_template('login.html')
 @app.route('/banner') 
 def banner():   
     return render_template('banner.html')

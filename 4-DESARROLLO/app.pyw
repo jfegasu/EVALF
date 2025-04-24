@@ -110,6 +110,7 @@ def valida():
             "titulacion":session['titulacion'],
             "dnia":session['dnia']
         }
+        au.registra(30,str(apr),session['nombreap'])
         session['apr']=apr
         return render_template('carga.html',N=N,datos=datos,apr=apr)
 def getInstructor(id):

@@ -11,6 +11,7 @@ app.secret_key = 'BAD_SECRET_KEY'
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 DATABASE = os.path.join(BASE_DIR, 'database', 'EVALF.db')
 RESPUESTAS = os.path.join(BASE_DIR, 'static/archivos/RESPUESTAS.csv')
+au=Auditor()
 
 @app.route('/') 
 def raiz():   
@@ -51,6 +52,8 @@ def valida():
     except Exception as e:
         msgito="USUARIO O CLAVE ERRADOS*"
         regresa="/login"
+        au.registra(30,'USUARIO O CLAVE ERRADOS')
+        
         return render_template('login.html',msgito=msgito,regreso=regresa)
     
     try:
@@ -58,11 +61,13 @@ def valida():
     except Exception as e:
         msgito="USUARIO O CLAVE ERRADOS**"
         regresa="/login"
+        au.registra(30,'USUARIO O CLAVE ERRADOS')
         return render_template('login.html',msgito=msgito,regreso=regresa)
     
     hay=hay[0]
     # return "->"+str(hay)
     if hay=="0":
+        au.registra(30,'USUARIO O CLAVE ERRADOS')
         return render_template("alertas.html",msgito="USUARIO O CLAVE INCORRECTO***",regreso="/login")
     
     
@@ -77,6 +82,7 @@ def valida():
         session['titulacion'] = aprendiz[6]
         
     except:
+        au.registra(30,'USUARIO O CLAVE ERRADOS')
         msgito="USUARIO O CLAVE ERRADOS**"
         regresa="/login"
         return render_template('alertas.html',msgito=msgito,regreso=regresa)
@@ -85,11 +91,14 @@ def valida():
     A=session['dnia']
     N=1
     sql=f"SELECT count(*) FROM FICHAINSTRUCTOR WHERE DNI NOT IN(SELECT IDINSTRUCTOR FROM THEVAL WHERE IDFICHA='{F}' AND IDAPRENDIZ='{A}')".format(F,A)
-    
+    au.registra(30,'INGRESO ',session['nombreap'])
+
     hay=ConsultarUno(DATABASE,sql)
 
     if hay[0]=="0":
         msgito="NO HAY INSTRUCTORES PARA EVALUAR"
+        au.registra(30,msgito,session['nombreap'])
+
         regresa="/login"
         return render_template('alertas.html',msgito=msgito,regreso=regresa)
     else:
@@ -98,7 +107,8 @@ def valida():
         apr={
             "ficha":session['ficha'],
             "aprendiz":session['nombreap'],
-            "titulacion":session['titulacion']
+            "titulacion":session['titulacion'],
+            "dnia":session['dnia']
         }
         session['apr']=apr
         return render_template('carga.html',N=N,datos=datos,apr=apr)
@@ -134,6 +144,7 @@ def otro():
 @app.route('/evalua/<N>/<I>' ,methods=['POST','GET']) 
 def evalua(N,I):   
     if N=="1":
+        
         F=session['ficha']
         A=session['dnia']
         sql=f"SELECT * FROM THEVAL WHERE idFICHA={F} AND idAPRENDIZ={A}".format(F,A)
@@ -151,6 +162,8 @@ def evalua(N,I):
         print("------------->",F,I,A)
         preg=Consultar(DATABASE,'SELECT * FROM PREGUNTA WHERE ESTADO=1')
         hay=len(preg)
+        au.registra(30,'ENTRA A EVALUAR A: '+getInstructor(I))
+        
         return render_template('carga.html',N=N,datos=datos,preg=preg,hay=hay,nomi=getInstructor(I))
     if N=="3":
         F=session['ficha']
@@ -167,8 +180,11 @@ def evalua(N,I):
             Preg=request.form.get('P' + str(i))
             sql=f"insert into THEVAL(idINSTRUCTOR,idFICHA,idAPRENDIZ,PREGUNTA,RESPUESTA,TITULACION) VALUES({I},{F},{A},'{Preg}','{Resp}','{T}')".format(I,F,A,Preg,Resp,T)
             Ejecutar(DATABASE,sql)
+            
+        
             # print(sql)
         
+        au.registra(30,'EVALUO A: '+getInstructor(I))
         msgito="Respuestas registrada"
         regreso="/login"
         return render_template("alertas.html",msgito=msgito,regreso=regreso)

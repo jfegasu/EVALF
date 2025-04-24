@@ -39,6 +39,12 @@
 {%else%}
 <div class="alert alert-danger" role="alert">
 <h1>NO HAY INSTRUCTORES PARA EVALUAR</h1>
+<script>
+    function Ir(){
+        window.open("/login",'centro')
+    }
+    setTimeout("Ir()",5000)
+</script>
 </div>
 {% endif%}
 {% endif%}

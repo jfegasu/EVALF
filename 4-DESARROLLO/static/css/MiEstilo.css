@@ -20,12 +20,12 @@
   top: 0;
   background: #015dca;
 }
-.sena>circulo{
+.sena-circulo{
   width: 10px;
-  border-radius: 200px 200px 200px 200px;
--moz-border-radius: 200px 200px 200px 200px;
--webkit-border-radius: 200px 200px 200px 200px;
-border: 2px solid #000000;
+  border-radius: 300px 300px 300px 300px;
+-moz-border-radius: 300px 300px 300px 300px;
+-webkit-border-radius: 300px 300px 300px 300px;
+border: 0px solid #000000;
 }
 .midiv{
   display:grid;

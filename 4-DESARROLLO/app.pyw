@@ -5,6 +5,7 @@ from flask_cors import CORS
 from utils.Utilitarios import *
 import socket
 import hashlib
+import logging
 
 app = Flask(__name__) 
 app.secret_key = 'BAD_SECRET_KEY'
@@ -33,7 +34,7 @@ def menu():
     ip_local = socket.gethostbyname(socket.gethostname())
     return render_template('menu.html',mip=ip_local,opci=opci)
 @app.route('/login') 
-def login():   
+def login():
     return render_template('login.html')
 
 @app.route('/acerca') 

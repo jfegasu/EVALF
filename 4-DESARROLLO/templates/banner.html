@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 {% block content %}
-<center>
+
 
   <div style="background-color: #015dca;padding-bottom: 0; height:40px;">
     
@@ -15,7 +15,13 @@
       const opciones = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
       document.getElementById("miFecha").innerText = hoy.toLocaleDateString('es-ES', opciones);
     </script>
-  <p style="text-align: left;"><img src="{{url_for('static',filename='images/senalogo.png')}}"> <h1 style="text-align: left;" class="sena-sombra">EVALUACION DE INSTRUCTORES </h1></p>
+    <table >
+      <tr style="text-align: left;">
+      <td style="text-align: left;"><img src="{{url_for('static',filename='images/senalogo.png')}}"> </td>
+      <td> <h1 style="text-align: left;" class="sena-sombra">EVALUACION DE INSTRUCTORES </h1></td>
+    </tr>
+    </table>
+  <p ></p>
   </div>
   {% endblock content %}  
 

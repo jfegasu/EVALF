@@ -39,6 +39,12 @@
 {%else%}
 <div class="alert alert-danger" role="alert">
 <h1>NO HAY INSTRUCTORES PARA EVALUAR</h1>
+<script>
+    function Ir(){
+        window.open("/login",'centro')
+    }
+    setTimeout("Ir()",5000)
+</script>
 </div>
 {% endif%}
 {% endif%}
@@ -46,7 +52,7 @@
 
 <div class="sena d-flex justify-content-center align-items-center  mx-auto" style="width: 50%;padding-top: 20px;">
     <table class="table table-striped" style="width: 100%;">
-        <th colspan="2" style="color:red">FICHA: {{session['apr'].ficha}}, APRENDIZ: {{session['apr'].aprendiz}}, TITULACION: {{session['apr'].titulacion}}, INSTRUCTOR A EVALUAR: {{nomi}}
+        <th colspan="2" style="color:red"><b>FICHA: {{session['apr'].ficha}}, APRENDIZ: {{session['apr'].aprendiz}}, TITULACION: {{session['apr'].titulacion}}, INSTRUCTOR A EVALUAR: {{nomi}}
         </th><th> <span class="btn btn-warning" style="text-align: right;"  onclick="window.open('/login','centro')"><i class="fa fa-fast-backward" aria-hidden="true"></i></span>
     </th>
         <tr>

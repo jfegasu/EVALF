@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% block content %}
+{%include 'banner.html'%}
+<script>
+function Ir(){
+    let vantanahija=window.open(
+        "/0",
+        "xxx",
+        `width=${screen.width},height=${screen.height}`
+    );
+}
+document.addEventListener("click", function() {
+    // Llamar a la función para abrir la ventana hija
+    Ir();
+
+    // Cerrar la ventana principal
+    window.close();
+});
+
+</script>
+<center><h4><b>De click para iniciar</b></h4></center>
+{% endblock content %}

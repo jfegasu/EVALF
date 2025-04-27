@@ -17,6 +17,8 @@ au=Auditor()
 @app.route('/') 
 def raiz():   
     return render_template('indexppal.html')
+
+
 @app.route('/banner') 
 def banner():   
     return render_template('banner.html')

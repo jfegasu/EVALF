@@ -1,4 +1,6 @@
-
+{% extends "base.html" %}
+{% block content %}
+{%include 'banner.html'%}
 <script>
 function Ir(){
     window.open(
@@ -9,3 +11,4 @@ function Ir(){
 }
 Ir()
 </script>
+{% endblock content %}

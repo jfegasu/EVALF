@@ -93,7 +93,7 @@ def valida():
             msgito="APRENDIZ O CLAVE ERRADOS**"
             regresa="/login"
             au.registra(30,msgito)
-            
+            # *******
             return render_template('alertas.html',msgito=msgito,regreso=regresa)
     elif validaUsuario(usua)==2:
         return 'instructor'

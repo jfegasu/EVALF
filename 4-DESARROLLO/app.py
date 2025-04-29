@@ -286,5 +286,8 @@ def resp():
 # O cambia el nombre en send_from_directory a minúsculas
     print("PROCESO TERMINADO")
     return render_template('respuestas.html')
+# juanav_duque@soy.sena.edu.co  6019
+# jgalindos@sena.edu.co
+# admin@sena.edu.co
 if __name__=='__main__':
     app.run(debug=True,port=5000)

@@ -43,6 +43,22 @@ def login():
 @app.route('/acerca') 
 def acerca():   
     return render_template('acerca.html')
+def validaUsuario(correo):
+
+    sql=f"SELECT count(*) FROM FICHAPRENDIZ WHERE EMAIL='{correo}'".format(correo)
+    hay=ConsultarUno(DATABASE,sql)
+    if hay[0]>0:
+        return 1
+    sql=f"select count(*) from fichainstructor where email='{correo}'".format(correo)
+    hay=ConsultarUno(DATABASE,sql)
+    if hay[0]>0:
+        return 2
+    sql=f"select count(*) from admin where email='{correo}'".format(correo)
+    hay=ConsultarUno(DATABASE,sql)
+    if hay[0]>0:
+        return 3
+    return 0
+
 @app.route('/valida' ,methods=['POST','GET']) 
 def valida():   
     N=1
@@ -50,16 +66,69 @@ def valida():
     pw=request.form.get('pw')
     
     pw1=hashlib.md5(pw.encode()).hexdigest()
-    try:
-        sql=f"SELECT count(*) FROM FICHAPRENDIZ WHERE PWDAP='{pw1}' AND EMAIL='{usua}'".format(usua,pw)
-        print(sql)
-    except Exception as e:
-        msgito="USUARIO O CLAVE ERRADOS*"
-        regresa="/login"
-        au.registra(30,'USUARIO O CLAVE ERRADOS')
-        
-        return render_template('login.html',msgito=msgito,regreso=regresa)
+    if validaUsuario(usua)==1:
+        sql=f"SELECT count(*) FROM FICHAPRENDIZ WHERE PWDAP='{pw1}' AND EMAIL='{usua}'".format(usua,pw1)
+        hay=ConsultarUno(DATABASE,sql)
+        if hay[0]>0:
+            N=1
+            sql=f"SELECT * FROM FICHAPRENDIZ WHERE PWDAP='{pw1}' AND EMAIL='{usua}'".format(usua,pw1)
+            aprendiz=ConsultarUno(DATABASE,sql)
+            session['ficha']=aprendiz[0]
+            session['nombreap']= aprendiz[2]   
+            session['titulacion']= aprendiz[6]   
+            session['dnia']= aprendiz[1]  
+            # return str(aprendiz)
+            F=aprendiz[0]
+            A=aprendiz[1] 
+            sql=f"SELECT * FROM FICHAINSTRUCTOR WHERE DNI NOT IN(SELECT IDINSTRUCTOR FROM THEVAL WHERE IDFICHA='{F}' AND IDAPRENDIZ='{A}')".format(F,A)
+            datos=Consultar(DATABASE,sql)
+            apr={
+                "ficha":session['ficha'],
+                "aprendiz":session['nombreap'],
+                "titulacion":session['titulacion'],
+                "dnia":session['dnia']
+            }
+            render_template('carga.html',N=N,datos=datos,apr=apr)
+        else:
+            msgito="APRENDIZ O CLAVE ERRADOS**"
+            regresa="/login"
+            au.registra(30,msgito)
+            # *******
+            return render_template('alertas.html',msgito=msgito,regreso=regresa)
+    elif validaUsuario(usua)==2:
+        return 'instructor'
+    elif validaUsuario(usua)==3:
+        return 'administrador'
+    else:
+        return "No existe"
     
+    sql=f"SELECT count(*) FROM FICHAPRENDIZ WHERE PWDAP='{pw1}' AND EMAIL='{usua}'".format(usua,pw1)
+    hay=ConsultarUno(DATABASE,sql)
+    if hay[0]>0:
+        N=1
+        sql=f"SELECT * FROM FICHAPRENDIZ WHERE PWDAP='{pw1}' AND EMAIL='{usua}'".format(usua,pw1)
+        aprendiz=ConsultarUno(DATABASE,sql)
+        session['ficha']=aprendiz[0]
+        session['nombreap']= aprendiz[2]   
+        session['titulacion']= aprendiz[6]   
+        session['dnia']= aprendiz[1]  
+        # return str(aprendiz)
+        F=aprendiz[0]
+        A=aprendiz[1] 
+        sql=f"SELECT * FROM FICHAINSTRUCTOR WHERE DNI NOT IN(SELECT IDINSTRUCTOR FROM THEVAL WHERE IDFICHA='{F}' AND IDAPRENDIZ='{A}')".format(F,A)
+        datos=Consultar(DATABASE,sql)
+        apr={
+            "ficha":session['ficha'],
+            "aprendiz":session['nombreap'],
+            "titulacion":session['titulacion'],
+            "dnia":session['dnia']
+        }
+        render_template('carga.html',N=N,datos=datos,apr=apr)
+    sql=f"SELECT count(*) FROM FICHAPRENDIZ WHERE PWDAP='{pw1}' AND EMAIL='{usua}'".format(usua,pw1)
+    hay=ConsultarUno(DATABASE,sql)
+    
+
+    # return str(hay)
     try:
         hay=ConsultarUno(DATABASE,f"SELECT count(*) FROM FICHAPRENDIZ WHERE DNIA='{usua}' AND EMAIL='{pw1}'".format(usua,pw1))
     except Exception as e:
@@ -121,7 +190,13 @@ def getInstructor(id):
     sql=f"SELECT NOMINST FROM FICHAINSTRUCTOR WHERE  dni='{id}'".format(str(id))
     datos=ConsultarUno(DATABASE,sql)
     return datos[0]
-
+def getAprendiz(id):
+    sql=f"select * from fichaprendiz where dnia='{id}'".format(str(id))
+    datos=ConsultarUno(DATABASE,sql)
+    dato={
+        "FICHA":datos['FICHA']
+    }
+    return datos[0]
 @app.route('/otro' ,methods=['POST','GET']) 
 def otro():
     hay=ConsultarUno(DATABASE,f"SELECT count(*) FROM FICHAPRENDIZ WHERE DNIA='{usua}' AND EMAIL='{pw}'".format(usua,pw))
@@ -212,4 +287,4 @@ def resp():
     print("PROCESO TERMINADO")
     return render_template('respuestas.html')
 if __name__=='__main__':
-    app.run(debug=True,port=5000,host='0.0.0.0')
+    app.run(debug=True,port=5000)

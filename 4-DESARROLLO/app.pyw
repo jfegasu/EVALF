@@ -96,11 +96,15 @@ def valida():
             # *******
             return render_template('alertas.html',msgito=msgito,regreso=regresa)
     elif validaUsuario(usua)==2:
-        return 'instructor'
+        return 'Instructor'
     elif validaUsuario(usua)==3:
-        return 'administrador'
+        return 'Administrador'
     else:
-        return "No existe"
+        msgito="USUARIO NO EXISTE**"
+        regresa="/login"
+        au.registra(30,msgito)
+        # *******
+        return render_template('alertas.html',msgito=msgito,regreso=regresa)
     
     sql=f"SELECT count(*) FROM FICHAPRENDIZ WHERE PWDAP='{pw1}' AND EMAIL='{usua}'".format(usua,pw1)
     hay=ConsultarUno(DATABASE,sql)

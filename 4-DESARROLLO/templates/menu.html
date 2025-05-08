@@ -1,20 +1,22 @@
 {% extends "base.html" %}
 {% block content %}
 <!--https://fontawesome.com/v4/icons/-->
-<nav class="navbar navbar-light bg-light">
-  <form class="form-inline">
+<nav class="navbar navbar-light bg-light ">
+  <form class="form-inline d-flex">
     {%for op in opci%}
     <span class=" ovalo"  style="font-weight: bold;font-size: 10px; cursor: pointer;color:rgb(202, 199, 199);"
     onclick="window.open('{{op[3]}}','centro')">
     |<i class="{{op[5]}}" style="padding-left: 30px;  font-size:26px; border:none;" aria-hidden="true"></i>
     &nbsp;<font color= gray ><b>{{op[2]}}</b></font>
     </span>
-    
-
     {%endfor%}
-    
-    {{mip}}
-    <h3>EVALUACION DE INSTRUCTORES </h3>
+    <span  style="display: flex; margin-left: auto; text-align: right; font-weight: bold;font-size: 10px; cursor: pointer;color:rgb(202, 199, 199);"
+    onclick="window.open('/acerca','centro')">
+    |<i class="fa fa-group" style="padding-left: 30px;  font-size:26px; border:none;" aria-hidden="true"></i>
+    &nbsp;<font color= gray ><b style="text-align: right;">Acerca de....</b></font>
+    </span>
+ 
+   
   </form>
 </nav>
 

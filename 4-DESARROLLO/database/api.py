@@ -104,7 +104,7 @@ def contar_instructores_por_email(email):
               .select(fn.COUNT(Admin.id).alias('total'))
               .where(Admin.EMAIL == email)
               .scalar())  # Devuelve el valor directo, no una fila
-    total={"Instructor":tinstructor,"Aprendiz":taprendiz,"Admin":tadmin}
+    total={"Email":email,"Instructor":tinstructor,"Aprendiz":taprendiz,"Admin":tadmin}
    
     return jsonify(total)
     

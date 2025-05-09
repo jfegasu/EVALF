@@ -91,7 +91,7 @@ def obtener_aprendiz_por_dni(dni):
     return jsonify({'error': 'Instructor no encontrado'}), 404
 
 @app.route('/inst/contar/<email>', methods=['GET'])
-def contar_instructores_por_dni(email):
+def contar_instructores_por_email(email):
     tinstructor = (FichaInstructor
               .select(fn.COUNT(FichaInstructor.id).alias('total'))
               .where(FichaInstructor.EMAIL == email)

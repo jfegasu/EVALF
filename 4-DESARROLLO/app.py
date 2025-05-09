@@ -13,6 +13,7 @@ app.secret_key = 'BAD_SECRET_KEY'
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 DATABASE = os.path.join(BASE_DIR, 'database', 'EVALF.db')
 RESPUESTAS = os.path.join(BASE_DIR, 'static/archivos/RESPUESTAS.csv')
+app.apidb="http://127.0.0.1:5555"
 au=Auditor()
 
 @app.route('/') 
@@ -45,7 +46,7 @@ def login():
 def acerca():   
     return render_template('acerca.html')
 def validaUsuario(correo):
-    url = 'http://localhost:5555/inst/contar/'+correo
+    url=app.apidb+'/inst/contar/'+correo
     response = requests.get(url)
     if response.status_code == 200:
         data = response.json()

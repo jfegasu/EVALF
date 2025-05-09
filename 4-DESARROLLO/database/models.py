@@ -1,7 +1,7 @@
 from peewee import *
 
 # Conexión a la base de datos SQLite
-db = SqliteDatabase('nombre_base.db')  # cambia 'nombre_base.db' por tu nombre de archivo deseado
+db = SqliteDatabase('sena.db')  
 
 
 class BaseModel(Model):

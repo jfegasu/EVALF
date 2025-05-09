@@ -1,6 +1,6 @@
 from flask import Flask, request, jsonify
 from peewee import *
-
+from models import *
 # Configuración de base de datos
 db = SqliteDatabase('sena.db')
 
@@ -8,15 +8,7 @@ class BaseModel(Model):
     class Meta:
         database = db
 
-# Modelo ejemplo: ADMIN
-class Admin(BaseModel):
-    NOM = TextField()
-    EMAIL = TextField()
-    CLA = TextField()
 
-# Crear tabla si no existe
-db.connect()
-db.create_tables([Admin])
 
 # Inicialización de Flask
 app = Flask(__name__)
@@ -70,4 +62,4 @@ def eliminar_admin(admin_id):
 
 # Ejecutar app
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(debug=True,port=5555)

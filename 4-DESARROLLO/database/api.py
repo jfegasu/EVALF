@@ -107,7 +107,15 @@ def contar_instructores_por_email(email):
     total={"Email":email,"Instructor":tinstructor,"Aprendiz":taprendiz,"Admin":tadmin}
    
     return jsonify(total)
-    
+from playhouse.shortcuts import model_to_dict
+
+@app.route("/menurol/<tipo>")
+def menurol(tipo):
+    menues = Menu.select().where(Menu.ROL == tipo)
+    data = [model_to_dict(menu) for menu in menues]
+    return jsonify(data)
+
+
 # Ejecutar app
 if __name__ == '__main__':
     app.run(debug=True,port=5555)

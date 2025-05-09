@@ -7,6 +7,7 @@ from utils.Utilitarios import *
 import socket
 import hashlib
 import logging
+from config import DevelopmentConfig 
 
 app = Flask(__name__) 
 app.secret_key = 'BAD_SECRET_KEY'
@@ -14,6 +15,8 @@ BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 DATABASE = os.path.join(BASE_DIR, 'database', 'EVALF.db')
 RESPUESTAS = os.path.join(BASE_DIR, 'static/archivos/RESPUESTAS.csv')
 app.apidb="http://127.0.0.1:5555"
+ 
+# app.config.from_object(DevelopmentConfig) 
 au=Auditor()
 
 @app.route('/') 

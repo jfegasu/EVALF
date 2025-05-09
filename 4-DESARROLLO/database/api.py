@@ -77,6 +77,17 @@ def obtener_instructores_por_ficha(ficha):
     instructores = FichaInstructor.select().where(FichaInstructor.FICHA == ficha)
     data = [model_to_dict(inst) for inst in instructores]
     return jsonify(data)
+@app.route('/aprend', methods=['GET'])
+def obtener_aprend():
+     aprend = FichaAprendiz.select()
+     data = [model_to_dict(inst) for inst in aprend]
+     return jsonify(data),404
+@app.route('/aprend/<dni>', methods=['GET'])
+def obtener_aprendiz_por_dni(dni):
+    aprend = FichaAprendiz.get_or_none(FichaAprendiz.DNIA == dni)
+    if aprend:
+        return jsonify(model_to_dict(aprend))
+    return jsonify({'error': 'Instructor no encontrado'}), 404
 
 
 # Ejecutar app

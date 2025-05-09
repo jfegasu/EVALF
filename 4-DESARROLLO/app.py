@@ -2,6 +2,7 @@ from flask import Flask,Blueprint, render_template,session,request ,redirect,url
 from flask_session import Session
 import pandas as pd
 from flask_cors import CORS
+import requests
 from utils.Utilitarios import *
 import socket
 import hashlib
@@ -44,20 +45,12 @@ def login():
 def acerca():   
     return render_template('acerca.html')
 def validaUsuario(correo):
-
-    sql=f"SELECT count(*) FROM FICHAPRENDIZ WHERE EMAIL='{correo}'".format(correo)
-    hay=ConsultarUno(DATABASE,sql)
-    if hay[0]>0:
-        return 1
-    sql=f"select count(*) from fichainstructor where email='{correo}'".format(correo)
-    hay=ConsultarUno(DATABASE,sql)
-    if hay[0]>0:
-        return 2
-    sql=f"select count(*) from admin where email='{correo}'".format(correo)
-    hay=ConsultarUno(DATABASE,sql)
-    if hay[0]>0:
-        return 3
-    return 0
+    url = 'http://localhost:5555/inst/contar/'+correo
+    response = requests.get(url)
+    if response.status_code == 200:
+        data = response.json()
+    Tipo=data['Tipo']
+    return Tipo
 
 @app.route('/valida' ,methods=['POST','GET']) 
 def valida():   

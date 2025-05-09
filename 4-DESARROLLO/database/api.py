@@ -1,6 +1,8 @@
 from flask import Flask, request, jsonify
 from peewee import *
 from models import *
+from playhouse.shortcuts import model_to_dict
+
 # Configuración de base de datos
 db = SqliteDatabase('sena.db')
 
@@ -59,6 +61,23 @@ def eliminar_admin(admin_id):
         return jsonify({'error': 'Admin no encontrado'}), 404
     admin.delete_instance()
     return jsonify({'message': 'Admin eliminado'})
+@app.route('/inst', methods=['GET'])
+def obtener_Inst():
+     instructores = FichaInstructor.select()
+     data = [model_to_dict(inst) for inst in instructores]
+     return jsonify(data)
+@app.route('/inst/<dni>', methods=['GET'])
+def obtener_instructor_por_dni(dni):
+    inst = FichaInstructor.get_or_none(FichaInstructor.DNI == dni)
+    if inst:
+        return jsonify(model_to_dict(inst))
+    return jsonify({'error': 'Instructor no encontrado'}), 404
+@app.route('/inst/ficha/<ficha>', methods=['GET'])
+def obtener_instructores_por_ficha(ficha):
+    instructores = FichaInstructor.select().where(FichaInstructor.FICHA == ficha)
+    data = [model_to_dict(inst) for inst in instructores]
+    return jsonify(data)
+
 
 # Ejecutar app
 if __name__ == '__main__':

@@ -2,6 +2,7 @@ from flask import Flask, request, jsonify
 from peewee import *
 from models import *
 from playhouse.shortcuts import model_to_dict
+from peewee import fn
 
 # Configuración de base de datos
 db = SqliteDatabase('sena.db')
@@ -89,7 +90,24 @@ def obtener_aprendiz_por_dni(dni):
         return jsonify(model_to_dict(aprend))
     return jsonify({'error': 'Instructor no encontrado'}), 404
 
-
+@app.route('/inst/contar/<email>', methods=['GET'])
+def contar_instructores_por_dni(email):
+    tinstructor = (FichaInstructor
+              .select(fn.COUNT(FichaInstructor.id).alias('total'))
+              .where(FichaInstructor.EMAIL == email)
+              .scalar())  # Devuelve el valor directo, no una fila
+    taprendiz = (FichaAprendiz
+              .select(fn.COUNT(FichaAprendiz.id).alias('total'))
+              .where(FichaAprendiz.EMAIL == email)
+              .scalar())  # Devuelve el valor directo, no una fila
+    tadmin = (Admin
+              .select(fn.COUNT(Admin.id).alias('total'))
+              .where(Admin.EMAIL == email)
+              .scalar())  # Devuelve el valor directo, no una fila
+    total={"Instructor":tinstructor,"Aprendiz":taprendiz,"Admin":tadmin}
+   
+    return jsonify(total)
+    
 # Ejecutar app
 if __name__ == '__main__':
     app.run(debug=True,port=5555)

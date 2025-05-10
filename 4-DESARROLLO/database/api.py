@@ -114,8 +114,8 @@ def contar_instructores_por_email(email):
         tipo=0
         
     total={"Tipo":tipo,"Email":email,"Instructor":tinstructor,"Aprendiz":taprendiz,"Admin":tadmin}
-   
     return jsonify(total)
+    # return jsonify({"Tipo":tipo})
 
 @app.route("/menurol/<tipo>")
 def menurol(tipo):

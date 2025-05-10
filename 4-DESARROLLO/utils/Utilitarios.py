@@ -1,5 +1,6 @@
 from flask import request,render_template,session
 import logging
+import requests
 import os
 from datetime import datetime
 import re
@@ -13,6 +14,8 @@ from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
 from email.message import EmailMessage
 import sqlite3
+from flask import current_app as app
+
 
 
 
@@ -219,6 +222,12 @@ def crearTabla(tabla,columns,condicion):
         row.append(rows)
     # return row
     return sql
+def ConsultarDB(clave):
+    url=app.config['apidb']+clave
+    response = requests.get(url)
+    if response.status_code == 200:
+        data = response.json()   
+    return data
  
 def Ejecutar(db,sql):
     conn = sqlite3.connect(db)

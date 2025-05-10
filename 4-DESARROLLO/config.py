@@ -8,6 +8,8 @@ class Config:
 
 class DevelopmentConfig(Config):
     DEBUG = True
+    apidb="http://127.0.0.1:5555"
+
     
 
 class ProductionConfig(Config):

@@ -14,8 +14,7 @@ app.secret_key = 'BAD_SECRET_KEY'
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 DATABASE = os.path.join(BASE_DIR, 'database', 'EVALF.db')
 RESPUESTAS = os.path.join(BASE_DIR, 'static/archivos/RESPUESTAS.csv')
-app.apidb="http://127.0.0.1:5555"
- 
+app.config['apidb'] =  "http://127.0.0.1:5555"
 # app.config.from_object(DevelopmentConfig) 
 au=Auditor()
 
@@ -49,21 +48,16 @@ def login():
 def acerca():   
     return render_template('acerca.html')
 def validaUsuario(correo):
-    url=app.apidb+'/inst/contar/'+correo
-    response = requests.get(url)
-    if response.status_code == 200:
-        data = response.json()
-    Tipo=data['Tipo']
-    return Tipo
+    return ConsultarDB('/inst/contar/'+correo)
 
 @app.route('/valida' ,methods=['POST','GET']) 
 def valida():   
     N=1
     usua=request.form.get('usua')
     pw=request.form.get('pw')
-    
+    Tipo=validaUsuario(usua)
     pw1=hashlib.md5(pw.encode()).hexdigest()
-    if validaUsuario(usua)==1:
+    if Tipo['Tipo']==1:
         sql=f"SELECT count(*) FROM FICHAPRENDIZ WHERE PWDAP='{pw1}' AND EMAIL='{usua}'".format(usua,pw1)
         hay=ConsultarUno(DATABASE,sql)
         if hay[0]>0:
@@ -92,9 +86,9 @@ def valida():
             au.registra(30,msgito)
             # *******
             return render_template('alertas.html',msgito=msgito,regreso=regresa)
-    elif validaUsuario(usua)==2:
+    elif Tipo['Tipo']==2:
         return 'Instructor'
-    elif validaUsuario(usua)==3:
+    elif Tipo['Tipo']==3:
         return 'Administrador'
     else:
         msgito="USUARIO NO EXISTE**"

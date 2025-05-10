@@ -89,6 +89,20 @@ def obtener_aprendiz_por_dni(dni):
     if aprend:
         return jsonify(model_to_dict(aprend))
     return jsonify({'error': 'Instructor no encontrado'}), 404
+@app.route('/aprend/v/<tipo>/<email>/<pwd>', methods=['GET'])
+def valida_aprendiz_por_email(tipo,email,pwd):
+    aprend="0"
+    print("mmmm>",tipo)
+    if tipo=="1":
+        aprend = FichaAprendiz.get_or_none(FichaAprendiz.EMAIL == email )
+        
+        aa=jsonify(model_to_dict(aprend))
+        
+        if aprend.PWDAP==pwd:
+            return "1"
+        else:
+            return "0"
+    
 
 @app.route('/inst/contar/<email>', methods=['GET'])
 def contar_instructores_por_email(email):

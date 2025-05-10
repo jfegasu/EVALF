@@ -147,7 +147,7 @@ box-shadow: 14px 10px 20px 11px rgba(0,0,0,0.75);
       padding-right: 10px;
       padding-left: 10px;
       font-family: 'Roboto', Courier, monospace;
-      font-size: x-small;
+      font-size: 1rem;
       font-weight: bold;
       font-stretch: condensed;
       }
@@ -759,4 +759,25 @@ border: 1px solid #000000;
 
 .modal-icon {
   margin-bottom: 3px;
+}
+@media (max-width:450px){
+  html{
+    f-size: 12px;
+  }
+}
+@media (max-width:1400px){
+  html{
+    f-size: 45px;
+    --scrollbarBG: #f1f5f7;
+    --thumbBG: #39A900;
+    font-family: 'Roboto', Courier, monospace;
+    font-size: x-small;
+    font-weight: bold;
+    font-stretch: condensed;
+  }
+}
+@media (max-width:768px){
+  html{
+    font-size: 18px;
+  }
 }

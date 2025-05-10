@@ -101,8 +101,43 @@ def valida_aprendiz_por_email(tipo,email,pwd):
             return "1"
         else:
             return "0"
-    
+@app.route('/aprend/vd/<tipo>/<email>/<pwd>', methods=['GET'])
+def valida_aprendiz_por_emailvd(tipo,email,pwd):
+    aprend="0"
+    if tipo=="1":
+        try:
+            aprend = FichaAprendiz.get_or_none(FichaAprendiz.EMAIL == email )
+            
+            aa=jsonify(model_to_dict(aprend))
+            
+            if aprend.PWDAP==pwd:
+                return aa
+        except Exception as e:    
+            return jsonify({"Error":"Las credenciales no coinciden"})
+ 
+               
+@app.route('/inst/inst/<pficha>/<paprendiz>', methods=['GET'])
+def noEvaluados(pficha, paprendiz):
+    pass
+    # subquery = TheVal.select(TheVal.IDINSTRUCTOR).where(
+    #     (TheVal.IDFICHA == pficha) & 
+    #     (TheVal.IDAPRENDIZ == paprendiz)
+    # )
 
+    # instructores = FichaInstructor.select().where(
+    #     FichaInstructor.DNI.not_in(subquery)
+    # )
+
+    # Convertir a JSON
+#     from playhouse.shortcuts import model_to_dict
+#     resultado = [model_to_dict(i) for i in instructores]
+    
+#     return jsonify(resultado)
+
+# instructores = FichaInstructor.select().where(
+#     FichaInstructor.DNI.not_in(subquery)
+# )
+    
 @app.route('/inst/contar/<email>', methods=['GET'])
 def contar_instructores_por_email(email):
     tinstructor = (FichaInstructor

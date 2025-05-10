@@ -21,7 +21,7 @@
   background: #015dca;
 }
 .imgfull:hover {
-  
+  /* develop */
     position: absolute;
     transform:scale(4);
     width: 469px;

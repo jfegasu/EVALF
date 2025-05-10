@@ -226,7 +226,9 @@ def ConsultarDB(clave):
     url=app.config['apidb']+clave
     response = requests.get(url)
     if response.status_code == 200:
-        data = response.json()   
+        data = response.json()
+    else:
+        data={"Error":response.status_code}  
     return data
  
 def Ejecutar(db,sql):

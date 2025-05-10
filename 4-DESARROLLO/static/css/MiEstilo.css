@@ -46,14 +46,7 @@ border: 0px solid #000000;
   padding-top: 10px;
 
 }
-html {
-    --scrollbarBG: #f1f5f7;
-    --thumbBG: #39A900;
-    font-family: 'Roboto', Courier, monospace;
-    font-size: x-small;
-    font-weight: bold;
-    font-stretch: condensed;
-  }
+
   body::-webkit-scrollbar {
     width: 21px;
   }

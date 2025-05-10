@@ -22,8 +22,10 @@
 }
 .imgfull:hover {
   
-    transform:scale(3);
-    margin: 30px;
+    position: absolute;
+    transform:scale(4);
+    
+    
    
 }
 .sena-circulo{

@@ -24,6 +24,9 @@
   
     position: absolute;
     transform:scale(4);
+    inset: auto;
+    z-index: auto;
+    left:hv;
     
     
    
@@ -101,10 +104,10 @@ border: 0px solid #000000;
     
   }
   .ovalo{
-    border-radius: 24px 24px 24px 24px;
--moz-border-radius: 24px 24px 24px 24px;
--webkit-border-radius: 24px 24px 24px 24px;
-border: 0px solid #c9c5c5;
+    border-radius: 34px 34px 34px 34px;
+-moz-border-radius: 34px 34px 34px 34px;
+-webkit-border-radius: 34px 34px 34px 34px;
+border: 0px;
   }
   .texto3d {
     text-align: left; 

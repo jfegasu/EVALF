@@ -228,7 +228,7 @@ def ConsultarDB(clave):
     if response.status_code == 200:
         data = response.json()
     else:
-        data={"Error":response.status_code}  
+        data={"Tipo":0}  
     return data
  
 def Ejecutar(db,sql):

@@ -20,6 +20,12 @@
   top: 0;
   background: #015dca;
 }
+.imgfull:hover {
+  
+    transform:scale(3);
+    left:50px
+   
+}
 .sena-circulo{
   width: 10px;
   border-radius: 300px 300px 300px 300px;

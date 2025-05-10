@@ -56,6 +56,7 @@ def valida():
     usua=request.form.get('usua')
     pw=request.form.get('pw')
     Tipo=tipoUsuario(usua)
+    print(Tipo)
     pw1=hashlib.md5(pw.encode()).hexdigest()
     if Tipo['Tipo']==1:
         sql=f"SELECT count(*) FROM FICHAPRENDIZ WHERE PWDAP='{pw1}' AND EMAIL='{usua}'".format(usua,pw1)
@@ -93,7 +94,7 @@ def valida():
         return 'Instructor'
     elif Tipo['Tipo']==3:
         return 'Administrador'
-    else:
+    if Tipo['Tipo']==0:
         msgito="USUARIO NO EXISTE**"
         regresa="/login"
         au.registra(30,msgito)

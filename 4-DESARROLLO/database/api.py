@@ -141,15 +141,15 @@ def noEvaluados(pficha, paprendiz):
 @app.route('/inst/contar/<email>', methods=['GET'])
 def contar_instructores_por_email(email):
     tinstructor = (FichaInstructor
-              .select(fn.COUNT(FichaInstructor.id).alias('total'))
+              .select(fn.COUNT(FichaInstructor.DNI).alias('total'))
               .where(FichaInstructor.EMAIL == email)
               .scalar())  # Devuelve el valor directo, no una fila
     taprendiz = (FichaAprendiz
-              .select(fn.COUNT(FichaAprendiz.id).alias('total'))
+              .select(fn.COUNT(FichaAprendiz.DNIA).alias('total'))
               .where(FichaAprendiz.EMAIL == email)
               .scalar())  # Devuelve el valor directo, no una fila
     tadmin = (Admin
-              .select(fn.COUNT(Admin.id).alias('total'))
+              .select(fn.COUNT(Admin.EMAIL).alias('total'))
               .where(Admin.EMAIL == email)
               .scalar())  # Devuelve el valor directo, no una fila
     if tinstructor>0:

@@ -92,7 +92,6 @@ def obtener_aprendiz_por_dni(dni):
 @app.route('/aprend/v/<tipo>/<email>/<pwd>', methods=['GET'])
 def valida_aprendiz_por_email(tipo,email,pwd):
     aprend="0"
-    print("mmmm>",tipo)
     if tipo=="1":
         aprend = FichaAprendiz.get_or_none(FichaAprendiz.EMAIL == email )
         

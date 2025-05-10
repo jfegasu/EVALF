@@ -24,9 +24,11 @@
   
     position: absolute;
     transform:scale(4);
-    inset: auto;
-    z-index: auto;
-    left:hv;
+    width: 469px;
+    z-index: 1000;
+    /* 
+    --initial--width:469px;
+    width: --initial--width;*/
     
     
    

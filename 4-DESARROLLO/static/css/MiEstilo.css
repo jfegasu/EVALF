@@ -23,7 +23,7 @@
 .imgfull:hover {
   
     transform:scale(3);
-    left:50px
+    margin: 30px;
    
 }
 .sena-circulo{

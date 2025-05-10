@@ -89,19 +89,67 @@ def obtener_aprendiz_por_dni(dni):
     if aprend:
         return jsonify(model_to_dict(aprend))
     return jsonify({'error': 'Instructor no encontrado'}), 404
+@app.route('/aprend/v/<tipo>/<email>/<pwd>', methods=['GET'])
+def valida_aprendiz_por_email(tipo,email,pwd):
+    aprend="0"
+    if tipo=="1":
+        aprend = FichaAprendiz.get_or_none(FichaAprendiz.EMAIL == email )
+        
+        aa=jsonify(model_to_dict(aprend))
+        
+        if aprend.PWDAP==pwd:
+            return "1"
+        else:
+            return "0"
+@app.route('/aprend/vd/<tipo>/<email>/<pwd>', methods=['GET'])
+def valida_aprendiz_por_emailvd(tipo,email,pwd):
+    aprend="0"
+    if tipo=="1":
+        try:
+            aprend = FichaAprendiz.get_or_none(FichaAprendiz.EMAIL == email )
+            
+            aa=jsonify(model_to_dict(aprend))
+            
+            if aprend.PWDAP==pwd:
+                return aa
+        except Exception as e:    
+            return jsonify({"Error":"Las credenciales no coinciden"})
+ 
+               
+@app.route('/inst/inst/<pficha>/<paprendiz>', methods=['GET'])
+def noEvaluados(pficha, paprendiz):
+    pass
+    # subquery = TheVal.select(TheVal.IDINSTRUCTOR).where(
+    #     (TheVal.IDFICHA == pficha) & 
+    #     (TheVal.IDAPRENDIZ == paprendiz)
+    # )
 
+    # instructores = FichaInstructor.select().where(
+    #     FichaInstructor.DNI.not_in(subquery)
+    # )
+
+    # Convertir a JSON
+#     from playhouse.shortcuts import model_to_dict
+#     resultado = [model_to_dict(i) for i in instructores]
+    
+#     return jsonify(resultado)
+
+# instructores = FichaInstructor.select().where(
+#     FichaInstructor.DNI.not_in(subquery)
+# )
+    
 @app.route('/inst/contar/<email>', methods=['GET'])
 def contar_instructores_por_email(email):
     tinstructor = (FichaInstructor
-              .select(fn.COUNT(FichaInstructor.id).alias('total'))
+              .select(fn.COUNT(FichaInstructor.DNI).alias('total'))
               .where(FichaInstructor.EMAIL == email)
               .scalar())  # Devuelve el valor directo, no una fila
     taprendiz = (FichaAprendiz
-              .select(fn.COUNT(FichaAprendiz.id).alias('total'))
+              .select(fn.COUNT(FichaAprendiz.DNIA).alias('total'))
               .where(FichaAprendiz.EMAIL == email)
               .scalar())  # Devuelve el valor directo, no una fila
     tadmin = (Admin
-              .select(fn.COUNT(Admin.id).alias('total'))
+              .select(fn.COUNT(Admin.EMAIL).alias('total'))
               .where(Admin.EMAIL == email)
               .scalar())  # Devuelve el valor directo, no una fila
     if tinstructor>0:
@@ -114,8 +162,8 @@ def contar_instructores_por_email(email):
         tipo=0
         
     total={"Tipo":tipo,"Email":email,"Instructor":tinstructor,"Aprendiz":taprendiz,"Admin":tadmin}
-   
     return jsonify(total)
+    # return jsonify({"Tipo":tipo})
 
 @app.route("/menurol/<tipo>")
 def menurol(tipo):

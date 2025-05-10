@@ -20,6 +20,19 @@
   top: 0;
   background: #015dca;
 }
+.imgfull:hover {
+  
+    position: absolute;
+    transform:scale(4);
+    width: 469px;
+    z-index: 1000;
+    /* 
+    --initial--width:469px;
+    width: --initial--width;*/
+    
+    
+   
+}
 .sena-circulo{
   width: 10px;
   border-radius: 300px 300px 300px 300px;
@@ -46,14 +59,7 @@ border: 0px solid #000000;
   padding-top: 10px;
 
 }
-html {
-    --scrollbarBG: #f1f5f7;
-    --thumbBG: #39A900;
-    font-family: 'Roboto', Courier, monospace;
-    font-size: x-small;
-    font-weight: bold;
-    font-stretch: condensed;
-  }
+
   body::-webkit-scrollbar {
     width: 21px;
   }
@@ -100,10 +106,10 @@ html {
     
   }
   .ovalo{
-    border-radius: 24px 24px 24px 24px;
--moz-border-radius: 24px 24px 24px 24px;
--webkit-border-radius: 24px 24px 24px 24px;
-border: 0px solid #c9c5c5;
+    border-radius: 34px 34px 34px 34px;
+-moz-border-radius: 34px 34px 34px 34px;
+-webkit-border-radius: 34px 34px 34px 34px;
+border: 0px;
   }
   .texto3d {
     text-align: left; 
@@ -147,7 +153,7 @@ box-shadow: 14px 10px 20px 11px rgba(0,0,0,0.75);
       padding-right: 10px;
       padding-left: 10px;
       font-family: 'Roboto', Courier, monospace;
-      font-size: x-small;
+      font-size: 1rem;
       font-weight: bold;
       font-stretch: condensed;
       }
@@ -759,4 +765,25 @@ border: 1px solid #000000;
 
 .modal-icon {
   margin-bottom: 3px;
+}
+@media (max-width:450px){
+  html{
+    f-size: 12px;
+  }
+}
+@media (max-width:1400px){
+  html{
+    f-size: 45px;
+    --scrollbarBG: #f1f5f7;
+    --thumbBG: #39A900;
+    font-family: 'Roboto', Courier, monospace;
+    font-size: x-small;
+    font-weight: bold;
+    font-stretch: condensed;
+  }
+}
+@media (max-width:768px){
+  html{
+    font-size: 18px;
+  }
 }

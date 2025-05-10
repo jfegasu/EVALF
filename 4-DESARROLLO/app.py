@@ -1,4 +1,4 @@
-from flask import Flask,Blueprint, render_template,session,request ,redirect,url_for,send_from_directory
+from flask import Flask,Blueprint, jsonify, render_template,session,request ,redirect,url_for,send_from_directory
 from flask_session import Session
 import pandas as pd
 from flask_cors import CORS
@@ -14,8 +14,7 @@ app.secret_key = 'BAD_SECRET_KEY'
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 DATABASE = os.path.join(BASE_DIR, 'database', 'EVALF.db')
 RESPUESTAS = os.path.join(BASE_DIR, 'static/archivos/RESPUESTAS.csv')
-app.apidb="http://127.0.0.1:5555"
- 
+app.config['apidb'] =  "http://127.0.0.1:5555"
 # app.config.from_object(DevelopmentConfig) 
 au=Auditor()
 
@@ -48,35 +47,33 @@ def login():
 @app.route('/acerca') 
 def acerca():   
     return render_template('acerca.html')
-def validaUsuario(correo):
-    url=app.apidb+'/inst/contar/'+correo
-    response = requests.get(url)
-    if response.status_code == 200:
-        data = response.json()
-    Tipo=data['Tipo']
-    return Tipo
+def tipoUsuario(correo):
+    return ConsultarDB('/inst/contar/'+correo)
 
 @app.route('/valida' ,methods=['POST','GET']) 
 def valida():   
     N=1
     usua=request.form.get('usua')
     pw=request.form.get('pw')
-    
+    Tipo=tipoUsuario(usua)
+    print(Tipo)
     pw1=hashlib.md5(pw.encode()).hexdigest()
-    if validaUsuario(usua)==1:
+    if Tipo['Tipo']==1:
         sql=f"SELECT count(*) FROM FICHAPRENDIZ WHERE PWDAP='{pw1}' AND EMAIL='{usua}'".format(usua,pw1)
-        hay=ConsultarUno(DATABASE,sql)
-        if hay[0]>0:
+        # hay=ConsultarUno(DATABASE,sql)
+        hay=ConsultarDB(f"/aprend/v/1/{usua}/{pw1}".format(usua,pw1))
+        if hay==1:
             N=1
             sql=f"SELECT * FROM FICHAPRENDIZ WHERE PWDAP='{pw1}' AND EMAIL='{usua}'".format(usua,pw1)
-            aprendiz=ConsultarUno(DATABASE,sql)
-            session['ficha']=aprendiz[0]
-            session['nombreap']= aprendiz[2]   
-            session['titulacion']= aprendiz[6]   
-            session['dnia']= aprendiz[1]  
+            aprendiz=ConsultarDB(f"/aprend/vd/1/{usua}/{pw1}".format(usua,pw1))
+            print(jsonify(aprendiz))
+            session['ficha']=aprendiz['FICHA']
+            session['nombreap']= aprendiz['NOMBREAP']  
+            session['titulacion']= aprendiz['TITULACION']   
+            session['dnia']= aprendiz['DNIA']  
             # return str(aprendiz)
-            F=aprendiz[0]
-            A=aprendiz[1] 
+            F=aprendiz['FICHA']
+            A=aprendiz['DNIA'] 
             sql=f"SELECT * FROM FICHAINSTRUCTOR WHERE DNI NOT IN(SELECT IDINSTRUCTOR FROM THEVAL WHERE IDFICHA='{F}' AND IDAPRENDIZ='{A}')".format(F,A)
             datos=Consultar(DATABASE,sql)
             apr={
@@ -85,18 +82,19 @@ def valida():
                 "titulacion":session['titulacion'],
                 "dnia":session['dnia']
             }
-            render_template('carga.html',N=N,datos=datos,apr=apr)
+            return render_template('carga.html',N=N,datos=datos,apr=apr)
+  
         else:
             msgito="APRENDIZ O CLAVE ERRADOS**"
             regresa="/login"
             au.registra(30,msgito)
             # *******
             return render_template('alertas.html',msgito=msgito,regreso=regresa)
-    elif validaUsuario(usua)==2:
+    elif Tipo['Tipo']==2:
         return 'Instructor'
-    elif validaUsuario(usua)==3:
+    elif Tipo['Tipo']==3:
         return 'Administrador'
-    else:
+    if Tipo['Tipo']==0:
         msgito="USUARIO NO EXISTE**"
         regresa="/login"
         au.registra(30,msgito)
@@ -224,8 +222,9 @@ def otro():
 
 @app.route('/evalua/<N>/<I>' ,methods=['POST','GET']) 
 def evalua(N,I):   
+    print("N--->",N)
     if N=="1":
-        
+       
         F=session['ficha']
         A=session['dnia']
         sql=f"SELECT * FROM THEVAL WHERE idFICHA={F} AND idAPRENDIZ={A}".format(F,A)
@@ -244,8 +243,14 @@ def evalua(N,I):
         preg=Consultar(DATABASE,'SELECT * FROM PREGUNTA WHERE ESTADO=1')
         hay=len(preg)
         au.registra(30,'ENTRA A EVALUAR A: '+getInstructor(I))
-        
-        return render_template('carga.html',N=N,datos=datos,preg=preg,hay=hay,nomi=getInstructor(I))
+        apr={
+                "ficha":session['ficha'],
+                "aprendiz":session['nombreap'],
+                "titulacion":session['titulacion'],
+                "dnia":session['dnia']
+            }
+        session['apr']=apr
+        return render_template('carga.html',N=N,datos=datos,preg=preg,hay=hay,nomi=getInstructor(I),apr=apr)
     if N=="3":
         F=session['ficha']
         A=session['dnia']

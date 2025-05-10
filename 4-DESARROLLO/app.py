@@ -47,7 +47,7 @@ def login():
 @app.route('/acerca') 
 def acerca():   
     return render_template('acerca.html')
-def validaUsuario(correo):
+def tipoUsuario(correo):
     return ConsultarDB('/inst/contar/'+correo)
 
 @app.route('/valida' ,methods=['POST','GET']) 
@@ -55,7 +55,7 @@ def valida():
     N=1
     usua=request.form.get('usua')
     pw=request.form.get('pw')
-    Tipo=validaUsuario(usua)
+    Tipo=tipoUsuario(usua)
     pw1=hashlib.md5(pw.encode()).hexdigest()
     if Tipo['Tipo']==1:
         sql=f"SELECT count(*) FROM FICHAPRENDIZ WHERE PWDAP='{pw1}' AND EMAIL='{usua}'".format(usua,pw1)

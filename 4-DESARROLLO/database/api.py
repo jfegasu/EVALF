@@ -4,11 +4,32 @@ from models import *
 from playhouse.shortcuts import model_to_dict
 from peewee import fn
 import os
+import sqlite3
+import json
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 DATABASE = os.path.join(BASE_DIR,  'sena.db')
 
 # Configuración de base de datos
 db = SqliteDatabase(DATABASE)
+def Consultar(db,sql):
+    conn = sqlite3.connect(db)
+    conn.row_factory = sqlite3.Row  # Esto permite acceder a los resultados como diccionarios
+    cursor = conn.cursor()
+    cursor.execute(sql)
+    rows = cursor.fetchall()
+    conn.close()
+
+    # Convertir cada fila a un diccionario
+    output = [dict(row) for row in rows]
+
+    return output  # Devolver como JSON string
+def ConsultarUno(db,sql):
+    conn = sqlite3.connect(db)
+    cursor = conn.cursor()
+    cursor.execute(sql)
+    output = cursor.fetchone() 
+    conn.close()
+    return output 
 
 class BaseModel(Model):
     class Meta:
@@ -118,29 +139,13 @@ def valida_aprendiz_por_emailvd(tipo,email,pwd):
         except Exception as e:    
             return jsonify({"Error":"Las credenciales no coinciden"})
  
-               
-@app.route('/inst/inst/<pficha>/<paprendiz>', methods=['GET'])
+@app.route('/inst/<pficha>/<paprendiz>', methods=['GET'])
 def noEvaluados(pficha, paprendiz):
-    pass
-    # subquery = TheVal.select(TheVal.IDINSTRUCTOR).where(
-    #     (TheVal.IDFICHA == pficha) & 
-    #     (TheVal.IDAPRENDIZ == paprendiz)
-    # )
-
-    # instructores = FichaInstructor.select().where(
-    #     FichaInstructor.DNI.not_in(subquery)
-    # )
-
-    # Convertir a JSON
-#     from playhouse.shortcuts import model_to_dict
-#     resultado = [model_to_dict(i) for i in instructores]
-    
-#     return jsonify(resultado)
-
-# instructores = FichaInstructor.select().where(
-#     FichaInstructor.DNI.not_in(subquery)
-# )
-    
+    sql=f"SELECT * FROM FICHAINSTRUCTOR WHERE FICHA='{pficha}' AND DNI NOT IN(SELECT IDINSTRUCTOR FROM THEVAL WHERE IDFICHA='{pficha}' AND IDAPRENDIZ='{paprendiz}')".format(pficha,paprendiz)
+    print(sql)
+    datos=Consultar(DATABASE,sql)
+    return jsonify(datos)
+  
 @app.route('/inst/contar/<email>', methods=['GET'])
 def contar_instructores_por_email(email):
     tinstructor = (FichaInstructor

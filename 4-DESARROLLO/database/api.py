@@ -3,9 +3,12 @@ from peewee import *
 from models import *
 from playhouse.shortcuts import model_to_dict
 from peewee import fn
+import os
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+DATABASE = os.path.join(BASE_DIR,  'sena.db')
 
 # Configuración de base de datos
-db = SqliteDatabase('sena.db')
+db = SqliteDatabase(DATABASE)
 
 class BaseModel(Model):
     class Meta:

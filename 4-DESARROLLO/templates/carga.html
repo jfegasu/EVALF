@@ -18,13 +18,13 @@
 <tr>
     <td>
 
-    {% with im = url_for('static', filename='images/dni/' ~ data[1] ~ '.png') %}
-<span style="cursor: pointer;margin: 10px;" onclick="window.open('/evalua/2/{{data[1]}}','centro')">
+    {% with im = url_for('static', filename='images/dni/' ~ data['DNI'] ~ '.png') %}
+<span style="cursor: pointer;margin: 10px;" onclick="window.open('/evalua/2/{{data["DNI"]}}','centro')">
 <img class="imgfull ovalo" src="{{ im }}"
      onerror="this.onerror=null; this.src='{{ url_for('static', filename='images/dni/silueta.png') }}';"
      style="width: 40px; border: 1px solid black;">
 
-{{data[0]}}
+{{data['NOMINST']}}
 </span>
    </td> 
     

@@ -20,6 +20,7 @@ class FichaInstructor(BaseModel):
     DNI = TextField()
     FICHA = TextField(null=True)
     EMAIL = TextField(null=True)
+    
 
 
 class FichaAprendiz(BaseModel):

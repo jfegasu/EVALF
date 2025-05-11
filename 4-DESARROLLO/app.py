@@ -75,13 +75,16 @@ def valida():
             F=aprendiz['FICHA']
             A=aprendiz['DNIA'] 
             sql=f"SELECT * FROM FICHAINSTRUCTOR WHERE DNI NOT IN(SELECT IDINSTRUCTOR FROM THEVAL WHERE IDFICHA='{F}' AND IDAPRENDIZ='{A}')".format(F,A)
-            datos=Consultar(DATABASE,sql)
+            # datos=Consultar(DATABASE,sql)
+            datos=ConsultarDB(f"/inst/{F}/{A}".format(F,A))
+            print(datos)
             apr={
                 "ficha":session['ficha'],
                 "aprendiz":session['nombreap'],
                 "titulacion":session['titulacion'],
                 "dnia":session['dnia']
             }
+            print("-->",N)
             return render_template('carga.html',N=N,datos=datos,apr=apr)
   
         else:
@@ -116,6 +119,7 @@ def valida():
         A=aprendiz[1] 
         sql=f"SELECT * FROM FICHAINSTRUCTOR WHERE DNI NOT IN(SELECT IDINSTRUCTOR FROM THEVAL WHERE IDFICHA='{F}' AND IDAPRENDIZ='{A}')".format(F,A)
         datos=Consultar(DATABASE,sql)
+        
         apr={
             "ficha":session['ficha'],
             "aprendiz":session['nombreap'],

@@ -68,7 +68,6 @@ border: 0px solid #000000;
     scrollbar-color: var(--thumbBG) var(--scrollbarBG);
   }
   .sena{
-    width: 80%;
     font-size: 10px;
     font-weight: bold;
     align-items: center;

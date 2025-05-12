@@ -91,12 +91,18 @@ def obtener_Inst():
      instructores = FichaInstructor.select()
      data = [model_to_dict(inst) for inst in instructores]
      return jsonify(data)
-@app.route('/inst/<dni>', methods=['GET'])
+@app.route('/inst/d/<dni>', methods=['GET'])
 def obtener_instructor_por_dni(dni):
-    inst = FichaInstructor.get_or_none(FichaInstructor.DNI == dni)
-    if inst:
-        return jsonify(model_to_dict(inst))
-    return jsonify({'error': 'Instructor no encontrado'}), 404
+    sql=f"SELECT * FROM FICHAINSTRUCTOR WHERE DNI='{dni}'".format(dni)
+    datos=Consultar(DATABASE,sql)
+    return jsonify(datos),404
+
+@app.route('/inst/e/<email>', methods=['GET'])
+def obtener_instructor_por_email(email):
+    sql=f"SELECT * FROM FICHAINSTRUCTOR WHERE EMAIL='{email}'".format(email)
+    datos=Consultar(DATABASE,sql)
+    return jsonify(datos),404
+    
 @app.route('/inst/ficha/<ficha>', methods=['GET'])
 def obtener_instructores_por_ficha(ficha):
     instructores = FichaInstructor.select().where(FichaInstructor.FICHA == ficha)

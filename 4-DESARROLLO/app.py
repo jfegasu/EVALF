@@ -94,7 +94,13 @@ def valida():
             # *******
             return render_template('alertas.html',msgito=msgito,regreso=regresa)
     elif Tipo['Tipo']==2:
-        return 'Instructor'
+        sql=f"/inst/e/{usua}".format(usua)
+        print(sql)
+        datos=ConsultarDB(sql)
+
+        return render_template('foto.html',datos=datos)
+        
+        
     elif Tipo['Tipo']==3:
         return 'Administrador'
     if Tipo['Tipo']==0:
@@ -296,6 +302,19 @@ def resp():
 # O cambia el nombre en send_from_directory a minúsculas
     print("PROCESO TERMINADO")
     return render_template('respuestas.html')
+
+@app.route('/success', methods = ['POST'])   
+def success():   
+    if request.method == 'POST':  
+        dni=request.form['dni'] 
+        f = request.files['file'] 
+        LUGAR = os.path.join(BASE_DIR, 'static', 'images','dni',dni+'.png')
+        # f.save(LUGAR+'/'+f.filename)   
+        f.save(LUGAR)   
+        msgito="FOTO EDITADA"
+        regreso="/login"
+        return render_template("alertas.html", msgito=msgito,regreso=regreso)   
+
 # juanav_duque@soy.sena.edu.co  6019
 # jgalindos@sena.edu.co
 # admin@sena.edu.co

@@ -225,11 +225,12 @@ def crearTabla(tabla,columns,condicion):
 def ConsultarDB(clave):
     url=app.config['apidb']+clave
     response = requests.get(url)
+    print("xxx>",response.status_code,url)
     if response.status_code == 200:
         data = response.json()
-    else:
-        data={"Tipo":0}  
-    return data
+    # else:
+    #     data={"Tipo":0} 
+    return response.json()
  
 def Ejecutar(db,sql):
     conn = sqlite3.connect(db)
@@ -263,3 +264,4 @@ def ConsultarUno(db,sql):
     output = cursor.fetchone() 
     conn.close()
     return output 
+ 

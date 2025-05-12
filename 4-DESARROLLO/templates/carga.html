@@ -67,9 +67,9 @@
 
             <tr>
                 <input type="hidden" name="P{{loop.index}}" value="{{data[0]}}">
-                <td>{{data[0]}}</td>
+                <td>{{data[1]}}</td>
                 <td><select name="R{{loop.index}}" style="width: 100%;">
-                    {%for n in data[2].split(',')%}
+                    {%for n in data[3].split(',')%}
                     <option value="{{n}}">{{n}}</option>
                     {%endfor%}
                     

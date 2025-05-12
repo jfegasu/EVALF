@@ -3,7 +3,7 @@
 
 <div class="w3-container d-flex  mx-auto">
   <div class="w3-card-4 w3-center" style="width:100%;max-width:100%">
-  <h2>INSTRUCTOR:[{{datos[0].NOMINST}}]</h2>
+  <h2 class="sena-sombra">INSTRUCTOR:{{datos[0].NOMINST}}</h2>
     {% set im = url_for('static', filename='images/dni/' ~ datos[0].DNI ~ '.png') %}
     <span style="cursor: pointer;margin: 10px;">
 <img class=" ovalo" src="{{ im }}" style="width:15%"
@@ -11,7 +11,7 @@
      style="width: 40px; border: 1px solid black;">
 
 </span>
-
+<hr>
     <div class="w3-container w3-center">
          <form action = "/success" method = "post" enctype="multipart/form-data"> 
           <input type="hidden" name="dni" value="{{datos[0].DNI}}">  
@@ -19,6 +19,7 @@
         <input class="btn btn-primary" type = "submit" value="Cargar archivo">   
     </form>
     </div>
+    <hr>
   </div>
 </div>
 

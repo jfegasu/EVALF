@@ -102,7 +102,7 @@ def valida():
         
         
     elif Tipo['Tipo']==3:
-        return 'Administrador'
+        return render_template('menuadmin.html')
     if Tipo['Tipo']==0:
         msgito="USUARIO NO EXISTE**"
         regresa="/login"
@@ -316,6 +316,9 @@ def success():
         msgito="FOTO EDITADA"
         regreso="/login"
         return render_template("alertas.html", msgito=msgito,regreso=regreso)   
+@app.route('/menu1', methods = ['GET'])   
+def menu1():
+    return render_template("menu1.html")   
 
 # juanav_duque@soy.sena.edu.co  6019
 # jgalindos@sena.edu.co

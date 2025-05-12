@@ -12,7 +12,7 @@ from config import DevelopmentConfig
 app = Flask(__name__) 
 app.secret_key = 'BAD_SECRET_KEY'
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-DATABASE = os.path.join(BASE_DIR, 'database', 'EVALF.db')
+DATABASE = os.path.join(BASE_DIR, 'database', 'sena.db')
 RESPUESTAS = os.path.join(BASE_DIR, 'static/archivos/RESPUESTAS.csv')
 app.config['apidb'] =  "http://127.0.0.1:5555"
 # app.config.from_object(DevelopmentConfig) 
@@ -260,6 +260,7 @@ def evalua(N,I):
                 "dnia":session['dnia']
             }
         session['apr']=apr
+        print("Preguntas->>>",preg)
         return render_template('carga.html',N=N,datos=datos,preg=preg,hay=hay,nomi=getInstructor(I),apr=apr)
     if N=="3":
         F=session['ficha']
@@ -275,6 +276,7 @@ def evalua(N,I):
             Resp=request.form.get('R' + str(i))
             Preg=request.form.get('P' + str(i))
             sql=f"insert into THEVAL(idINSTRUCTOR,idFICHA,idAPRENDIZ,PREGUNTA,RESPUESTA,TITULACION) VALUES({I},{F},{A},'{Preg}','{Resp}','{T}')".format(I,F,A,Preg,Resp,T)
+            print("CCCCC>>",sql)
             Ejecutar(DATABASE,sql)
             
         

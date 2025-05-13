@@ -22,7 +22,8 @@ au=Auditor(BASE_DIR)
 def raiz():   
     return render_template('inicio.html')
 @app.route('/0') 
-def indexppal():   
+def indexppal():  
+    au.registra(30,'Inicia Aplicacion') 
     return render_template('indexppal.html')
 @app.route('/banner') 
 def banner():   
@@ -85,6 +86,7 @@ def valida():
                 "dnia":session['dnia']
             }
             print("-->",N)
+            au.registra(30,'Ingresa:'+session['nombreap'])
             return render_template('carga.html',N=N,datos=datos,apr=apr)
   
         else:

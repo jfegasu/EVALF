@@ -16,7 +16,7 @@ DATABASE = os.path.join(BASE_DIR, 'database', 'sena.db')
 RESPUESTAS = os.path.join(BASE_DIR, 'static/archivos/RESPUESTAS.csv')
 app.config['apidb'] =  "http://127.0.0.1:5555"
 # app.config.from_object(DevelopmentConfig) 
-au=Auditor()
+au=Auditor(BASE_DIR)
 
 @app.route('/') 
 def raiz():   
@@ -289,7 +289,9 @@ def evalua(N,I):
     return "Nada"    
 @app.route('/descargar')
 def descargar():
+    au.registra(30,"Descarga Respuestas")
     return send_from_directory('static/archivos', 'RESPUESTAS.csv', as_attachment=True)
+
 @app.route('/cargar')
 def cargar():
     return send_from_directory('static/archivos', 'CARGA.xlsx', as_attachment=True)
@@ -303,7 +305,7 @@ def resp():
 
 # O cambia el nombre en send_from_directory a minúsculas
     print("PROCESO TERMINADO")
-    return render_template('respuestas.html')
+    return redirect('/descargar')
 
 @app.route('/success', methods = ['POST'])   
 def success():   

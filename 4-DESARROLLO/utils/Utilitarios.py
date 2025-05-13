@@ -15,21 +15,24 @@ from email.mime.multipart import MIMEMultipart
 from email.message import EmailMessage
 import sqlite3
 from flask import current_app as app
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+
 
 
 
 
 class Auditor():
     logger=None
-    def __init__(self):
+    def __init__(self,base1):
         
         fecha=datetime.now()
         fe=str(fecha.year)+str(fecha.month)+str(fecha.day)
         # print("** Inicia **")
-        os.makedirs('/log/'+fe,exist_ok=True)
+        LOG = os.path.join(base1, 'log',fe)
+        os.makedirs(LOG,exist_ok=True)
         logger = logging.getLogger('werkzeug')
         self.logger =logger 
-        logging.basicConfig(format='%(asctime)s %(levelname)s %(message)s ',filename='/log/'+fe+'/login.log', encoding='utf-8',level=logging.WARNING)
+        logging.basicConfig(format='%(asctime)s %(levelname)s %(message)s ',filename=LOG+'/login.log', encoding='utf-8',level=logging.WARNING)
         self.logger.setLevel(logging.WARNING  )
         # logger.setLevel(logging.INFO)
         # self.logger.warning("inicia")

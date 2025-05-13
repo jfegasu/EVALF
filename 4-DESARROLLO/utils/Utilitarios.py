@@ -28,7 +28,7 @@ class Auditor():
         fecha=datetime.now()
         fe=str(fecha.year)+str(fecha.month)+str(fecha.day)
         # print("** Inicia **")
-        LOG = os.path.join(base1, 'log',fe)
+        LOG = os.path.join('/log',fe)
         os.makedirs(LOG,exist_ok=True)
         logger = logging.getLogger('werkzeug')
         self.logger =logger 

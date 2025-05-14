@@ -301,7 +301,7 @@ def descargarlog():
     print(fe)
     au.registra(30,"Descarga Log de Transacciones")
     # return fe
-    return send_from_directory('/log/'+fe, "login.log",as_attachment=True)
+    return send_from_directory('/log/', fe+'.log',as_attachment=True)
 
 @app.route('/cargar')
 def cargar():

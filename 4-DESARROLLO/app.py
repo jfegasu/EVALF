@@ -8,6 +8,7 @@ import socket
 import hashlib
 import logging
 from config import DevelopmentConfig 
+from datetime import datetime
 
 app = Flask(__name__) 
 app.secret_key = 'BAD_SECRET_KEY'
@@ -293,6 +294,14 @@ def evalua(N,I):
 def descargar():
     au.registra(30,"Descarga Respuestas")
     return send_from_directory('static/archivos', 'RESPUESTAS.csv', as_attachment=True)
+@app.route('/descargarlog')
+def descargarlog():
+    fecha=datetime.now()
+    fe=str(fecha.year)+str(fecha.month)+str(fecha.day)
+    print(fe)
+    au.registra(30,"Descarga Log de Transacciones")
+    # return fe
+    return send_from_directory('/log/'+fe, "login.log",as_attachment=True)
 
 @app.route('/cargar')
 def cargar():

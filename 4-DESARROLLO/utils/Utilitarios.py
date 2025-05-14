@@ -236,12 +236,16 @@ def ConsultarDB(clave):
     return response.json()
  
 def Ejecutar(db,sql):
-    conn = sqlite3.connect(db)
-    cursor = conn.cursor()
-    cursor.execute(sql)
-    conn.commit()
-    conn.close()
-    return 'OK' 
+    try:
+        conn = sqlite3.connect(db)
+        cursor = conn.cursor()
+        cursor.execute(sql)
+        conn.commit()
+        conn.close()
+        return '200' 
+    except Exception as e:
+        print(e)
+        return("400")
 def ConsultarD(db, sql):
     conn = sqlite3.connect(db)
     conn.row_factory = sqlite3.Row  # <- necesario para acceder por nombre de columna

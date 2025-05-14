@@ -346,6 +346,10 @@ def success():
 def menu1():
     return render_template("menu1.html")   
 
+@app.route('/CargaInicial', methods = ['GET'])   
+def CargaInicial():
+    from Carga import Cargando
+    return Cargando()
 # juanav_duque@soy.sena.edu.co  6019
 # jgalindos@sena.edu.co
 # admin@sena.edu.co

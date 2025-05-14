@@ -3,6 +3,7 @@ from flask_session import Session
 import pandas as pd
 from flask_cors import CORS
 import requests
+import json
 from utils.Utilitarios import *
 import socket
 import hashlib
@@ -348,8 +349,13 @@ def menu1():
 
 @app.route('/CargaInicial', methods = ['GET'])   
 def CargaInicial():
+    au.registra(30,'Carga Inicial de la base de datos terminada con exito')
     from Carga import Cargando
-    return Cargando()
+    aux= Cargando()
+    return render_template("alertas.html",msgito=aux, regreso="/menuadmin")
+@app.route('/menuadmin')
+def menuadmin():
+    return render_template('menuadmin.html')
 # juanav_duque@soy.sena.edu.co  6019
 # jgalindos@sena.edu.co
 # admin@sena.edu.co

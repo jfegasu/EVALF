@@ -72,4 +72,4 @@ def Cargando():
         except Exception as e:
             print(f"No se pudo eliminar {archivo}: {e}")
     
-    return  jsonify({"Estado":"PROCESO TERMINADO"})
+    return  "200 - PROCESO TERMINADO CON EXITO"

@@ -66,6 +66,8 @@ border: 0px solid #000000;
   body {
     scrollbar-width: auto;
     scrollbar-color: var(--thumbBG) var(--scrollbarBG);
+    background-image: url({{url_for('static',filename='images/logosena.png')}});
+    padding-left: 10px;
   }
   .sena{
     font-size: 10px;

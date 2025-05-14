@@ -1,5 +1,7 @@
+{% extends "base.html" %}
+{% block content %}
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<div id="contenido" class="sena d-flex  mx-auto" style="cursor:default; width:350px;position: absolute;top: 5px;left: 10px;height: auto;"></div>
+<div id="contenido" class="sena d-flex  mx-auto" style="padding-left: 10px; cursor:default; width:350px;position: absolute;top: 5px;left: 10px;height: auto;"></div>
 <div id="contenido1" class="sena d-flex  mx-auto" style="cursor:default; width:920px;position: absolute;top: 5px;left: 400px;height: auto;"></div>
 <div id="contenido2" class="sena d-flex  mx-auto" style="cursor:default; width:920px;position: absolute;top: 380px;left: 400px;height: auto;"></div>
 
@@ -10,4 +12,5 @@
 $('#contenido1').load('/centro');
 $('#contenido2').load('/footer');
 </script>
-</script>
+
+{% endblock content %}

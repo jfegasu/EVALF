@@ -308,7 +308,7 @@ def verlog():
     fecha=datetime.now()
     fe=str(fecha.year)+str(fecha.month)+str(fecha.day)
     print(fe)
-    au.registra(30,"Descarga Log de Transacciones")
+    au.registra(30,"Observa el Log de Transacciones:"+str(fecha))
     # return fe
     ruta_origen='/log/'+fe+'.log'
     ruta_destino='static/archivos/'+fe+'.txt'

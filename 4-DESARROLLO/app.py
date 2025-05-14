@@ -9,7 +9,8 @@ import hashlib
 import logging
 from config import DevelopmentConfig 
 from datetime import datetime
-
+import shutil
+import os
 app = Flask(__name__) 
 app.secret_key = 'BAD_SECRET_KEY'
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
@@ -302,6 +303,18 @@ def descargarlog():
     au.registra(30,"Descarga Log de Transacciones")
     # return fe
     return send_from_directory('/log/', fe+'.log',as_attachment=True)
+@app.route('/verlog')
+def verlog():
+    fecha=datetime.now()
+    fe=str(fecha.year)+str(fecha.month)+str(fecha.day)
+    print(fe)
+    au.registra(30,"Descarga Log de Transacciones")
+    # return fe
+    ruta_origen='/log/'+fe+'.log'
+    ruta_destino='static/archivos/'+fe+'.txt'
+    shutil.copy(ruta_origen, ruta_destino)
+    # return ver
+    return render_template('verlog.html',ver=ruta_destino)
 
 @app.route('/cargar')
 def cargar():

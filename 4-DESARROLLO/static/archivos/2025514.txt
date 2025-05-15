@@ -157,3 +157,28 @@
 2025-05-14 12:02:25,099 WARNING  * Debugger is active! 
 2025-05-14 12:02:31,350 WARNING 127.0.0.1 Carga Inicial de la base de datos - 
 2025-05-14 12:02:41,042 WARNING 127.0.0.1 Observa el Log de Transacciones:2025-05-14 12:02:41.040680 - 
+2025-05-14 12:03:20,453 WARNING  * Debugger is active! 
+2025-05-14 12:04:52,785 WARNING  * Debugger is active! 
+2025-05-14 12:05:29,042 WARNING  * Debugger is active! 
+2025-05-14 12:05:32,005 WARNING 127.0.0.1 Carga Inicial de la base de datos terminada con exito - 
+2025-05-14 12:06:00,476 WARNING 127.0.0.1 Descarga Log de Transacciones - 
+2025-05-14 19:24:04,493 WARNING  * Debugger is active! 
+2025-05-14 19:24:12,539 WARNING 127.0.0.1 Inicia Aplicacion - 
+2025-05-14 19:24:31,687 WARNING 127.0.0.1 Descarga Respuestas - 
+2025-05-14 19:24:46,500 WARNING 127.0.0.1 Descarga Log de Transacciones - 
+2025-05-14 19:24:52,136 WARNING 127.0.0.1 Observa el Log de Transacciones:2025-05-14 19:24:52.136696 - 
+2025-05-14 19:26:47,290 WARNING 127.0.0.1 Observa el Log de Transacciones:2025-05-14 19:26:47.290039 - 
+2025-05-14 19:30:26,390 WARNING 127.0.0.1 Observa el Log de Transacciones:2025-05-14 19:30:26.390736 - 
+2025-05-14 19:35:19,630 WARNING 127.0.0.1 Observa el Log de Transacciones:2025-05-14 19:35:19.630238 - 
+2025-05-14 19:36:22,758 WARNING 127.0.0.1 Observa el Log de Transacciones:2025-05-14 19:36:22.757375 - 
+2025-05-14 19:45:40,983 WARNING 127.0.0.1 Observa el Log de Transacciones:2025-05-14 19:45:40.983803 - 
+2025-05-14 19:46:45,574 WARNING 127.0.0.1 Observa el Log de Transacciones:2025-05-14 19:46:45.573916 - 
+2025-05-14 19:47:12,002 WARNING 127.0.0.1 Observa el Log de Transacciones:2025-05-14 19:47:12.002094 - 
+2025-05-14 19:48:02,255 WARNING 127.0.0.1 Observa el Log de Transacciones:2025-05-14 19:48:02.255234 - 
+2025-05-14 19:48:06,315 WARNING 127.0.0.1 Observa el Log de Transacciones:2025-05-14 19:48:06.315617 - 
+2025-05-14 19:48:54,346 WARNING 127.0.0.1 Observa el Log de Transacciones:2025-05-14 19:48:54.346877 - 
+2025-05-14 19:49:23,160 WARNING 127.0.0.1 Observa el Log de Transacciones:2025-05-14 19:49:23.160538 - 
+2025-05-14 19:50:36,620 WARNING 127.0.0.1 Observa el Log de Transacciones:2025-05-14 19:50:36.620994 - 
+2025-05-14 19:52:54,568 WARNING 127.0.0.1 Observa el Log de Transacciones:2025-05-14 19:52:54.568705 - 
+2025-05-14 19:53:55,253 WARNING 127.0.0.1 Observa el Log de Transacciones:2025-05-14 19:53:55.253430 - 
+2025-05-14 19:55:30,798 WARNING 127.0.0.1 Observa el Log de Transacciones:2025-05-14 19:55:30.798470 - 

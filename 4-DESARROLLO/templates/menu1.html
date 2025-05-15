@@ -21,15 +21,17 @@ ul, #myUL {
 }
 
 .caret::before {
-  content: "\25B6";
+  content: "\271A";
   color: black;
   display: inline-block;
   margin-right: 6px;
 }
 
 .caret-down::before {
+  content: "\25B6";
   -ms-transform: rotate(90deg); /* IE 9 */
   -webkit-transform: rotate(90deg); /* Safari */'
+  
   transform: rotate(90deg);  
 }
 
@@ -53,13 +55,13 @@ ul, #myUL {
     </ul>  
       <li><span class="caret">RESULTADOS</span>
           <ul class="nested">
-          <li><span style="cursor:pointer" onclick="window.open('/resp','centro')">🔄 EXPORTAR LOS RESULTADOS DE LA ENCUESTA(CSV)</span></li>
+          <li><span style="cursor:pointer" onclick="window.open('/resp','centro')">&#8984; EXPORTAR LOS RESULTADOS DE LA ENCUESTA(CSV)</span></li>
         </ul>
  
         <li ><spand class="caret">AUDITORIA</spand>
           <ul class="nested">
-            <li><span style="cursor:pointer" onclick="window.open('/descargarlog','centro')">🔄 DESCARGA LOG DE TRANSACCIONES</span></li>
-           <li><span style="cursor:pointer" onclick="window.open('/verlog','centro')">🔄VER LOG DE TRANSACCIONES</span></li>
+            <li><span style="cursor:pointer" onclick="window.open('/descargarlog','centro')">&#8984; DESCARGA LOG DE TRANSACCIONES</span></li>
+           <li><span style="cursor:pointer" onclick="window.open('/verlog','centro')">&#8984; VER LOG DE TRANSACCIONES</span></li>
           </ul>
  
     </ul>

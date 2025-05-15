@@ -9,7 +9,7 @@
 <br>
 <div class="sena d-flex justify-content-center align-items-center  mx-auto" style="width:40%;">
 <table class="table table-striped ">
-<th  style="color:red;">INSTRUCTORES DE LA FICHA: {{apr.ficha}}, APRENDIZ: {{apr.aprendiz}}, TITULACION: {{apr.titulacion}}
+<th  style="color:red;font-size: 10px;"><span>INSTRUCTORES DE LA FICHA: {{apr.ficha}}, APRENDIZ: {{apr.aprendiz}}, TITULACION: {{apr.titulacion}}</span>
  </th><th><span class="btn btn-warning" style="text-align: right;"  onclick="window.open('/login','centro')"><i class="fa fa-fast-backward" aria-hidden="true"></i></span>
 </th>
 </tr>
@@ -49,10 +49,10 @@
 {% endif%}
 {% endif%}
 {% if N=="2" %}
-
-<div class="sena d-flex justify-content-center align-items-center  mx-auto" style="width: 50%;padding-top: 20px;">
+<br><br>
+<div class="sena d-flex justify-content-center align-items-center  mx-auto" style="width: 50%;padding-top: 20px;padding-left: 20px;padding-right: 20px;">
     <table class="table table-striped" style="width: 100%;">
-        <th colspan="2" style="color:red"><b>FICHA: {{session['apr'].ficha}}, APRENDIZ: {{session['apr'].aprendiz}}, TITULACION: {{session['apr'].titulacion}}, INSTRUCTOR A EVALUAR: {{nomi}}
+        <th colspan="2" style="color:red;font-size: 10px;"><b>FICHA: {{session['apr'].ficha}}, APRENDIZ: {{session['apr'].aprendiz}}, TITULACION: {{session['apr'].titulacion}}, INSTRUCTOR A EVALUAR: {{nomi}}
         </th><th> <span class="btn btn-warning" style="text-align: right;"  onclick="window.open('/login','centro')"><i class="fa fa-fast-backward" aria-hidden="true"></i></span>
     </th>
         <tr>

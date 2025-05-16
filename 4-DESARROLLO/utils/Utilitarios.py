@@ -279,3 +279,11 @@ def obtener_trimestre(fecha):
     mes = fecha.month
     trimestre = (mes - 1) // 3 + 1
     return trimestre
+def obtener_trimestreT(fecha):
+    if isinstance(fecha, str):
+        fecha = datetime.strptime(fecha, '%Y-%m-%d')
+    
+    mes = fecha.month
+    anual=fecha.year
+    trimestre = (mes - 1) // 3 + 1
+    return "T"+str(anual)+"-"+str(trimestre)

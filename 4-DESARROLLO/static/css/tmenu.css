@@ -6,6 +6,8 @@ ul, #myUL {
 #myUL {
   margin: 0;
   padding: 0;
+font-size: 12px;  
+font-weight: bold;
 }
 
 .caret {
@@ -35,4 +37,5 @@ ul, #myUL {
 .active {
   display: block;
   content: "\22c6";
+  
 }

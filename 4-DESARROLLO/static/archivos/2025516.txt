@@ -1,0 +1,122 @@
+2025-05-16 09:58:59,725 WARNING  * Debugger is active! 
+2025-05-16 09:59:12,225 WARNING  * Debugger is active! 
+2025-05-16 09:59:34,223 WARNING 127.0.0.1 Inicia Aplicacion - 
+2025-05-16 09:59:45,790 WARNING 127.0.0.1 Carga Inicial de la base de datos terminada con exito - 
+2025-05-16 10:07:08,149 WARNING 127.0.0.1 Carga Inicial de la base de datos terminada con exito - 
+2025-05-16 10:14:49,061 WARNING 127.0.0.1 Carga Inicial de la base de datos terminada con exito - 
+2025-05-16 10:16:25,227 WARNING 127.0.0.1 Carga Inicial de la base de datos terminada con exito - 
+2025-05-16 10:19:23,396 WARNING 127.0.0.1 Carga Inicial de la base de datos terminada con exito - 
+2025-05-16 10:19:27,499 WARNING 127.0.0.1 Carga Inicial de la base de datos terminada con exito - 
+2025-05-16 10:19:28,538 WARNING 127.0.0.1 Carga Inicial de la base de datos terminada con exito - 
+2025-05-16 10:20:16,752 WARNING 127.0.0.1 Carga Inicial de la base de datos terminada con exito - 
+2025-05-16 10:44:56,260 WARNING 127.0.0.1 Carga Inicial de la base de datos terminada con exito - 
+2025-05-16 10:58:36,041 WARNING 127.0.0.1 Carga Inicial de la base de datos terminada con exito - 
+2025-05-16 11:17:47,525 WARNING  * Debugger is active! 
+2025-05-16 11:17:59,562 WARNING 127.0.0.1 Carga Inicial de la base de datos terminada con exito - 
+2025-05-16 11:19:10,796 WARNING  * Debugger is active! 
+2025-05-16 11:19:16,086 WARNING 127.0.0.1 Carga Inicial de la base de datos terminada con exito - 
+2025-05-16 11:20:13,980 WARNING  * Debugger is active! 
+2025-05-16 11:20:18,476 WARNING 127.0.0.1 Carga Inicial de la base de datos terminada con exito - 
+2025-05-16 11:21:35,242 WARNING  * Debugger is active! 
+2025-05-16 11:21:40,882 WARNING 127.0.0.1 Carga Inicial de la base de datos terminada con exito - 
+2025-05-16 11:38:12,743 WARNING 127.0.0.1 Carga Inicial de la base de datos terminada con exito - 
+2025-05-16 11:38:23,865 WARNING 127.0.0.1 Carga Inicial de la base de datos terminada con exito - 
+2025-05-16 11:38:28,234 WARNING 127.0.0.1 Carga Inicial de la base de datos terminada con exito - 
+2025-05-16 11:39:24,479 WARNING  * Debugger is active! 
+2025-05-16 11:39:49,148 WARNING 127.0.0.1 Carga Inicial de la base de datos terminada con exito - 
+2025-05-16 11:39:50,666 WARNING 127.0.0.1 Carga Inicial de la base de datos terminada con exito - 
+2025-05-16 11:41:22,989 WARNING  * Debugger is active! 
+2025-05-16 11:41:38,422 WARNING 127.0.0.1 Inicia Aplicacion - 
+2025-05-16 11:41:49,390 WARNING 127.0.0.1 Carga Inicial de la base de datos terminada con exito - 
+2025-05-16 11:43:51,018 WARNING  * Debugger is active! 
+2025-05-16 11:44:24,010 WARNING 127.0.0.1 Inicia Aplicacion - 
+2025-05-16 11:44:33,306 WARNING 127.0.0.1 Carga Inicial de la base de datos terminada con exito - 
+2025-05-16 11:48:24,023 WARNING  * Debugger is active! 
+2025-05-16 11:48:35,194 WARNING 127.0.0.1 Carga Inicial de la base de datos terminada con exito - 
+2025-05-16 11:49:40,151 WARNING  * Debugger is active! 
+2025-05-16 11:56:40,647 WARNING  * Debugger is active! 
+2025-05-16 11:57:20,722 WARNING  * Debugger is active! 
+2025-05-16 11:57:27,518 WARNING 127.0.0.1 Inicia Aplicacion - 
+2025-05-16 11:59:34,981 WARNING  * Debugger is active! 
+2025-05-16 11:59:49,211 WARNING 127.0.0.1 Carga Inicial de la base de datos terminada con exito - 
+2025-05-16 12:03:13,307 WARNING  * Debugger is active! 
+2025-05-16 12:03:35,220 WARNING 127.0.0.1 Carga Inicial de la base de datos terminada con exito - 
+2025-05-16 12:08:48,568 WARNING  * Debugger is active! 
+2025-05-16 12:08:54,938 WARNING 127.0.0.1 Carga Inicial de la base de datos terminada con exito - 
+2025-05-16 12:09:52,406 WARNING 127.0.0.1 Carga Inicial de la base de datos terminada con exito - 
+2025-05-16 12:10:19,872 WARNING  * Debugger is active! 
+2025-05-16 12:10:24,052 WARNING 127.0.0.1 Carga Inicial de la base de datos terminada con exito - 
+2025-05-16 12:12:23,087 WARNING 127.0.0.1 Carga Inicial de la base de datos terminada con exito - 
+2025-05-16 12:17:58,884 WARNING 127.0.0.1 Ingresa:DUQUE URIBE JUANA VALENTINA - 
+2025-05-16 12:18:02,912 WARNING 127.0.0.1 ENTRA A EVALUAR A: ELIZABETH DOMINGUEZ AUESCUM - 
+2025-05-16 12:18:07,706 WARNING 127.0.0.1 EVALUO A: ELIZABETH DOMINGUEZ AUESCUM - 
+2025-05-16 12:22:29,664 WARNING  * Debugger is active! 
+2025-05-16 12:22:55,387 WARNING 127.0.0.1 Ingresa:DUQUE URIBE JUANA VALENTINA - 
+2025-05-16 12:22:57,432 WARNING 127.0.0.1 ENTRA A EVALUAR A: ELIZABETH DOMINGUEZ AUESCUM - 
+2025-05-16 12:23:05,046 WARNING 127.0.0.1 EVALUO A: ELIZABETH DOMINGUEZ AUESCUM - 
+2025-05-16 12:25:02,330 WARNING 127.0.0.1 Descarga Respuestas - 
+2025-05-16 12:25:02,345 WARNING 127.0.0.1 Descarga Respuestas - 
+2025-05-16 12:25:24,346 WARNING 127.0.0.1 Descarga Respuestas - 
+2025-05-16 12:27:06,284 WARNING 127.0.0.1 Ingresa:DUQUE URIBE JUANA VALENTINA - 
+2025-05-16 12:27:08,474 WARNING 127.0.0.1 ENTRA A EVALUAR A: ULDARICO ANDRADE HERNANDEZ - 
+2025-05-16 12:27:29,658 WARNING 127.0.0.1 ENTRA A EVALUAR A: ULDARICO ANDRADE HERNANDEZ - 
+2025-05-16 12:28:47,042 WARNING 127.0.0.1 Ingresa:DUQUE URIBE JUANA VALENTINA - 
+2025-05-16 12:28:49,091 WARNING 127.0.0.1 ENTRA A EVALUAR A: ULDARICO ANDRADE HERNANDEZ - 
+2025-05-16 12:28:59,123 WARNING 127.0.0.1 ENTRA A EVALUAR A: ULDARICO ANDRADE HERNANDEZ - 
+2025-05-16 12:31:07,442 WARNING 127.0.0.1 Inicia Aplicacion - 
+2025-05-16 12:31:18,095 WARNING 127.0.0.1 Ingresa:DUQUE URIBE JUANA VALENTINA - 
+2025-05-16 12:31:22,107 WARNING 127.0.0.1 ENTRA A EVALUAR A: ELIZABETH DOMINGUEZ AUESCUM - 
+2025-05-16 12:31:28,022 WARNING 127.0.0.1 EVALUO A: ELIZABETH DOMINGUEZ AUESCUM - 
+2025-05-16 12:33:28,243 WARNING 127.0.0.1 Descarga Respuestas - 
+2025-05-16 12:33:28,256 WARNING 127.0.0.1 Descarga Respuestas - 
+2025-05-16 12:33:47,136 WARNING 127.0.0.1 Descarga Respuestas - 
+2025-05-16 12:58:31,365 WARNING  * Debugger is active! 
+2025-05-16 12:58:37,294 WARNING 127.0.0.1 Inicia Aplicacion - 
+2025-05-16 12:58:46,893 WARNING 127.0.0.1 Ingresa:DUQUE URIBE JUANA VALENTINA - 
+2025-05-16 12:58:48,716 WARNING 127.0.0.1 ENTRA A EVALUAR A: ELIZABETH DOMINGUEZ AUESCUM - 
+2025-05-16 12:58:57,107 WARNING 127.0.0.1 EVALUO A: ELIZABETH DOMINGUEZ AUESCUM - 
+2025-05-16 12:59:51,672 WARNING  * Debugger is active! 
+2025-05-16 13:00:02,647 WARNING 127.0.0.1 Ingresa:DUQUE URIBE JUANA VALENTINA - 
+2025-05-16 13:00:04,473 WARNING 127.0.0.1 ENTRA A EVALUAR A: ELIZABETH DOMINGUEZ AUESCUM - 
+2025-05-16 13:00:09,352 WARNING 127.0.0.1 EVALUO A: ELIZABETH DOMINGUEZ AUESCUM - 
+2025-05-16 13:02:51,849 WARNING 127.0.0.1 Ingresa:DUQUE URIBE JUANA VALENTINA - 
+2025-05-16 13:02:53,611 WARNING 127.0.0.1 ENTRA A EVALUAR A: ELIZABETH DOMINGUEZ AUESCUM - 
+2025-05-16 13:02:58,334 WARNING 127.0.0.1 EVALUO A: ELIZABETH DOMINGUEZ AUESCUM - 
+2025-05-16 14:26:36,141 WARNING  * Debugger is active! 
+2025-05-16 17:42:04,928 WARNING  * Debugger is active! 
+2025-05-16 17:43:56,219 WARNING  * Debugger is active! 
+2025-05-16 17:44:00,078 WARNING 127.0.0.1 Inicia Aplicacion - 
+2025-05-16 17:45:26,941 WARNING 127.0.0.1 Observa el Log de Transacciones:2025-05-16 17:45:26.941703 - 
+2025-05-16 17:50:43,882 WARNING 127.0.0.1 Observa el Log de Transacciones:2025-05-16 17:50:43.882624 - 
+2025-05-16 17:58:16,674 WARNING 127.0.0.1 Observa el Log de Transacciones:2025-05-16 17:58:16.674270 - 
+2025-05-16 17:59:21,736 WARNING 127.0.0.1 Observa el Log de Transacciones:2025-05-16 17:59:21.736055 - 
+2025-05-16 18:01:51,861 WARNING 127.0.0.1 Observa el Log de Transacciones:2025-05-16 18:01:51.860053 - 
+2025-05-16 18:05:27,915 WARNING 127.0.0.1 Observa el Log de Transacciones:2025-05-16 18:05:27.914647 - 
+2025-05-16 18:13:35,582 WARNING 127.0.0.1 Observa el Log de Transacciones:2025-05-16 18:13:35.582031 - 
+2025-05-16 18:16:19,874 WARNING 127.0.0.1 Observa el Log de Transacciones:2025-05-16 18:16:19.874251 - 
+2025-05-16 18:16:52,404 WARNING 127.0.0.1 Observa el Log de Transacciones:2025-05-16 18:16:52.404303 - 
+2025-05-16 18:18:41,186 WARNING 127.0.0.1 Observa el Log de Transacciones:2025-05-16 18:18:41.186473 - 
+2025-05-16 18:18:58,733 WARNING 127.0.0.1 Observa el Log de Transacciones:2025-05-16 18:18:58.733204 - 
+2025-05-16 18:20:38,299 WARNING 127.0.0.1 Observa el Log de Transacciones:2025-05-16 18:20:38.298822 - 
+2025-05-16 18:22:58,458 WARNING 127.0.0.1 Observa el Log de Transacciones:2025-05-16 18:22:58.458117 - 
+2025-05-16 18:23:41,977 WARNING 127.0.0.1 Observa el Log de Transacciones:2025-05-16 18:23:41.977368 - 
+2025-05-16 18:24:33,551 WARNING 127.0.0.1 Observa el Log de Transacciones:2025-05-16 18:24:33.551846 - 
+2025-05-16 18:25:18,219 WARNING 127.0.0.1 Observa el Log de Transacciones:2025-05-16 18:25:18.219983 - 
+2025-05-16 18:25:47,555 WARNING 127.0.0.1 Observa el Log de Transacciones:2025-05-16 18:25:47.555663 - 
+2025-05-16 18:26:12,013 WARNING 127.0.0.1 Observa el Log de Transacciones:2025-05-16 18:26:12.012836 - 
+2025-05-16 18:26:59,650 WARNING 127.0.0.1 Observa el Log de Transacciones:2025-05-16 18:26:59.649497 - 
+2025-05-16 18:27:37,627 WARNING 127.0.0.1 Observa el Log de Transacciones:2025-05-16 18:27:37.627451 - 
+2025-05-16 18:28:19,869 WARNING 127.0.0.1 Observa el Log de Transacciones:2025-05-16 18:28:19.869609 - 
+2025-05-16 18:28:39,538 WARNING 127.0.0.1 Observa el Log de Transacciones:2025-05-16 18:28:39.538513 - 
+2025-05-16 18:31:32,862 WARNING 127.0.0.1 Observa el Log de Transacciones:2025-05-16 18:31:32.862121 - 
+2025-05-16 18:32:17,223 WARNING 127.0.0.1 Observa el Log de Transacciones:2025-05-16 18:32:17.223619 - 
+2025-05-16 18:33:15,657 WARNING 127.0.0.1 Observa el Log de Transacciones:2025-05-16 18:33:15.657948 - 
+2025-05-16 18:33:44,169 WARNING 127.0.0.1 Observa el Log de Transacciones:2025-05-16 18:33:44.169243 - 
+2025-05-16 18:35:38,878 WARNING 127.0.0.1 Observa el Log de Transacciones:2025-05-16 18:35:38.877404 - 
+2025-05-16 18:36:09,241 WARNING 127.0.0.1 Observa el Log de Transacciones:2025-05-16 18:36:09.241609 - 
+2025-05-16 18:36:32,205 WARNING 127.0.0.1 Observa el Log de Transacciones:2025-05-16 18:36:32.205471 - 
+2025-05-16 18:36:46,284 WARNING 127.0.0.1 Observa el Log de Transacciones:2025-05-16 18:36:46.284484 - 
+2025-05-16 18:36:57,298 WARNING 127.0.0.1 Observa el Log de Transacciones:2025-05-16 18:36:57.298333 - 
+2025-05-16 18:37:14,554 WARNING 127.0.0.1 Observa el Log de Transacciones:2025-05-16 18:37:14.554281 - 
+2025-05-16 18:38:02,830 WARNING 127.0.0.1 Observa el Log de Transacciones:2025-05-16 18:38:02.829674 - 
+2025-05-16 18:38:44,990 WARNING 127.0.0.1 Observa el Log de Transacciones:2025-05-16 18:38:44.990269 - 

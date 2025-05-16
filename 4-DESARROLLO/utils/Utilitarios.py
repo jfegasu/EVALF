@@ -272,3 +272,10 @@ def ConsultarUno(db,sql):
     conn.close()
     return output 
  
+def obtener_trimestre(fecha):
+    if isinstance(fecha, str):
+        fecha = datetime.strptime(fecha, '%Y-%m-%d')
+    
+    mes = fecha.month
+    trimestre = (mes - 1) // 3 + 1
+    return trimestre

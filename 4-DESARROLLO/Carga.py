@@ -15,6 +15,11 @@ def Cargando():
         # RegEdInicio("EVALF",INICIO)
     print('CARGANDO APRENDICES')
     sql="DELETE FROM FICHAAPRENDIZ"
+    # conn = sqlite3.connect(DATABASE)
+    # cursor = conn.cursor()
+    # cursor.execute(sql)
+    # conn.commit()
+    # conn.close()
     Ejecutar(DATABASE,sql)
     # return DATABASE
     
@@ -31,6 +36,7 @@ def Cargando():
         print(xx)
         # x=hash(x)
         sql=f"INSERT INTO FICHAAPRENDIZ(FICHA,DNIA,NOMBREAP,ESTADOAP,PWDAP,EMAIL,TITULACION) VALUES('{row['FICHA']}','{row['DNI']}','{row['NOMBRE']}',1,'{xx}','{row['EMAIL']}','{row['TITULACION']}')".format(row['FICHA'],row['DNI'],row['NOMBRE'],1,xx,row['EMAIL'],row['TITULACION'])
+        print("->",sql)
         Ejecutar(DATABASE,sql)
     # os.remove("aprendiz.csv")
     print('CARGANDO INSTRUCTORES')
@@ -40,9 +46,10 @@ def Cargando():
     instructor=pd.DataFrame(datos[['FICHA','DNI','NOMBRE','EMAIL']])
     instructor.drop_duplicates(inplace=True)
     instructor.to_csv("instructor.csv",index=False)
+    TRIMESTRE=obtener_trimestre(datetime.now())
     for index, row in instructor.iterrows():
         # print(row['FICHA'],row['DNI'],row['NOMBRE'],row['EMAIL'])
-        sql=f"INSERT INTO FICHAINSTRUCTOR(FICHA,DNI,NOMINST,EMAIL) VALUES('{row['FICHA']}','{row['DNI']}','{row['NOMBRE']}','{row['EMAIL']}')".format(row['FICHA'],row['DNI'],row['NOMBRE'],row['EMAIL'])
+        sql=f"INSERT INTO FICHAINSTRUCTOR(FICHA,DNI,NOMINST,EMAIL,TRIMESTRE) VALUES('{row['FICHA']}','{row['DNI']}','{row['NOMBRE']}','{row['EMAIL']}',{TRIMESTRE})".format(row['FICHA'],row['DNI'],row['NOMBRE'],row['EMAIL'],TRIMESTRE)
         # print(sql)
         Ejecutar(DATABASE,sql)
     # os.remove("instructor.csv")

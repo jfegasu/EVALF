@@ -132,3 +132,5 @@
 2025-05-15 22:17:55,159 WARNING 127.0.0.1 Observa el Log de Transacciones:2025-05-15 22:17:55.159923 - 
 2025-05-15 22:18:11,982 WARNING 127.0.0.1 Observa el Log de Transacciones:2025-05-15 22:18:11.981718 - 
 2025-05-15 22:20:24,380 WARNING 127.0.0.1 Observa el Log de Transacciones:2025-05-15 22:20:24.380798 - 
+2025-05-15 22:29:27,696 WARNING 127.0.0.1 Inicia Aplicacion - 
+2025-05-15 22:34:24,985 WARNING 127.0.0.1 Observa el Log de Transacciones:2025-05-15 22:34:24.985200 - 

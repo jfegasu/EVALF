@@ -1,4 +1,4 @@
-@echo off
+@echo on
 @echo INICIANDO BASE DE DATOS
 cd .\database
 start  python api.py
@@ -7,5 +7,5 @@ cd ..
 start python app.py
 @echo INICIANDO APLICATIVO
 start 127.0.0.1:5000
-@echo OK
+
 pause

@@ -271,7 +271,7 @@ def evalua(N,I):
         F=session['ficha']
         A=session['dnia']
         T=session['titulacion']
-
+        TRIMESTRE=obtener_trimestre(datetime.now())
         
         # I=session['instructor']
         print(F,I,A)
@@ -280,7 +280,7 @@ def evalua(N,I):
         for i in range(1, conta + 1):  # Asegúrate de incluir el último valor
             Resp=request.form.get('R' + str(i))
             Preg=request.form.get('P' + str(i))
-            sql=f"insert into THEVAL(idINSTRUCTOR,idFICHA,idAPRENDIZ,PREGUNTA,RESPUESTA,TITULACION) VALUES({I},{F},{A},'{Preg}','{Resp}','{T}')".format(I,F,A,Preg,Resp,T)
+            sql=f"insert into THEVAL(idINSTRUCTOR,idFICHA,idAPRENDIZ,PREGUNTA,RESPUESTA,TITULACION,TRIMESTRE) VALUES({I},{F},{A},'{Preg}','{Resp}','{T}',{TRIMESTRE})".format(I,F,A,Preg,Resp,T,TRIMESTRE)
             print("CCCCC>>",sql)
             Ejecutar(DATABASE,sql)
             

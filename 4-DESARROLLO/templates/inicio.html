@@ -8,13 +8,15 @@ function Ir(){
         "xxx",
         `width=${screen.width},height=${screen.height}`
     );
+    
 }
 document.addEventListener("click", function() {
     // Llamar a la función para abrir la ventana hija
+    window.close();
     Ir();
 
     // Cerrar la ventana principal
-    window.close();
+    
 });
 
 </script>

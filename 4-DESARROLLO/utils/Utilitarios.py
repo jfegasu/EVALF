@@ -15,21 +15,24 @@ from email.mime.multipart import MIMEMultipart
 from email.message import EmailMessage
 import sqlite3
 from flask import current_app as app
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+
 
 
 
 
 class Auditor():
     logger=None
-    def __init__(self):
+    def __init__(self,base1):
         
         fecha=datetime.now()
         fe=str(fecha.year)+str(fecha.month)+str(fecha.day)
         # print("** Inicia **")
-        os.makedirs('/log/'+fe,exist_ok=True)
+        LOG = os.path.join('/log')
+        # os.makedirs(LOG,exist_ok=True)
         logger = logging.getLogger('werkzeug')
         self.logger =logger 
-        logging.basicConfig(format='%(asctime)s %(levelname)s %(message)s ',filename='/log/'+fe+'/login.log', encoding='utf-8',level=logging.WARNING)
+        logging.basicConfig(format='%(asctime)s %(levelname)s %(message)s ',filename=LOG+'/'+fe+'.log', encoding='utf-8',level=logging.WARNING)
         self.logger.setLevel(logging.WARNING  )
         # logger.setLevel(logging.INFO)
         # self.logger.warning("inicia")
@@ -225,19 +228,24 @@ def crearTabla(tabla,columns,condicion):
 def ConsultarDB(clave):
     url=app.config['apidb']+clave
     response = requests.get(url)
+    print("xxx>",response.status_code,url)
     if response.status_code == 200:
         data = response.json()
-    else:
-        data={"Tipo":0}  
-    return data
+    # else:
+    #     data={"Tipo":0} 
+    return response.json()
  
 def Ejecutar(db,sql):
-    conn = sqlite3.connect(db)
-    cursor = conn.cursor()
-    cursor.execute(sql)
-    conn.commit()
-    conn.close()
-    return 'OK' 
+    try:
+        conn = sqlite3.connect(db)
+        cursor = conn.cursor()
+        cursor.execute(sql)
+        conn.commit()
+        conn.close()
+        return '200' 
+    except Exception as e:
+        print(e)
+        return("400")
 def ConsultarD(db, sql):
     conn = sqlite3.connect(db)
     conn.row_factory = sqlite3.Row  # <- necesario para acceder por nombre de columna
@@ -263,3 +271,19 @@ def ConsultarUno(db,sql):
     output = cursor.fetchone() 
     conn.close()
     return output 
+ 
+def obtener_trimestre(fecha):
+    if isinstance(fecha, str):
+        fecha = datetime.strptime(fecha, '%Y-%m-%d')
+    
+    mes = fecha.month
+    trimestre = (mes - 1) // 3 + 1
+    return trimestre
+def obtener_trimestreT(fecha):
+    if isinstance(fecha, str):
+        fecha = datetime.strptime(fecha, '%Y-%m-%d')
+    
+    mes = fecha.month
+    anual=fecha.year
+    trimestre = (mes - 1) // 3 + 1
+    return "T"+str(anual)+"-"+str(trimestre)

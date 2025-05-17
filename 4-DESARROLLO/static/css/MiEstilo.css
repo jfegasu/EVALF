@@ -66,10 +66,21 @@ border: 0px solid #000000;
   body {
     scrollbar-width: auto;
     scrollbar-color: var(--thumbBG) var(--scrollbarBG);
-    background-image: url({{url_for('static',filename='images/logosena.png')}});
+    background-image: url('./static/images/logosena.png');
     padding-left: 10px;
-    font-size: 10px;  
+
   }
+  .iframe{
+      height: auto;
+  overflow-y: scroll;
+  scrollbar-color: #007 #bada55;
+  }
+  .scroller {
+  width: 300px;
+  height: auto;
+  overflow-y: scroll;
+  scrollbar-color: #007 #bada55;
+}
   .sena{
     font-size: 10px;
     font-weight: bold;

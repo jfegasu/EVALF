@@ -1,0 +1,3 @@
+Python3 -m venv venv 
+source ven/bin/actívate
+pip install flask

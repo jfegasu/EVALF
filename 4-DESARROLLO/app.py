@@ -63,6 +63,8 @@ def tipoUsuario(correo):
 def valida():   
     N=1
     usua=request.form.get('usua')
+    au.registra(30,'Intento de logueo',usua)
+    
     pw=request.form.get('pw')
     Tipo=tipoUsuario(usua)
     
@@ -112,6 +114,8 @@ def valida():
         
         
     elif Tipo['Tipo']==3:
+        session['usua']=usua
+        au.registra(30,"Ingresa un administrador",session['usua'])
         return render_template('menuadmin.html')
     if Tipo['Tipo']==0:
         msgito="USUARIO NO EXISTE**"
@@ -307,7 +311,8 @@ def descargarlog():
     
     au.registra(30,"Descarga Log de Transacciones")
     # return fe
-    return send_from_directory('/log/', fe+'.log',as_attachment=True)
+    # 'static/archivos/'+fe+'.txt'
+    return send_from_directory('static/archivos', fe+'.txt',as_attachment=True)
 @app.route('/verlog')
 def verlog():
     fecha=datetime.now()
@@ -391,6 +396,7 @@ def CargaInicial():
     return render_template("alertas.html",msgito=aux, regreso="/menuadmin")
 @app.route('/menuadmin')
 def menuadmin():
+    au.registra(30,'ingresa menuadmin')
     return render_template('menuadmin.html')
 @app.route('/aprendiz')
 def aprendiz():

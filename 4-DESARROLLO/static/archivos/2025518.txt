@@ -5,3 +5,38 @@
 2025-05-18 21:03:28,354 WARNING 127.0.0.1 Observa el Log de Transacciones:2025-05-18 21:03:28.354196 - 
 2025-05-18 21:03:51,257 WARNING 127.0.0.1 Carga Inicial de la base de datos terminada con exito - 
 2025-05-18 21:04:01,162 WARNING 127.0.0.1 Observa el Log de Transacciones:2025-05-18 21:04:01.162183 - 
+2025-05-18 21:05:55,321 WARNING 127.0.0.1 Descarga Log de Transacciones - 
+2025-05-18 21:05:55,338 WARNING 127.0.0.1 Descarga Log de Transacciones - 
+2025-05-18 21:06:04,395 WARNING 127.0.0.1 Descarga Log de Transacciones - 
+2025-05-18 21:08:49,590 WARNING  * Debugger is active! 
+2025-05-18 21:08:53,397 WARNING  * Debugger is active! 
+2025-05-18 21:09:00,134 WARNING 127.0.0.1 Descarga Log de Transacciones - 
+2025-05-18 21:09:00,218 WARNING 127.0.0.1 Descarga Log de Transacciones - 
+2025-05-18 21:09:06,929 WARNING 127.0.0.1 Descarga Log de Transacciones - 
+2025-05-18 21:10:09,095 WARNING 127.0.0.1 Inicia Aplicacion - 
+2025-05-18 21:11:04,762 WARNING 127.0.0.1 Descarga Log de Transacciones - 
+2025-05-18 21:12:11,753 WARNING 127.0.0.1 Observa el Log de Transacciones:2025-05-18 21:12:11.753949 - 
+2025-05-18 21:12:21,115 WARNING 127.0.0.1 Descarga Log de Transacciones - 
+2025-05-18 21:12:21,135 WARNING 127.0.0.1 Descarga Log de Transacciones - 
+2025-05-18 21:12:26,163 WARNING 127.0.0.1 Descarga Log de Transacciones - 
+2025-05-18 21:14:45,198 WARNING  * Debugger is active! 
+2025-05-18 21:15:15,686 WARNING 127.0.0.1 Observa el Log de Transacciones:2025-05-18 21:15:15.686011 - 
+2025-05-18 21:15:41,422 WARNING  * Debugger is active! 
+2025-05-18 21:15:48,968 WARNING 127.0.0.1 Observa el Log de Transacciones:2025-05-18 21:15:48.968066 - 
+2025-05-18 21:16:21,463 WARNING  * Debugger is active! 
+2025-05-18 21:16:36,369 WARNING  * Debugger is active! 
+2025-05-18 21:16:45,657 WARNING 127.0.0.1 ingresa menuadmin - 
+2025-05-18 21:17:00,527 WARNING 127.0.0.1 ingresa menuadmin - 
+2025-05-18 21:17:19,907 WARNING 127.0.0.1 Observa el Log de Transacciones:2025-05-18 21:17:19.907483 - 
+2025-05-18 21:19:27,168 WARNING  * Debugger is active! 
+2025-05-18 21:19:32,977 WARNING 127.0.0.1 Intento de logueo admin@sena.edu.co 
+2025-05-18 21:19:35,826 WARNING 127.0.0.1 Observa el Log de Transacciones:2025-05-18 21:19:35.826237 - 
+2025-05-18 21:23:30,336 WARNING  * Debugger is active! 
+2025-05-18 21:23:40,556 WARNING 127.0.0.1 Inicia Aplicacion - 
+2025-05-18 21:23:46,101 WARNING 127.0.0.1 Intento de logueo admin@sena.edu.co 
+2025-05-18 21:23:46,114 WARNING 127.0.0.1 Ingresa un administrador admin@sena.edu.co 
+2025-05-18 21:24:01,614 WARNING 127.0.0.1 Observa el Log de Transacciones:2025-05-18 21:24:01.614236 - 
+2025-05-18 21:25:49,771 WARNING  * Debugger is active! 
+2025-05-18 21:26:06,131 WARNING 127.0.0.1 Intento de logueo admin@sena.edu.co 
+2025-05-18 21:26:06,141 WARNING 127.0.0.1 Ingresa un administrador admin@sena.edu.co 
+2025-05-18 21:26:13,307 WARNING 127.0.0.1 Observa el Log de Transacciones:2025-05-18 21:26:13.307898 - 

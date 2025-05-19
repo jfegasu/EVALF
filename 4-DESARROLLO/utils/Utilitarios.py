@@ -28,8 +28,8 @@ class Auditor():
         fecha=datetime.now()
         fe=str(fecha.year)+str(fecha.month)+str(fecha.day)
         # print("** Inicia **")
-        LOG = os.path.join('/log')
-        # os.makedirs(LOG,exist_ok=True)
+        LOG = os.path.join(base1,'static','log')
+        os.makedirs(LOG,exist_ok=True)
         logger = logging.getLogger('werkzeug')
         self.logger =logger 
         logging.basicConfig(format='%(asctime)s %(levelname)s %(message)s ',filename=LOG+'/'+fe+'.log', encoding='utf-8',level=logging.WARNING)

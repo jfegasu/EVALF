@@ -220,27 +220,27 @@ def getAprendiz(id):
         "FICHA":datos['FICHA']
     }
     return datos[0]
-@app.route('/otro' ,methods=['POST','GET']) 
-def otro():
-    hay=ConsultarUno(DATABASE,f"SELECT count(*) FROM FICHAPRENDIZ WHERE DNIA='{usua}' AND EMAIL='{pw}'".format(usua,pw))
-    hay=hay[0]
-    if hay=="0":
-        session[usua]=usua
+# @app.route('/otro' ,methods=['POST','GET']) 
+# def otro():
+#     hay=ConsultarUno(DATABASE,f"SELECT count(*) FROM FICHAPRENDIZ WHERE DNIA='{usua}' AND EMAIL='{pw}'".format(usua,pw))
+#     hay=hay[0]
+#     if hay=="0":
+#         session[usua]=usua
 
-        return render_template("alertas.html",msgito="USUARIO O CLAVE INCORRECTO",regreso="/login")
-    sql=f"SELECT * FROM FICHAPRENDIZ WHERE EMAIL='{usua}' AND PWDAP='{pw}'".format(usua,pw)
-    aprendiz=ConsultarUno(DATABASE,sql)
-    session['ficha'] = aprendiz[0]
-    session['dnia'] = aprendiz[1]
-    session['nombreap'] = aprendiz[2]
-    session['titulacion'] = aprendiz[6]
-    F=session['ficha']
-    A=session['dnia']
-    N=1
-    sql=f"SELECT * FROM FICHAINSTRUCTOR WHERE DNI NOT IN(SELECT IDINSTRUCTOR FROM THEVAL WHERE IDFICHA='{F}' AND IDAPRENDIZ='{A}')".format(F,A)
-    datos=Consultar(DATABASE,sql)
-    session['instructor'] = datos[1]
-    session['ninstructor'] = datos[0]
+#         return render_template("alertas.html",msgito="USUARIO O CLAVE INCORRECTO",regreso="/login")
+#     sql=f"SELECT * FROM FICHAPRENDIZ WHERE EMAIL='{usua}' AND PWDAP='{pw}'".format(usua,pw)
+#     aprendiz=ConsultarUno(DATABASE,sql)
+#     session['ficha'] = aprendiz[0]
+#     session['dnia'] = aprendiz[1]
+#     session['nombreap'] = aprendiz[2]
+#     session['titulacion'] = aprendiz[6]
+#     F=session['ficha']
+#     A=session['dnia']
+#     N=1
+#     sql=f"SELECT * FROM FICHAINSTRUCTOR WHERE DNI NOT IN(SELECT IDINSTRUCTOR FROM THEVAL WHERE IDFICHA='{F}' AND IDAPRENDIZ='{A}')".format(F,A)
+#     datos=Consultar(DATABASE,sql)
+#     session['instructor'] = datos[1]
+#     session['ninstructor'] = datos[0]
 
     return render_template('carga.html',N=N,datos=datos)
 

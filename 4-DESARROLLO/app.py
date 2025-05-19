@@ -18,8 +18,10 @@ BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 DATABASE = os.path.join(BASE_DIR, 'database', 'sena.db')
 RESPUESTAS = os.path.join(BASE_DIR, 'static/archivos/RESPUESTAS.csv')
 app.config['apidb'] =  "http://127.0.0.1:5555"
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+app.config['BASE_DIR']=BASE_DIR
 # app.config.from_object(DevelopmentConfig) 
-au=Auditor(BASE_DIR)
+au=Auditor(app.config['BASE_DIR'])
 
 @app.route('/') 
 def raiz():   
@@ -61,6 +63,8 @@ def tipoUsuario(correo):
 def valida():   
     N=1
     usua=request.form.get('usua')
+    au.registra(30,'Intento de logueo',usua)
+    
     pw=request.form.get('pw')
     Tipo=tipoUsuario(usua)
     
@@ -110,6 +114,8 @@ def valida():
         
         
     elif Tipo['Tipo']==3:
+        session['usua']=usua
+        au.registra(30,"Ingresa un administrador",session['usua'])
         return render_template('menuadmin.html')
     if Tipo['Tipo']==0:
         msgito="USUARIO NO EXISTE**"
@@ -305,7 +311,8 @@ def descargarlog():
     
     au.registra(30,"Descarga Log de Transacciones")
     # return fe
-    return send_from_directory('/log/', fe+'.log',as_attachment=True)
+    # 'static/archivos/'+fe+'.txt'
+    return send_from_directory('static/archivos', fe+'.txt',as_attachment=True)
 @app.route('/verlog')
 def verlog():
     fecha=datetime.now()
@@ -313,7 +320,7 @@ def verlog():
     
     au.registra(30,"Observa el Log de Transacciones:"+str(fecha))
     # return fe
-    ruta_origen='/log/'+fe+'.log'
+    ruta_origen='static/log/'+fe+'.log'
     ruta_destino='static/archivos/'+fe+'.txt'
     shutil.copy(ruta_origen, ruta_destino)
     # return ver
@@ -389,6 +396,7 @@ def CargaInicial():
     return render_template("alertas.html",msgito=aux, regreso="/menuadmin")
 @app.route('/menuadmin')
 def menuadmin():
+    au.registra(30,'ingresa menuadmin')
     return render_template('menuadmin.html')
 @app.route('/aprendiz')
 def aprendiz():

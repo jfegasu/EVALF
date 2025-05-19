@@ -49,7 +49,6 @@ class Auditor():
             self.logger.info(client_ip+' '+msg+' '+usua)
         elif tipo==30:
             a=30
-            pass
             # self.logger.warning(client_ip+' '+msg+' '+usua)
         elif tipo==40:
             # print(client_ip+' '+msg+' '+usua)

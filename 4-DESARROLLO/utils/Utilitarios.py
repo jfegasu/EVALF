@@ -5,7 +5,7 @@ import os
 from datetime import datetime
 import re
 import string
-import winreg
+# import winreg
 # pip install Flask Flask-Mail
 # pip install --upgrade requests
 import smtplib

@@ -8,7 +8,7 @@ function Ir(){
         "xxx",
         `width=${screen.width},height=${screen.height}`
     );
-    window.close();
+    self.close();
 }
 document.addEventListener("click", function() {
     // Llamar a la función para abrir la ventana hija
@@ -18,6 +18,8 @@ document.addEventListener("click", function() {
     // Cerrar la ventana principal
     
 });
+
+            setTimeout('Ir()',2000)
 
 </script>
 <center><h4><b>De click para comenzar</b></h4></center>

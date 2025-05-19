@@ -12,10 +12,8 @@
                 
         <script>
             function Voy(){
-            {% if regreso%}
+            {% if regreso %}
             window.open("{{regreso}}","centro")
-            {% else %}
-            location.href="/"
             {% endif %}
             }
             setTimeout('Voy()',5000)

@@ -403,7 +403,7 @@ def aprendiz():
     return render_template("aprendices.html")
 @app.route('/construir')
 def construir():
-    msgito="PAGINA EN CONSTRUCCION"
+    msgito="401 - PAGINA EN CONSTRUCCION"
     
     return render_template("alertas.html",msgito=msgito,regreso='/menuadmin')
 

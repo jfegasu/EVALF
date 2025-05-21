@@ -1,4 +1,5 @@
 @echo on
+rem venv\Scripts\Activate.bat
 @echo INICIANDO BASE DE DATOS
 cd .\database
 start  python api.py

@@ -148,7 +148,7 @@ def valida_aprendiz_por_emailvd(tipo,email,pwd):
 @app.route('/inst/<pficha>/<paprendiz>', methods=['GET'])
 def noEvaluados(pficha, paprendiz):
     sql=f"SELECT * FROM FICHAINSTRUCTOR WHERE FICHA='{pficha}' AND DNI NOT IN(SELECT IDINSTRUCTOR FROM THEVAL WHERE IDFICHA='{pficha}' AND IDAPRENDIZ='{paprendiz}')".format(pficha,paprendiz)
-    
+    sql=f"SELECT * FROM VINSTRUCTORESP WHERE FICHA={pficha} AND DNIAP={paprendiz}".format(pficha,paprendiz)
     datos=Consultar(DATABASE,sql)
     return jsonify(datos)
   

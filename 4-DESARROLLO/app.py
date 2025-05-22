@@ -242,7 +242,7 @@ def getAprendiz(id):
 #     session['instructor'] = datos[1]
 #     session['ninstructor'] = datos[0]
 
-#     return render_template('carga.html',N=N,datos=datos)
+    return render_template('carga.html',N=N,datos=datos)
 
 @app.route('/evalua/<N>/<I>' ,methods=['POST','GET']) 
 def evalua(N,I):   
@@ -384,6 +384,11 @@ def menu1():
             {"texto": "VER LOG DE TRANSACCIONES", "url": "/verlog","svg":"","fa":"fa fa-television"},
         ]
     },
+    {
+        "titulo":"TERMINAR",
+        "items":[{"texto":"SALIR DEL APLICATIVO","url":"/salir","svg":"","fa":"fa fa-window-close"}]
+
+    }
 ]
 
     return render_template("menu1.html",menu=menu)   
@@ -403,9 +408,16 @@ def aprendiz():
     return render_template("aprendices.html")
 @app.route('/construir')
 def construir():
-    msgito="PAGINA EN CONSTRUCCION"
+    msgito="401 - PAGINA EN CONSTRUCCION"
     
     return render_template("alertas.html",msgito=msgito,regreso='/menuadmin')
+@app.route('/salir')
+def salir():
+    msgito="SALIENDO DEL APLICATIVO"
+    return render_template("alertas.html",msgito=msgito,regreso='/saliendo')
+@app.route('/saliendo')
+def saliendo():
+    return render_template("saliendo.html")
 
 if __name__=='__main__':
     app.run(debug=True,port=5000)

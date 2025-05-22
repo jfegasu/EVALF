@@ -1,0 +1,1 @@
+start https://www.python.org/ftp/python/3.12.8/python-3.12.8-amd64.exe

@@ -25,25 +25,24 @@ class Admin(BaseModel):
     FECHA = DateTimeField(default=datetime.datetime.now)
 
 class FichaAprendiz(BaseModel):
-    id = AutoField()
-    FICHA = TextField()
-    DNIA = TextField()
-    NOMBREAP = TextField()
+    FICHA = TextField(null=True)
+    DNIA = TextField(null=True)
+    NOMBREAP = TextField(null=True)
     ESTADOAP = IntegerField(default=0)
-    PWDAP = TextField()
-    EMAIL = TextField()
-    TITULACION = TextField()
-    FECHA = DateTimeField(default=datetime.datetime.now)
+    PWDAP = TextField(null=True)
+    EMAIL = TextField(null=True)
+    TITULACION = TextField(null=True)
+    FECHA = DateTimeField(default=datetime.datetime.now,null=True)
 
 class FichaInstructor(BaseModel):
-    NOMINST = TextField()
-    DNI = TextField()
-    FICHA = TextField()
-    EMAIL = TextField()
+    NOMINST = TextField(null=True)
+    DNI = TextField(null=True)
+    FICHA = TextField(null=True)
+    EMAIL = TextField(null=True)
     LIDER = IntegerField(default=0, constraints=[Check('LIDER IN (0, 1)')])
     TRIMESTRE = IntegerField(default=1, constraints=[Check('TRIMESTRE IN (1, 2, 3, 4)')])
     FECHA = DateTimeField(default=datetime.datetime.now)
-    PWD = TextField()
+    PWD = TextField(null=True)
 
 class Menu(BaseModel):
     idMenu = AutoField()

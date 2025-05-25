@@ -244,8 +244,67 @@ def getAprendiz(id):
 
     return render_template('carga.html',N=N,datos=datos)
 
+@app.route('/eval/1/<I>' ,methods=['POST','GET']) 
+def eval1(I):  
+    F=session['ficha']
+    A=session['dnia']
+    sql=f"SELECT * FROM THEVAL WHERE idFICHA={F} AND idAPRENDIZ={A}".format(F,A)
+    datos=ConsultarUno(DATABASE,sql)
+    
+    session['instructor']=datos[3]
+    I=session['instructor']
+    datos=[N,F,I,A]
+    return render_template('carga.html',N=1,datos=datos)
+@app.route('/eval/2/<I>' ,methods=['POST','GET']) 
+def eval2(I):  
+    # F=session['ficha']
+    F=3147246
+    # A=session['dnia']
+    A=1013106019
+    # I=session['instructor']
+    datos=[N,F,I,A]
+    print("__________________________>",N)
+    preg=Consultar(DATABASE,'SELECT * FROM PREGUNTA WHERE ESTADO=1')
+    hay=len(preg)
+    au.registra(30,'ENTRA A EVALUAR A: '+getInstructor(I))
+    apr={
+            "ficha":session['ficha'],
+            "aprendiz":session['nombreap'],
+            "titulacion":session['titulacion'],
+            "dnia":session['dnia']
+        }
+    session['apr']=apr
+    
+    return render_template('carga.html',N=2,datos=datos,preg=preg,hay=hay,nomi=getInstructor(I),apr=apr)
+@app.route('/eval/3/<I>' ,methods=['POST','GET']) 
+def eval(I):  
+    F=session['ficha']
+    A=session['dnia']
+    T=session['titulacion']
+    TRIMESTRE=obtener_trimestreT(datetime.now())
+    
+    # I=session['instructor']
+    
+    conta = int(request.form.get('conta'))
+
+    for i in range(1, conta + 1):  # Asegúrate de incluir el último valor
+        Resp=request.form.get('R' + str(i))
+        Preg=request.form.get('P' + str(i))
+        sql=f"insert into THEVAL(idINSTRUCTOR,idFICHA,idAPRENDIZ,PREGUNTA,RESPUESTA,TITULACION,TRIMESTRE) VALUES({I},{F},{A},'{Preg}','{Resp}','{T}','{TRIMESTRE}')".format(I,F,A,Preg,Resp,T,TRIMESTRE)
+        
+        Ejecutar(DATABASE,sql)
+        
+    
+        
+    
+    au.registra(30,'EVALUO A: '+getInstructor(I))
+    msgito="Respuestas registrada"
+    regreso="/login"
+    return render_template("alertas.html",msgito=msgito,regreso=regreso)
+
 @app.route('/evalua/<N>/<I>' ,methods=['POST','GET']) 
-def evalua(N,I):   
+def evalua(N,I):  
+    print("xxxxxxxxxxxxxxxx>",N)
     if N=="1":
        
         F=session['ficha']
@@ -256,13 +315,16 @@ def evalua(N,I):
         session['instructor']=datos[3]
         I=session['instructor']
         datos=[N,F,I,A]
+        return "->"+str(N)
         return render_template('carga.html',N=N,datos=datos)
     if N=="2":
-        F=session['ficha']
-        A=session['dnia']
+        # F=session['ficha']
+        F=3147246
+        # A=session['dnia']
+        A=1013106019
         # I=session['instructor']
         datos=[N,F,I,A]
-        
+        print("__________________________>",N)
         preg=Consultar(DATABASE,'SELECT * FROM PREGUNTA WHERE ESTADO=1')
         hay=len(preg)
         au.registra(30,'ENTRA A EVALUAR A: '+getInstructor(I))
@@ -274,7 +336,7 @@ def evalua(N,I):
             }
         session['apr']=apr
         
-        return render_template('carga.html',N=N,datos=datos,preg=preg,hay=hay,nomi=getInstructor(I),apr=apr)
+        return render_template('carga.html',N=2,datos=datos,preg=preg,hay=hay,nomi=getInstructor(I),apr=apr)
     if N=="3":
         F=session['ficha']
         A=session['dnia']

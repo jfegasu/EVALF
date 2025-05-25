@@ -96,10 +96,19 @@ def obtener_instructor_por_dni(dni):
     sql=f"SELECT * FROM FICHAINSTRUCTOR WHERE DNI='{dni}'".format(dni)
     datos=Consultar(DATABASE,sql)
     return jsonify(datos),404
-
+@app.route('/u/<int:t>/<p>/<m>')
+def Valida(t,p,m):
+    if t==1:
+        sql=f"SELECT COUNT(*) cant FROM FICHAAPRENDIZ WHERE PWDAP='{p}' AND EMAIL='{m}'".format(p,m)
+        try:
+            datos=ConsultarUno(DATABASE,sql)
+            return jsonify(datos[0])
+        except Exception as e:
+            return 401
+    
 @app.route('/inst/e/<email>', methods=['GET'])
 def obtener_instructor_por_email(email):
-    sql=f"SELECT * FROM FICHAINSTRUCTOR WHERE EMAIL='{email}'".format(email)
+    sql=f"SELECT * FROM VINSTRUCTOR WHERE EMAIL='{email}'".format(email)
     datos=Consultar(DATABASE,sql)
     return jsonify(datos),404
     
@@ -147,25 +156,24 @@ def valida_aprendiz_por_emailvd(tipo,email,pwd):
  
 @app.route('/inst/<pficha>/<paprendiz>', methods=['GET'])
 def noEvaluados(pficha, paprendiz):
-    sql=f"SELECT * FROM FICHAINSTRUCTOR WHERE FICHA='{pficha}' AND DNI NOT IN(SELECT IDINSTRUCTOR FROM THEVAL WHERE IDFICHA='{pficha}' AND IDAPRENDIZ='{paprendiz}')".format(pficha,paprendiz)
+    # sql=f"SELECT * FROM FICHAINSTRUCTOR WHERE FICHA='{pficha}' AND DNI NOT IN(SELECT IDINSTRUCTOR FROM THEVAL WHERE IDFICHA='{pficha}' AND IDAPRENDIZ='{paprendiz}')".format(pficha,paprendiz)
     sql=f"SELECT * FROM VINSTRUCTORESP WHERE FICHA={pficha} AND DNIAP={paprendiz}".format(pficha,paprendiz)
+    print(sql)
     datos=Consultar(DATABASE,sql)
     return jsonify(datos)
   
 @app.route('/inst/contar/<email>', methods=['GET'])
 def contar_instructores_por_email(email):
-    tinstructor = (FichaInstructor
-              .select(fn.COUNT(FichaInstructor.DNI).alias('total'))
-              .where(FichaInstructor.EMAIL == email)
-              .scalar())  # Devuelve el valor directo, no una fila
-    taprendiz = (FichaAprendiz
-              .select(fn.COUNT(FichaAprendiz.DNIA).alias('total'))
-              .where(FichaAprendiz.EMAIL == email)
-              .scalar())  # Devuelve el valor directo, no una fila
-    tadmin = (Admin
-              .select(fn.COUNT(Admin.EMAIL).alias('total'))
-              .where(Admin.EMAIL == email)
-              .scalar())  # Devuelve el valor directo, no una fila
+    sql=f"SELECT COUNT(*) CANT FROM VINSTRUCTOR WHERE EMAIL='{email}'".format(email)
+    datos=Consultar(DATABASE,sql)
+    tinstructor=datos[0]['CANT']
+    sql=f"SELECT COUNT(*) CANT FROM VAPRENDIZ WHERE EMAIL='{email}'".format(email)
+    datos=Consultar(DATABASE,sql)
+    taprendiz=datos[0]['CANT']
+    sql=f"SELECT COUNT(*) CANT FROM VADMIN WHERE EMAIL='{email}'".format(email)
+    datos=Consultar(DATABASE,sql)
+    tadmin=datos[0]['CANT']
+    
     if tinstructor>0:
         tipo=2
     elif taprendiz>0:

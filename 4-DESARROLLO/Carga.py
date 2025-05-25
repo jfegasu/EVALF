@@ -49,7 +49,11 @@ def Cargando():
     TRIMESTRE=obtener_trimestre(datetime.now())
     for index, row in instructor.iterrows():
         # print(row['FICHA'],row['DNI'],row['NOMBRE'],row['EMAIL'])
-        sql=f"INSERT INTO FICHAINSTRUCTOR(FICHA,DNI,NOMINST,EMAIL,TRIMESTRE) VALUES('{row['FICHA']}','{row['DNI']}','{row['NOMBRE']}','{row['EMAIL']}',{TRIMESTRE})".format(row['FICHA'],row['DNI'],row['NOMBRE'],row['EMAIL'],TRIMESTRE)
+        x=row['DNI']
+        x=str(x)[-4:]
+        xx = hashlib.md5(x.encode()).hexdigest()
+        
+        sql=f"INSERT INTO FICHAINSTRUCTOR(FICHA,DNI,NOMINST,EMAIL,TRIMESTRE,PWD) VALUES('{row['FICHA']}','{row['DNI']}','{row['NOMBRE']}','{row['EMAIL']}',{TRIMESTRE},'{xx}')".format(row['FICHA'],row['DNI'],row['NOMBRE'],row['EMAIL'],TRIMESTRE,xx)
         # print(sql)
         Ejecutar(DATABASE,sql)
     # os.remove("instructor.csv")

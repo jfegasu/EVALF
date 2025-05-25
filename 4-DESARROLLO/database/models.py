@@ -10,7 +10,7 @@ class Asistencia(BaseModel):
     ACTIVIDAD = TextField()
     DNIA = IntegerField()
     DNII = IntegerField()
-    FICHA = IntegerField(null=True)
+    FICHA = IntegerField()
 
 class Configura(BaseModel):
     CENTRO = TextField()
@@ -31,7 +31,7 @@ class FichaAprendiz(BaseModel):
     NOMBREAP = TextField()
     ESTADOAP = IntegerField(default=0)
     PWDAP = TextField()
-    EMAIL = TextField(null=True)
+    EMAIL = TextField()
     TITULACION = TextField()
     FECHA = DateTimeField(default=datetime.datetime.now)
 
@@ -43,7 +43,7 @@ class FichaInstructor(BaseModel):
     LIDER = IntegerField(default=0, constraints=[Check('LIDER IN (0, 1)')])
     TRIMESTRE = IntegerField(default=1, constraints=[Check('TRIMESTRE IN (1, 2, 3, 4)')])
     FECHA = DateTimeField(default=datetime.datetime.now)
-    PWD = TextField(null=True)
+    PWD = TextField()
 
 class Menu(BaseModel):
     idMenu = AutoField()
@@ -51,7 +51,7 @@ class Menu(BaseModel):
     NOM = TextField()
     RUTA = TextField()
     ROL = TextField()
-    ICONO = TextField(null=True)
+    ICONO = TextField()
 
 class Pregunta(BaseModel):
     id = AutoField()

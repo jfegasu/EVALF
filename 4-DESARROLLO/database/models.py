@@ -54,21 +54,23 @@ class Menu(BaseModel):
 
 class Pregunta(BaseModel):
     id = AutoField()
-    DESCRIPCION = TextField()
-    ESTADO = IntegerField()
-    VALORES = TextField()
+    DESCRIPCION = TextField(null=True)
+    ESTADO = IntegerField(null=True)
+    VALORES = TextField(null=True)
     FECHA = DateTimeField(default=datetime.datetime.now)
 
 class TheVal(BaseModel):
-    idINSTRUCTOR = IntegerField()
-    idFICHA = IntegerField()
-    TITULACION = TextField()
-    idAPRENDIZ = IntegerField()
-    PREGUNTA = TextField()
-    RESPUESTA = TextField()
-    TRIMESTRE = TextField(default='0')
+    idINSTRUCTOR = IntegerField(null=True)
+    idFICHA = IntegerField(null=True)
+    TITULACION = TextField(null=True)
+    idAPRENDIZ = IntegerField(null=True)
+    PREGUNTA = TextField(null=True)
+    RESPUESTA = TextField(null=True)
+    TRIMESTRE = TextField(default='0',null=True)
     FECHA = DateTimeField(default=datetime.datetime.now)
     
 # Crear las tablas si no existen
+
 db.connect()
 db.create_tables([Admin, FichaInstructor, FichaAprendiz, Menu, Pregunta, TheVal])
+print("PROCESO FINALIZADO")

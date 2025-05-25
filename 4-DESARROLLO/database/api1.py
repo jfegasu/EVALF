@@ -29,7 +29,17 @@ def ConsultarUno(db,sql):
     output = cursor.fetchone() 
     conn.close()
     return output 
-
+def Ejecutar(db,sql):
+    try:
+        conn = sqlite3.connect(db)
+        cursor = conn.cursor()
+        cursor.execute(sql)
+        conn.commit()
+        conn.close()
+        return '200' 
+    except Exception as e:
+        print(e)
+        return("400")
 @app.route('/u/1/<email>', methods=['GET']) # Detemina tipo de usuario
 def TipoUsuario(email):
     
@@ -129,6 +139,19 @@ def InstructoresXFicha(ficha):
     sql=f"SELECT * FROM FICHAINSTRUCTOR WHERE FICHA={ficha}".format(ficha)
     datos=Consultar(DATABASE,sql)
     return datos
+@app.route('/act', methods=['POST']) # Instructores por evaluar por el aprendiz
+def inserta():
+    datos = request.get_json()
+    a=datos['ACTIVIDAD']
+    b=datos['DNIA']
+    c=datos['DNII']
+    
+    print(a)
+    sql=f"INSERT INTO ASISTENCIA(ACTIVIDAD,DNIA,DNII) values('{a}',{b},{c})".format(a,b,c)
+    print(sql)
+    datos=Ejecutar(DATABASE,sql)
+    return "200"
+    
 
 
 

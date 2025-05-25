@@ -39,25 +39,25 @@ class FichaInstructor(BaseModel):
     DNI = TextField(null=True)
     FICHA = TextField(null=True)
     EMAIL = TextField(null=True)
-    LIDER = IntegerField(default=0, constraints=[Check('LIDER IN (0, 1)')])
-    TRIMESTRE = IntegerField(default=1, constraints=[Check('TRIMESTRE IN (1, 2, 3, 4)')])
-    FECHA = DateTimeField(default=datetime.datetime.now)
+    LIDER = IntegerField(default=0, constraints=[Check('LIDER IN (0, 1)')],null=True)
+    TRIMESTRE = IntegerField(default=1, constraints=[Check('TRIMESTRE IN (1, 2, 3, 4)')],null=True)
+    FECHA = DateTimeField(default=datetime.datetime.now,null=True)
     PWD = TextField(null=True)
 
 class Menu(BaseModel):
     idMenu = AutoField()
-    LUGAR = IntegerField()
-    NOM = TextField()
-    RUTA = TextField()
-    ROL = TextField()
-    ICONO = TextField()
+    LUGAR = IntegerField(null=True)
+    NOM = TextField(null=True)
+    RUTA = TextField(null=True)
+    ROL = TextField(null=True)
+    ICONO = TextField(null=True)
 
 class Pregunta(BaseModel):
     id = AutoField()
     DESCRIPCION = TextField(null=True)
     ESTADO = IntegerField(null=True)
     VALORES = TextField(null=True)
-    FECHA = DateTimeField(default=datetime.datetime.now)
+    FECHA = DateTimeField(default=datetime.datetime.now,null=True)
 
 class TheVal(BaseModel):
     idINSTRUCTOR = IntegerField(null=True)
@@ -67,7 +67,7 @@ class TheVal(BaseModel):
     PREGUNTA = TextField(null=True)
     RESPUESTA = TextField(null=True)
     TRIMESTRE = TextField(default='0',null=True)
-    FECHA = DateTimeField(default=datetime.datetime.now)
+    FECHA = DateTimeField(default=datetime.datetime.now,null=True)
     
 # Crear las tablas si no existen
 

@@ -11,7 +11,7 @@ app.secret_key = 'BAD_SECRET_KEY'
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 DATABASE = os.path.join(BASE_DIR,  'sena.db')
 
-db = SqliteDatabase(DATABASE)
+# db = SqliteDatabase(DATABASE)
 def Consultar(db,sql):
     conn = sqlite3.connect(db)
     # conn.row_factory = sqlite3.Row  # Esto permite acceder a los resultados como diccionarios
@@ -139,18 +139,27 @@ def InstructoresXFicha(ficha):
     sql=f"SELECT * FROM FICHAINSTRUCTOR WHERE FICHA={ficha}".format(ficha)
     datos=Consultar(DATABASE,sql)
     return datos
-@app.route('/act', methods=['POST']) # Instructores por evaluar por el aprendiz
+import sqlite3
+
+@app.route('/act', methods=['POST','GET'])  # Instructores por evaluar por el aprendiz
 def inserta():
     datos = request.get_json()
-    a=datos['ACTIVIDAD']
-    b=datos['DNIA']
-    c=datos['DNII']
-    
+    a = datos['ACTIVIDAD']
+    b = datos['DNIA']
+    c = datos['DNII']
+    D = datos['FICHA']
+
     print(a)
-    sql=f"INSERT INTO ASISTENCIA(ACTIVIDAD,DNIA,DNII) values('{a}',{b},{c})".format(a,b,c)
-    print(sql)
-    datos=Ejecutar(DATABASE,sql)
+    sql = "INSERT INTO ASISTENCIA(ACTIVIDAD, DNIA, DNII,FICHA) VALUES (?, ?, ?,?)"
+    print(DATABASE)
+    conn = sqlite3.connect(DATABASE)
+    cursor = conn.cursor()
+    cursor.execute(sql, (a, b, c))
+    conn.commit()
+    conn.close()
+    
     return "200"
+
     
 
 

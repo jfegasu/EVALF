@@ -160,6 +160,23 @@ def inserta():
     
     return "200"
 
+# app.py (continuación)
+# from modelos import Asistencia
+
+# @app.route('/act1', methods=['POST'])
+# def insertar_asistencia():
+#     try:
+#         data = request.get_json()
+#         asistencia = Asistencia.create(
+#             ACTIVIDAD=data['ACTIVIDAD'],
+#             DNIA=data['DNIA'],
+#             DNII=data['DNII'],
+#             FICHA=data.get('FICHA')  # puede ser opcional
+#         )
+#         return jsonify({"status": "ok", "id": asistencia.id}), 200
+#     except Exception as e:
+#         print("[ERROR]:", e)
+#         return jsonify({"status": "error", "message": str(e)}), 500
     
 
 

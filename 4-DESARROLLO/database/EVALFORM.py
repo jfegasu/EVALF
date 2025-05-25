@@ -1,7 +1,7 @@
+# modelos.py
 from peewee import *
-import datetime 
-# Conexión a la base de datos SQLite
-db = SqliteDatabase('sena.db')  
+from app import db
+
 class BaseModel(Model):
     class Meta:
         database = db
@@ -69,7 +69,3 @@ class TheVal(BaseModel):
     RESPUESTA = TextField()
     TRIMESTRE = TextField(default='0')
     FECHA = DateTimeField(default=datetime.datetime.now)
-    
-# Crear las tablas si no existen
-db.connect()
-db.create_tables([Admin, FichaInstructor, FichaAprendiz, Menu, Pregunta, TheVal])

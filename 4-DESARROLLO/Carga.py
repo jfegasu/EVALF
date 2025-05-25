@@ -5,6 +5,7 @@ import os
 import glob
 import platform
 import hashlib
+print("**********************************")
 def Cargando():
     BASE_DIR = os.path.dirname(os.path.abspath(__file__))
     DATABASE = os.path.join(BASE_DIR, 'database', 'sena.db')
@@ -84,3 +85,5 @@ def Cargando():
             print(f"No se pudo eliminar {archivo}: {e}")
     
     return  "200 - PROCESO TERMINADO CON EXITO"
+if __name__ == '__main__':
+    Cargando()

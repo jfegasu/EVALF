@@ -7,15 +7,15 @@ class BaseModel(Model):
         database = db
 
 class Asistencia(BaseModel):
-    ACTIVIDAD = TextField()
-    DNIA = IntegerField()
-    DNII = IntegerField()
-    FICHA = IntegerField()
+    ACTIVIDAD = TextField(null=True)
+    DNIA = IntegerField(null=True)
+    DNII = IntegerField(null=True)
+    FICHA = IntegerField(null=True)
 
 class Configura(BaseModel):
-    CENTRO = TextField()
-    FINICIA = DateField()
-    FFIN = DateField()
+    CENTRO = TextField(null=True)
+    FINICIA = DateField(null=True)
+    FFIN = DateField(null=True)
 
 class Admin(BaseModel):
     id = AutoField()
@@ -59,6 +59,13 @@ class Pregunta(BaseModel):
     VALORES = TextField(null=True)
     FECHA = DateTimeField(default=datetime.datetime.now,null=True)
 
+class Asistencia(Model):
+    actividad = CharField(null=True)
+    dnia = CharField(null=True)
+    dnii = CharField(null=True)
+    ficha = CharField(null=True)
+    falla = CharField(max_length=1, null=True)
+    
 class TheVal(BaseModel):
     idINSTRUCTOR = IntegerField(null=True)
     idFICHA = IntegerField(null=True)
@@ -69,8 +76,11 @@ class TheVal(BaseModel):
     TRIMESTRE = TextField(default='0',null=True)
     FECHA = DateTimeField(default=datetime.datetime.now,null=True)
     
+db.connect()
 # Crear las tablas si no existen
 
-db.connect()
-db.create_tables([Admin, FichaInstructor, FichaAprendiz, Menu, Pregunta, TheVal])
-print("PROCESO FINALIZADO")
+
+if __name__ == '__main__':
+    
+    db.create_tables([Admin, FichaInstructor, FichaAprendiz, Menu, Pregunta, TheVal])
+    print("PROCESO FINALIZADO")

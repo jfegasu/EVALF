@@ -123,17 +123,29 @@ def InstructorUsuarioXEvaluar(email):
     subquery = TheVal.select(TheVal.idINSTRUCTOR).where(
     (TheVal.idFICHA == Ficha) & (TheVal.idAPRENDIZ == DNI))
     
-    return jsonify({"idINSTRUCTOR":subquery.idINSTRUCTOR})
-    # query = FichaInstructor.select().where(
-    # (FichaInstructor.ficha == Ficha) &
-    # (FichaInstructor.dni.not_in(subquery))
-    # )
+    
+    query = FichaInstructor.select().where(
+    (FichaInstructor.FICHA == Ficha) &
+    (FichaInstructor.DNI.not_in(subquery))
+    )
+    return str(query)
 
 @app.route('/p', methods=['GET']) # Instructores por evaluar por el aprendiz
 def Preguntas():
-    sql=f"SELECT * FROM PREGUNTA WHERE ESTADO=1"
-    datos=Consultar(DATABASE,sql)
-    return datos
+    try:
+        datos = Pregunta.select().where(Pregunta.ESTADO==1)  # puedes agregar filtros si deseas
+
+        resultado = []
+        for fila in datos:
+            resultado.append({
+                "ID":fila.id,
+                "DESCRIPCION": fila.DESCRIPCION,
+                "VALORES": fila.VALORES
+            })
+
+        return jsonify(resultado)
+    except Exception as e:
+        return jsonify({"error": str(e)}), 400
 
 @app.route('/i/2/<ficha>', methods=['GET']) # Instructores por evaluar por el aprendiz
 def InstructoresXFicha(ficha):

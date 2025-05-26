@@ -115,11 +115,19 @@ def DatosUsuario(email):
 
 @app.route('/i/1/<email>', methods=['GET']) # Instructores por evaluar por el aprendiz
 def InstructorUsuarioXEvaluar(email):
-    Ficha=FichaAprendiz(email)
+    Ficha=FichaAprendiz1(email)
     DNI=DNIAprendiz(email)
     sql=f"SELECT * FROM FICHAINSTRUCTOR FI WHERE FI.FICHA={Ficha} AND FI.DNI NOT IN (SELECT idINSTRUCTOR FROM THEVAL WHERE IDFICHA={Ficha} AND idAPRENDIZ={DNI})".format(Ficha,DNI)
     datos=Consultar(DATABASE,sql)
-    return datos
+    # return datos
+    subquery = TheVal.select(TheVal.idINSTRUCTOR).where(
+    (TheVal.idFICHA == Ficha) & (TheVal.idAPRENDIZ == DNI))
+    
+    return jsonify({"idINSTRUCTOR":subquery.idINSTRUCTOR})
+    # query = FichaInstructor.select().where(
+    # (FichaInstructor.ficha == Ficha) &
+    # (FichaInstructor.dni.not_in(subquery))
+    # )
 
 @app.route('/p', methods=['GET']) # Instructores por evaluar por el aprendiz
 def Preguntas():

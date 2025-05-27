@@ -255,14 +255,15 @@ def eval1(I):
     I=session['instructor']
     datos=[N,F,I,A]
     return render_template('carga.html',N=1,datos=datos)
-@app.route('/eval/2/<I>' ,methods=['POST','GET']) 
-def eval2(I):  
+@app.route('/ev/2/<I>' ,methods=['POST','GET']) 
+def eval2a(I):  
     # F=session['ficha']
     F=3147246
     # A=session['dnia']
     A=1013106019
     # I=session['instructor']
-    datos=[N,F,I,A]
+    N=2
+    datos=[2,F,I,A]
     print("__________________________>",N)
     preg=Consultar(DATABASE,'SELECT * FROM PREGUNTA WHERE ESTADO=1')
     hay=len(preg)

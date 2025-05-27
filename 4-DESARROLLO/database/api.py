@@ -105,10 +105,17 @@ def Valida(t,p,m):
             return jsonify(datos[0])
         except Exception as e:
             return 401
+    if t==2:
+        sql=f"SELECT COUNT(*) cant FROM FICHAINSTRUCTOR WHERE PWDAP='{p}' AND EMAIL='{m}'".format(p,m)
+        try:
+            datos=ConsultarUno(DATABASE,sql)
+            return jsonify(datos[0])
+        except Exception as e:
+            return 401
     
 @app.route('/inst/e/<email>', methods=['GET'])
 def obtener_instructor_por_email(email):
-    sql=f"SELECT * FROM VINSTRUCTOR WHERE EMAIL='{email}'".format(email)
+    sql=f"SELECT * FROM FICHAINSTRUCTOR WHERE EMAIL='{email}'".format(email)
     datos=Consultar(DATABASE,sql)
     return jsonify(datos),404
     

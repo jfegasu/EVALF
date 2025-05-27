@@ -105,15 +105,15 @@ def valida():
             # au.registra(30,msgito)
             # *******
             return render_template('alertas.html',msgito=msgito,regreso=regresa)
-    elif Tipo['Tipo']==2:
-        sql=f"/inst/e/{usua}".format(usua)
+    elif Tipo==2:
+        sql=f"/i/e/{usua}".format(usua)
         
         datos=ConsultarDB(sql)
 
         return render_template('foto.html',datos=datos)
         
         
-    elif Tipo['Tipo']==3:
+    elif Tipo==3:
         session['usua']=usua
         # au.registra(30,"Ingresa un administrador",session['usua'])
         return render_template('menuadmin.html')

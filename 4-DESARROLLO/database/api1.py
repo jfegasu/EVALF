@@ -201,12 +201,6 @@ def insertar_asistencia():
 
 @app.route('/inst/<pficha>/<paprendiz>', methods=['GET'])
 def noEvaluados(pficha, paprendiz):
-    # sql=f"SELECT * FROM FICHAINSTRUCTOR WHERE FICHA='{pficha}' AND DNI NOT IN(SELECT IDINSTRUCTOR FROM THEVAL WHERE IDFICHA='{pficha}' AND IDAPRENDIZ='{paprendiz}')".format(pficha,paprendiz)
-    # sql=f"SELECT * FROM VINSTRUCTORESP WHERE FICHA={pficha} AND DNIAP={paprendiz}".format(pficha,paprendiz)
-    # print(sql)
-    # datos=Consultar(DATABASE,sql)
-    # return jsonify(datos)
-    # datos=  VINSTRUCTORESP.select().where((VINSTRUCTORESP.FICHA==pficha) & (VINSTRUCTORESP.DNIAP==paprendiz))
     datos = VInstructorEsp.select().where((VInstructorEsp.ficha==pficha) & (VInstructorEsp.dniap==paprendiz))
     resultado = [{
         'titulacion': d.titulacion,
@@ -219,37 +213,6 @@ def noEvaluados(pficha, paprendiz):
         'emailap': d.emailap
     } for d in datos]
     return jsonify(resultado)
-#     try:
-#             query = (FichaInstructor.select(
-#             #  FichaInstructor.TITULACION,
-#              FichaInstructor.FICHA,
-#              FichaInstructor.DNI,
-#              FichaInstructor.EMAIL.alias('EMAILINST'),
-#              FichaInstructor.NOMINST,
-#              FichaAprendiz.TITULACION,
-#              FichaAprendiz.DNIA.alias('DNIAP'),
-#              FichaAprendiz.NOMBREAP,
-#              FichaAprendiz.EMAIL.alias('EMAILAP')
-#          ).join(FichaAprendiz, on=(FichaInstructor.FICHA == FichaAprendiz.FICHA)).where(FichaInstructor.DNI.not_in(
-#              TheVal.select(TheVal.idINSTRUCTOR).distinct()
-#              .where((TheVal.idFICHA == FichaInstructor.FICHA) &
-#                     (TheVal.idAPRENDIZ == FichaAprendiz.DNIA))
-#          ))
-#          .distinct()
-# )
-#             resultado = []
-#             for fila in query:
-#                 resultado.append({
-#                     "FICHA": fila.FICHA,
-#                     "DNI": fila.DNI,
-#                     "EMAILINST":fila.EMAILINST
-                    
-                    
-#                 })
-
-#             return jsonify(resultado)
-    # except Exception as e:
-    #         return jsonify({"error": str(e)}), 400
 
 
 if __name__ == '__main__':

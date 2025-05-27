@@ -207,7 +207,7 @@ def noEvaluados(pficha, paprendiz):
     # datos=Consultar(DATABASE,sql)
     # return jsonify(datos)
     # datos=  VINSTRUCTORESP.select().where((VINSTRUCTORESP.FICHA==pficha) & (VINSTRUCTORESP.DNIAP==paprendiz))
-    datos = VInstructorEsp.select()
+    datos = VInstructorEsp.select().where((VInstructorEsp.ficha==pficha) & (VInstructorEsp.dniap==paprendiz))
     resultado = [{
         'titulacion': d.titulacion,
         'ficha': d.ficha,

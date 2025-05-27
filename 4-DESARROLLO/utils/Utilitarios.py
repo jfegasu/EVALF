@@ -20,6 +20,17 @@ BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 
 
 
+class Api:
+    def __init__(self,url="http://127.0.0.1:5556"):
+        self.url = url  
+        self.Estado=None     
+    def ConsultaApi(self,clave):
+        response = requests.get(self.url+clave) 
+        self.Estado=response.status_code
+        return  response.text
+    def PostApi(self,clave,datos):
+        response = requests.post(self.url+clave, json=datos)  
+        return response.status_code   
 
 class Auditor():
     logger=None

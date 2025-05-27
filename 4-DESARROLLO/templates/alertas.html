@@ -2,9 +2,9 @@
 {% block content %}
             
                 <center><br>
-                    <div class="container w-50 col-4" style="text-align:center">
+                    <div class="sena w-50 col-4" style="text-align:center">
             <img src="{{url_for('static',filename='images/NOTFOUND.png')}}" width="400px" ><br>
-                        <h1><font color=red  class="caret-sombra-red"><b>{{ msgito}}</font></h1>
+                        <h1 class="sena-sombra"><font color=red  class="caret-sombra-red"><b>{{ msgito}}</font></h1>
                     </div>
                 </center>
 
@@ -12,10 +12,8 @@
                 
         <script>
             function Voy(){
-            {% if regreso%}
+            {% if regreso %}
             window.open("{{regreso}}","centro")
-            {% else %}
-            location.href="/"
             {% endif %}
             }
             setTimeout('Voy()',5000)

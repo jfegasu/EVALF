@@ -151,7 +151,7 @@ def Preguntas():
     except Exception as e:
         return jsonify({"error": str(e)}), 400
 
-@app.route('/i/2/<ficha>', methods=['GET']) # Instructores por evaluar por el aprendiz
+@app.route('/i/2a/<ficha>', methods=['GET']) # Instructores por evaluar por el aprendiz
 def InstructoresXFicha(ficha):
     sql=f"SELECT * FROM FICHAINSTRUCTOR WHERE FICHA={ficha}".format(ficha)
     datos=Consultar(DATABASE,sql)
@@ -199,44 +199,21 @@ def insertar_asistencia():
         print("[ERROR]:", e)
         return jsonify({"status": "error", "message": str(e)}), 400
 
-@app.route('/inst/<pficha>/<paprendiz>', methods=['GET'])
+@app.route('/i/2/<pficha>/<paprendiz>', methods=['GET'])
 def noEvaluados(pficha, paprendiz):
-    sql=f"SELECT * FROM FICHAINSTRUCTOR WHERE FICHA='{pficha}' AND DNI NOT IN(SELECT IDINSTRUCTOR FROM THEVAL WHERE IDFICHA='{pficha}' AND IDAPRENDIZ='{paprendiz}')".format(pficha,paprendiz)
-    sql=f"SELECT * FROM VINSTRUCTORESP WHERE FICHA={pficha} AND DNIAP={paprendiz}".format(pficha,paprendiz)
-    print(sql)
-    datos=Consultar(DATABASE,sql)
-    return jsonify(datos)
-#     try:
-#             query = (FichaInstructor.select(
-#             #  FichaInstructor.TITULACION,
-#              FichaInstructor.FICHA,
-#              FichaInstructor.DNI,
-#              FichaInstructor.EMAIL.alias('EMAILINST'),
-#              FichaInstructor.NOMINST,
-#              FichaAprendiz.TITULACION,
-#              FichaAprendiz.DNIA.alias('DNIAP'),
-#              FichaAprendiz.NOMBREAP,
-#              FichaAprendiz.EMAIL.alias('EMAILAP')
-#          ).join(FichaAprendiz, on=(FichaInstructor.FICHA == FichaAprendiz.FICHA)).where(FichaInstructor.DNI.not_in(
-#              TheVal.select(TheVal.idINSTRUCTOR).distinct()
-#              .where((TheVal.idFICHA == FichaInstructor.FICHA) &
-#                     (TheVal.idAPRENDIZ == FichaAprendiz.DNIA))
-#          ))
-#          .distinct()
-# )
-#             resultado = []
-#             for fila in query:
-#                 resultado.append({
-#                     "FICHA": fila.FICHA,
-#                     "DNI": fila.DNI,
-#                     "EMAILINST":fila.EMAILINST
-                    
-                    
-#                 })
-
-#             return jsonify(resultado)
-    # except Exception as e:
-    #         return jsonify({"error": str(e)}), 400
+    datos = VInstructorEsp.select().where((VInstructorEsp.ficha==pficha) & (VInstructorEsp.dniap==paprendiz))
+    
+    resultado = [{
+        'titulacion': d.titulacion,
+        'ficha': d.ficha,
+        'dninst': d.dninst,
+        'emailinst': d.emailinst,
+        'nominst': d.nominst,
+        'dniap': d.dniap,
+        'nombreap': d.nombreap,
+        'emailap': d.emailap
+    } for d in datos]
+    return jsonify(resultado)
 
 
 if __name__ == '__main__':

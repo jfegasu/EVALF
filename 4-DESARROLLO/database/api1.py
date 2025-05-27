@@ -201,11 +201,24 @@ def insertar_asistencia():
 
 @app.route('/inst/<pficha>/<paprendiz>', methods=['GET'])
 def noEvaluados(pficha, paprendiz):
-    sql=f"SELECT * FROM FICHAINSTRUCTOR WHERE FICHA='{pficha}' AND DNI NOT IN(SELECT IDINSTRUCTOR FROM THEVAL WHERE IDFICHA='{pficha}' AND IDAPRENDIZ='{paprendiz}')".format(pficha,paprendiz)
-    sql=f"SELECT * FROM VINSTRUCTORESP WHERE FICHA={pficha} AND DNIAP={paprendiz}".format(pficha,paprendiz)
-    print(sql)
-    datos=Consultar(DATABASE,sql)
-    return jsonify(datos)
+    # sql=f"SELECT * FROM FICHAINSTRUCTOR WHERE FICHA='{pficha}' AND DNI NOT IN(SELECT IDINSTRUCTOR FROM THEVAL WHERE IDFICHA='{pficha}' AND IDAPRENDIZ='{paprendiz}')".format(pficha,paprendiz)
+    # sql=f"SELECT * FROM VINSTRUCTORESP WHERE FICHA={pficha} AND DNIAP={paprendiz}".format(pficha,paprendiz)
+    # print(sql)
+    # datos=Consultar(DATABASE,sql)
+    # return jsonify(datos)
+    # datos=  VINSTRUCTORESP.select().where((VINSTRUCTORESP.FICHA==pficha) & (VINSTRUCTORESP.DNIAP==paprendiz))
+    datos = VInstructorEsp.select()
+    resultado = [{
+        'titulacion': d.titulacion,
+        'ficha': d.ficha,
+        'dninst': d.dninst,
+        'emailinst': d.emailinst,
+        'nominst': d.nominst,
+        'dniap': d.dniap,
+        'nombreap': d.nombreap,
+        'emailap': d.emailap
+    } for d in datos]
+    return jsonify(resultado)
 #     try:
 #             query = (FichaInstructor.select(
 #             #  FichaInstructor.TITULACION,

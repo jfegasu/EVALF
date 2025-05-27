@@ -77,6 +77,21 @@ class TheVal(BaseModel):
     RESPUESTA = TextField(null=True)
     TRIMESTRE = TextField(default='0',null=True)
     FECHA = DateTimeField(default=datetime.datetime.now,null=True)
+
+
+class VInstructorEsp(BaseModel):
+    titulacion = CharField()
+    ficha = IntegerField()
+    dninst = CharField()
+    emailinst = CharField()
+    nominst = CharField()
+    dniap = CharField()
+    nombreap = CharField()
+    emailap = CharField()
+
+    class Meta:
+        table_name = 'vinstructoresp'
+        primary_key = False  # Las vistas normalmente no tienen clave primaria
     
 db.connect()
 # Crear las tablas si no existen

@@ -202,6 +202,7 @@ def insertar_asistencia():
 @app.route('/i/2/<pficha>/<paprendiz>', methods=['GET'])
 def noEvaluados(pficha, paprendiz):
     datos = VInstructorEsp.select().where((VInstructorEsp.ficha==pficha) & (VInstructorEsp.dniap==paprendiz))
+    
     resultado = [{
         'titulacion': d.titulacion,
         'ficha': d.ficha,

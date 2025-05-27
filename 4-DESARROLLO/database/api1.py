@@ -215,7 +215,11 @@ def noEvaluados(pficha, paprendiz):
     } for d in datos]
     return jsonify(resultado)
 
-
+@app.route('/i/e/<email>', methods=['GET'])
+def obtener_instructor_por_email(email):
+    sql=f"SELECT * FROM FICHAINSTRUCTOR WHERE EMAIL='{email}'".format(email)
+    datos=Consultar(DATABASE,sql)
+    return jsonify(datos),404
 if __name__ == '__main__':
     app.run(debug=True,port=5556)
     

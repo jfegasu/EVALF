@@ -106,7 +106,7 @@ def valida():
             # *******
             return render_template('alertas.html',msgito=msgito,regreso=regresa)
     elif Tipo==2:
-        sql=f"/inst/e/{usua}".format(usua)
+        sql=f"/i/e/{usua}".format(usua)
         
         datos=ConsultarDB(sql)
 

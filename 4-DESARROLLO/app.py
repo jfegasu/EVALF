@@ -85,9 +85,9 @@ def valida():
             # return str(aprendiz)
             F=aprendiz['FICHA']
             A=aprendiz['DNI'] 
-            sql=f"SELECT * FROM FICHAINSTRUCTOR WHERE DNI NOT IN(SELECT IDINSTRUCTOR FROM THEVAL WHERE IDFICHA='{F}' AND IDAPRENDIZ='{A}')".format(F,A)
+            # sql=f"SELECT * FROM FICHAINSTRUCTOR WHERE DNI NOT IN(SELECT IDINSTRUCTOR FROM THEVAL WHERE IDFICHA='{F}' AND IDAPRENDIZ='{A}')".format(F,A)
             # datos=Consultar(DATABASE,sql)
-            datos=ConsultarDB(f"/inst/{F}/{A}".format(F,A))
+            datos=ConsultarDB(f"/i/2/{F}/{A}".format(F,A))
             
             apr={
                 "ficha":session['ficha'],
@@ -95,9 +95,9 @@ def valida():
                 "titulacion":session['titulacion'],
                 "dnia":session['dnia']
             }
-            
+            print("---->",datos)
             # au.registra(30,'Ingresa:'+session['nombreap'])
-            return render_template('carga.html',N=N,datos=datos,apr=apr)
+            return render_template('carga.html',N=1,datos=datos,apr=apr)
   
         else:
             msgito="APRENDIZ O CLAVE ERRADOS**"

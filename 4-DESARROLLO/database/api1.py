@@ -151,7 +151,7 @@ def Preguntas():
     except Exception as e:
         return jsonify({"error": str(e)}), 400
 
-@app.route('/i/2/<ficha>', methods=['GET']) # Instructores por evaluar por el aprendiz
+@app.route('/i/2a/<ficha>', methods=['GET']) # Instructores por evaluar por el aprendiz
 def InstructoresXFicha(ficha):
     sql=f"SELECT * FROM FICHAINSTRUCTOR WHERE FICHA={ficha}".format(ficha)
     datos=Consultar(DATABASE,sql)
@@ -199,7 +199,7 @@ def insertar_asistencia():
         print("[ERROR]:", e)
         return jsonify({"status": "error", "message": str(e)}), 400
 
-@app.route('/inst/<pficha>/<paprendiz>', methods=['GET'])
+@app.route('/i/2/<pficha>/<paprendiz>', methods=['GET'])
 def noEvaluados(pficha, paprendiz):
     datos = VInstructorEsp.select().where((VInstructorEsp.ficha==pficha) & (VInstructorEsp.dniap==paprendiz))
     resultado = [{

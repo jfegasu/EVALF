@@ -24,6 +24,8 @@ class Admin(BaseModel):
     CLA = TextField()
     FECHA = DateTimeField(default=datetime.datetime.now)
 
+
+
 class FichaAprendiz(BaseModel):
     FICHA = TextField(null=True)
     DNIA = TextField(null=True)

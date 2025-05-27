@@ -17,11 +17,11 @@ app.secret_key = 'BAD_SECRET_KEY'
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 DATABASE = os.path.join(BASE_DIR, 'database', 'sena.db')
 RESPUESTAS = os.path.join(BASE_DIR, 'static/archivos/RESPUESTAS.csv')
-app.config['apidb'] =  "http://127.0.0.1:5555"
+app.config['apidb'] =  "http://127.0.0.1:5556"
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 app.config['BASE_DIR']=BASE_DIR
 # app.config.from_object(DevelopmentConfig) 
-au=Auditor(app.config['BASE_DIR'])
+#au=Auditor(app.config['BASE_DIR'])
 
 @app.route('/') 
 def raiz():   
@@ -30,7 +30,7 @@ def raiz():
 def indexppal():  
     server_ip = socket.gethostbyname(socket.gethostname())
     session['server_ip']=server_ip
-    au.registra(30,'Inicia Aplicacion') 
+    # au.registra(30,'Inicia Aplicacion') 
     return render_template('indexppal.html',server_ip=session['server_ip'])
 @app.route('/banner') 
 def banner():  
@@ -57,34 +57,34 @@ def login():
 def acerca():   
     return render_template('acerca.html')
 def tipoUsuario(correo):
-    return ConsultarDB('/inst/contar/'+correo)
+    return ConsultarDB('/u/1/'+correo)
 
 @app.route('/valida' ,methods=['POST','GET']) 
 def valida():   
     N=1
     usua=request.form.get('usua')
-    au.registra(30,'Intento de logueo',usua)
+    # au.registra(30,'Intento de logueo',usua)
     
     pw=request.form.get('pw')
     Tipo=tipoUsuario(usua)
     
     pw1=hashlib.md5(pw.encode()).hexdigest()
-    if Tipo['Tipo']==1:
+    if Tipo==1:
         sql=f"SELECT count(*) FROM FICHAPRENDIZ WHERE PWDAP='{pw1}' AND EMAIL='{usua}'".format(usua,pw1)
         # hay=ConsultarUno(DATABASE,sql)
-        hay=ConsultarDB(f"/aprend/v/1/{usua}/{pw1}".format(usua,pw1))
-        if hay==1:
+        hay=ConsultarDB(f"/u/2/{usua}/{pw1}".format(usua,pw1))
+        if hay:
             N=1
             sql=f"SELECT * FROM FICHAPRENDIZ WHERE PWDAP='{pw1}' AND EMAIL='{usua}'".format(usua,pw1)
-            aprendiz=ConsultarDB(f"/aprend/vd/1/{usua}/{pw1}".format(usua,pw1))
+            aprendiz=ConsultarDB(f"/u/{usua}".format(usua))
             
             session['ficha']=aprendiz['FICHA']
-            session['nombreap']= aprendiz['NOMBREAP']  
+            session['nombreap']= aprendiz['NOM']  
             session['titulacion']= aprendiz['TITULACION']   
-            session['dnia']= aprendiz['DNIA']  
+            session['dnia']= aprendiz['DNI']  
             # return str(aprendiz)
             F=aprendiz['FICHA']
-            A=aprendiz['DNIA'] 
+            A=aprendiz['DNI'] 
             sql=f"SELECT * FROM FICHAINSTRUCTOR WHERE DNI NOT IN(SELECT IDINSTRUCTOR FROM THEVAL WHERE IDFICHA='{F}' AND IDAPRENDIZ='{A}')".format(F,A)
             # datos=Consultar(DATABASE,sql)
             datos=ConsultarDB(f"/inst/{F}/{A}".format(F,A))
@@ -96,13 +96,13 @@ def valida():
                 "dnia":session['dnia']
             }
             
-            au.registra(30,'Ingresa:'+session['nombreap'])
+            # au.registra(30,'Ingresa:'+session['nombreap'])
             return render_template('carga.html',N=N,datos=datos,apr=apr)
   
         else:
             msgito="APRENDIZ O CLAVE ERRADOS**"
             regresa="/login"
-            au.registra(30,msgito)
+            # au.registra(30,msgito)
             # *******
             return render_template('alertas.html',msgito=msgito,regreso=regresa)
     elif Tipo['Tipo']==2:
@@ -115,12 +115,12 @@ def valida():
         
     elif Tipo['Tipo']==3:
         session['usua']=usua
-        au.registra(30,"Ingresa un administrador",session['usua'])
+        # au.registra(30,"Ingresa un administrador",session['usua'])
         return render_template('menuadmin.html')
     if Tipo['Tipo']==0:
         msgito="USUARIO NO EXISTE**"
         regresa="/login"
-        au.registra(30,msgito)
+        # au.registra(30,msgito)
         # *******
         return render_template('alertas.html',msgito=msgito,regreso=regresa)
     
@@ -157,13 +157,13 @@ def valida():
     except Exception as e:
         msgito="USUARIO O CLAVE ERRADOS**"
         regresa="/login"
-        au.registra(30,'USUARIO O CLAVE ERRADOS')
+        # au.registra(30,'USUARIO O CLAVE ERRADOS')
         return render_template('login.html',msgito=msgito,regreso=regresa)
     
     hay=hay[0]
     # return "->"+str(hay)
     if hay=="0":
-        au.registra(30,'USUARIO O CLAVE ERRADOS')
+        # au.registra(30,'USUARIO O CLAVE ERRADOS')
         return render_template("alertas.html",msgito="USUARIO O CLAVE INCORRECTO***",regreso="/login")
     
     
@@ -178,7 +178,7 @@ def valida():
         session['titulacion'] = aprendiz[6]
         
     except:
-        au.registra(30,'USUARIO O CLAVE ERRADOS')
+        # au.registra(30,'USUARIO O CLAVE ERRADOS')
         msgito="USUARIO O CLAVE ERRADOS**"
         regresa="/login"
         return render_template('alertas.html',msgito=msgito,regreso=regresa)
@@ -187,13 +187,13 @@ def valida():
     A=session['dnia']
     N=1
     sql=f"SELECT count(*) FROM FICHAINSTRUCTOR WHERE DNI NOT IN(SELECT IDINSTRUCTOR FROM THEVAL WHERE IDFICHA='{F}' AND IDAPRENDIZ='{A}')".format(F,A)
-    au.registra(30,'INGRESO ',session['nombreap'])
+    # au.registra(30,'INGRESO ',session['nombreap'])
 
     hay=ConsultarUno(DATABASE,sql)
 
     if hay[0]=="0":
         msgito="NO HAY INSTRUCTORES PARA EVALUAR"
-        au.registra(30,msgito,session['nombreap'])
+        # au.registra(30,msgito,session['nombreap'])
 
         regresa="/login"
         return render_template('alertas.html',msgito=msgito,regreso=regresa)
@@ -206,7 +206,7 @@ def valida():
             "titulacion":session['titulacion'],
             "dnia":session['dnia']
         }
-        au.registra(30,str(apr),session['nombreap'])
+        # au.registra(30,str(apr),session['nombreap'])
         session['apr']=apr
         return render_template('carga.html',N=N,datos=datos,apr=apr)
 def getInstructor(id):
@@ -266,7 +266,7 @@ def eval2(I):
     print("__________________________>",N)
     preg=Consultar(DATABASE,'SELECT * FROM PREGUNTA WHERE ESTADO=1')
     hay=len(preg)
-    au.registra(30,'ENTRA A EVALUAR A: '+getInstructor(I))
+    # au.registra(30,'ENTRA A EVALUAR A: '+getInstructor(I))
     apr={
             "ficha":session['ficha'],
             "aprendiz":session['nombreap'],
@@ -297,7 +297,7 @@ def eval(I):
     
         
     
-    au.registra(30,'EVALUO A: '+getInstructor(I))
+    # au.registra(30,'EVALUO A: '+getInstructor(I))
     msgito="Respuestas registrada"
     regreso="/login"
     return render_template("alertas.html",msgito=msgito,regreso=regreso)
@@ -327,7 +327,7 @@ def evalua(N,I):
         print("__________________________>",N)
         preg=Consultar(DATABASE,'SELECT * FROM PREGUNTA WHERE ESTADO=1')
         hay=len(preg)
-        au.registra(30,'ENTRA A EVALUAR A: '+getInstructor(I))
+        # au.registra(30,'ENTRA A EVALUAR A: '+getInstructor(I))
         apr={
                 "ficha":session['ficha'],
                 "aprendiz":session['nombreap'],
@@ -357,21 +357,21 @@ def evalua(N,I):
         
             
         
-        au.registra(30,'EVALUO A: '+getInstructor(I))
+        # au.registra(30,'EVALUO A: '+getInstructor(I))
         msgito="Respuestas registrada"
         regreso="/login"
         return render_template("alertas.html",msgito=msgito,regreso=regreso)
     return "Nada"    
 @app.route('/descargar')
 def descargar():
-    au.registra(30,"Descarga Respuestas")
+    # au.registra(30,"Descarga Respuestas")
     return send_from_directory('static/archivos', 'RESPUESTAS.csv', as_attachment=True)
 @app.route('/descargarlog')
 def descargarlog():
     fecha=datetime.now()
     fe=str(fecha.year)+str(fecha.month)+str(fecha.day)
     
-    au.registra(30,"Descarga Log de Transacciones")
+    # au.registra(30,"Descarga Log de Transacciones")
     # return fe
     # 'static/archivos/'+fe+'.txt'
     return send_from_directory('static/archivos', fe+'.txt',as_attachment=True)
@@ -380,7 +380,7 @@ def verlog():
     fecha=datetime.now()
     fe=str(fecha.year)+str(fecha.month)+str(fecha.day)
     
-    au.registra(30,"Observa el Log de Transacciones:"+str(fecha))
+    # au.registra(30,"Observa el Log de Transacciones:"+str(fecha))
     # return fe
     ruta_origen='static/log/'+fe+'.log'
     ruta_destino='static/archivos/'+fe+'.txt'
@@ -457,13 +457,13 @@ def menu1():
 
 @app.route('/CargaInicial', methods = ['GET'])   
 def CargaInicial():
-    au.registra(30,'Carga Inicial de la base de datos terminada con exito')
+    # au.registra(30,'Carga Inicial de la base de datos terminada con exito')
     from Carga import Cargando
     aux= Cargando()
     return render_template("alertas.html",msgito=aux, regreso="/menuadmin")
 @app.route('/menuadmin')
 def menuadmin():
-    au.registra(30,'ingresa menuadmin')
+    # au.registra(30,'ingresa menuadmin')
     return render_template('menuadmin.html')
 @app.route('/aprendiz')
 def aprendiz():

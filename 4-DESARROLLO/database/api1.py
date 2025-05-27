@@ -1,5 +1,6 @@
 from flask import Flask, request, jsonify
 from peewee import *
+from peewee import fn
 from models import *
 from playhouse.shortcuts import model_to_dict
 from peewee import fn
@@ -42,20 +43,22 @@ def Ejecutar(db,sql):
         return("400")
 @app.route('/u/1/<email>', methods=['GET']) # Detemina tipo de usuario
 def TipoUsuario(email):
-    
+    email = email.strip().lower()
     sql=f"SELECT COUNT(*) CANT FROM Fichaaprendiz    WHERE EMAIL='{email}'".format(email)
     datos=ConsultarUno(DATABASE,sql)
+    # total = FichaAprendiz.select(FichaAprendiz.EMAIL).where(fn.LOWER(FichaAprendiz.EMAIL) == email).count()
+    # print("oooo>",total)
     if datos[0]:
         return str(1)
     sql=f"SELECT COUNT(*) CANT FROM fichainstructor WHERE EMAIL='{email}'".format(email)
     datos=ConsultarUno(DATABASE,sql)
     if datos[0]:
         return str(2)
-    sql=f"SELECT COUNT(*) CANT FROM VADMIN WHERE EMAIL='{email}'".format(email)
+    sql=f"SELECT COUNT(*) CANT FROM admin WHERE EMAIL='{email}'".format(email)
     datos=ConsultarUno(DATABASE,sql)
     if datos[0]:
         return str(3)
-    return str(0)
+    return str(-1)
 @app.route('/a/0/<email>', methods=['GET']) # Entrega ficha del aprendiz
 def Aprendiz(email):
     sql=f"SELECT * FROM FICHAAPRENDIZ WHERE EMAIL='{email}'".format(email)
@@ -87,7 +90,8 @@ def NomAprendiz(email):
 @app.route('/u/2/<email>/<pwd>', methods=['GET']) # Valida clave de acceso a usuario
 def ValidaUsuario(email,pwd):
     Tipo=TipoUsuario(email)
-    if Tipo=="1":
+    print("-->",Tipo)
+    if Tipo:
         total = FichaAprendiz.select().where((FichaAprendiz.EMAIL==email) and (FichaAprendiz.PWDAP==pwd)).count()
         if total:
             return "1"
@@ -106,7 +110,7 @@ def DatosUsuario(email):
     Tipo=TipoUsuario(email)
     if Tipo=="1":
         datos = FichaAprendiz.get(FichaAprendiz.EMAIL==email)
-        return jsonify({"FICHA":datos.FICHA,"DNI":datos.DNIA,"NOM":datos.NOMBREAP,"EMAIL":datos.EMAIL,"ESTADO":datos.ESTADOAP})
+        return jsonify({"FICHA":datos.FICHA,"DNI":datos.DNIA,"NOM":datos.NOMBREAP,"EMAIL":datos.EMAIL,"ESTADO":datos.ESTADOAP,"TITULACION":datos.TITULACION})
     if Tipo=="2":
         sql=f"SELECT  * FROM FICHAINSTRUCTOR WHERE EMAIL='{email}'".format(email)
         datos=ConsultarUno(DATABASE,sql)
@@ -194,6 +198,45 @@ def insertar_asistencia():
     except Exception as e:
         print("[ERROR]:", e)
         return jsonify({"status": "error", "message": str(e)}), 400
+
+@app.route('/inst/<pficha>/<paprendiz>', methods=['GET'])
+def noEvaluados(pficha, paprendiz):
+    sql=f"SELECT * FROM FICHAINSTRUCTOR WHERE FICHA='{pficha}' AND DNI NOT IN(SELECT IDINSTRUCTOR FROM THEVAL WHERE IDFICHA='{pficha}' AND IDAPRENDIZ='{paprendiz}')".format(pficha,paprendiz)
+    sql=f"SELECT * FROM VINSTRUCTORESP WHERE FICHA={pficha} AND DNIAP={paprendiz}".format(pficha,paprendiz)
+    print(sql)
+    datos=Consultar(DATABASE,sql)
+    return jsonify(datos)
+#     try:
+#             query = (FichaInstructor.select(
+#             #  FichaInstructor.TITULACION,
+#              FichaInstructor.FICHA,
+#              FichaInstructor.DNI,
+#              FichaInstructor.EMAIL.alias('EMAILINST'),
+#              FichaInstructor.NOMINST,
+#              FichaAprendiz.TITULACION,
+#              FichaAprendiz.DNIA.alias('DNIAP'),
+#              FichaAprendiz.NOMBREAP,
+#              FichaAprendiz.EMAIL.alias('EMAILAP')
+#          ).join(FichaAprendiz, on=(FichaInstructor.FICHA == FichaAprendiz.FICHA)).where(FichaInstructor.DNI.not_in(
+#              TheVal.select(TheVal.idINSTRUCTOR).distinct()
+#              .where((TheVal.idFICHA == FichaInstructor.FICHA) &
+#                     (TheVal.idAPRENDIZ == FichaAprendiz.DNIA))
+#          ))
+#          .distinct()
+# )
+#             resultado = []
+#             for fila in query:
+#                 resultado.append({
+#                     "FICHA": fila.FICHA,
+#                     "DNI": fila.DNI,
+#                     "EMAILINST":fila.EMAILINST
+                    
+                    
+#                 })
+
+#             return jsonify(resultado)
+    # except Exception as e:
+    #         return jsonify({"error": str(e)}), 400
 
 
 if __name__ == '__main__':

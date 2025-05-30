@@ -11,6 +11,33 @@
 .danger {background-image: linear-gradient(to right, #dc3545, #e0666e);} 
 .danger:hover {background-image: linear-gradient(to right, #d32838, #e0666e);}
 
+.alerta {
+      display: none;
+      position: fixed;
+      top: 30%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background-color: #f44336;
+      color: white;
+      padding: 20px;
+      border-radius: 5px;
+      z-index: 999;
+      width: 300px;
+      text-align: center;
+    }
+#alerta:target {
+      display: block;
+    }
+
+    .cerrar {
+      display: inline-block;
+      margin-top: 15px;
+      padding: 5px 10px;
+      background: #fff;
+      color: #f44336;
+      text-decoration: none;
+      border-radius: 3px;
+    }
 .icono1{
   content: '\1f1f1f';
 }

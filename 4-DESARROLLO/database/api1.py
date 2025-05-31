@@ -7,6 +7,8 @@ from peewee import fn
 import os
 import sqlite3
 import json
+import sentry_sdk
+
 app = Flask(__name__) 
 app.secret_key = 'BAD_SECRET_KEY'
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
@@ -215,11 +217,28 @@ def noEvaluados(pficha, paprendiz):
     } for d in datos]
     return jsonify(resultado)
 
+
+
+
+
+# or, without the decorator
+
+
 @app.route('/i/e/<email>', methods=['GET'])
 def obtener_instructor_por_email(email):
     sql=f"SELECT * FROM FICHAINSTRUCTOR WHERE EMAIL='{email}'".format(email)
     datos=Consultar(DATABASE,sql)
     return jsonify(datos),404
+def pagina_no_encontrada(error):
+    return "<h1>RUTA NO ENCONTRADA</h1>", 404
+def metodo_no_aceptado(error):
+    return "<h1>Este metodo no esta permitido para esta ruta</h1>", 423
+def servicio_no_dispoible(error):
+    return "<h1>Este metodo no esta permitido para esta ruta</h1>", 423
 if __name__ == '__main__':
+    app.register_error_handler(404, pagina_no_encontrada)
+    app.register_error_handler(405, metodo_no_aceptado)
+    app.register_error_handler(503, servicio_no_dispoible)
     app.run(debug=True,port=5556)
+    
     

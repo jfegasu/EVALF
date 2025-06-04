@@ -67,11 +67,10 @@ def valida():
     
     pw=request.form.get('pw')
     Tipo=tipoUsuario(usua)
-    
-    pw1=hashlib.md5(pw.encode()).hexdigest()
+    if Tipo<3:
+        pw1=hashlib.md5(pw.encode()).hexdigest()
     if Tipo==1:
         sql=f"SELECT count(*) FROM FICHAPRENDIZ WHERE PWDAP='{pw1}' AND EMAIL='{usua}'".format(usua,pw1)
-        # hay=ConsultarUno(DATABASE,sql)
         hay=ConsultarDB(f"/u/2/{usua}/{pw1}".format(usua,pw1))
         if hay:
             N=1

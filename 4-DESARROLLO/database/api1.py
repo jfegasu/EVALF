@@ -43,30 +43,47 @@ def Ejecutar(db,sql):
     except Exception as e:
         print(e)
         return("400")
-@app.route('/u/1/<email>', methods=['GET']) # Detemina tipo de usuario
-def TipoUsuario(email):
-    email = email.strip().lower()
-    sql=f"SELECT COUNT(*) CANT FROM Fichaaprendiz    WHERE EMAIL='{email}'".format(email)
+@app.route('/u/1/<id>', methods=['GET']) # Detemina tipo de usuario
+def TipoUsuario(id):
+    # email = email.strip().lower()
+    sql=f"SELECT COUNT(*) CANT FROM Fichaaprendiz    WHERE DNIA='{id}'".format(id)
     datos=ConsultarUno(DATABASE,sql)
     # total = FichaAprendiz.select(FichaAprendiz.EMAIL).where(fn.LOWER(FichaAprendiz.EMAIL) == email).count()
     # print("oooo>",total)
     if datos[0]:
         return str(1)
-    sql=f"SELECT COUNT(*) CANT FROM fichainstructor WHERE EMAIL='{email}'".format(email)
+    sql=f"SELECT COUNT(*) CANT FROM fichainstructor WHERE DNI='{id}'".format(id)
     datos=ConsultarUno(DATABASE,sql)
     if datos[0]:
         return str(2)
-    sql=f"SELECT COUNT(*) CANT FROM admin WHERE EMAIL='{email}'".format(email)
+    sql=f"SELECT COUNT(*) CANT FROM admin WHERE CLA='{id}'".format(id)
     datos=ConsultarUno(DATABASE,sql)
     if datos[0]:
         return str(3)
     return str(-1)
+@app.route('/yyyy/<id>', methods=['GET'])
+def UsuarioAprendiz(id):
+    try:
+        datos=FichaAprendiz.get(FichaAprendiz.DNIA==id)
+        return jsonify({"FICHA":datos.FICHA,"DNI":datos.DNIA,"NOMBRE":datos.NOMBREAP,"ESTADOAP":datos.ESTADOAP,"EMAIL":datos.EMAIL})
+    except Exception as e:
+        return jsonify("Error":e)
+
+@app.route('/u/<id>', methods=['GET']) # Entrega Datos del Usuario
+def AllAprendiz(id):
+    Tipo=TipoUsuario(id)
+    # sql=f"SELECT * FROM FICHAAPENDIZ WHERE EMAIL='{email}'".format(email)
+    # datos=Consultar(DATABASE,sql)
+    datos=FichaAprendiz.get(FichaAprendiz.EMAIL)
+    return jsonify({"FICHA":datos.FICHA})
+    # return jsonify( "FICHA":datos[0][1],"DNI":datos[0][2],"NOMBRE":datos[0][3],"ESTADOAP":datos[0][4],"EMAIL":datos[0][6]})
 @app.route('/a/0/<email>', methods=['GET']) # Entrega ficha del aprendiz
 def Aprendiz(email):
     sql=f"SELECT * FROM FICHAAPRENDIZ WHERE EMAIL='{email}'".format(email)
     datos=Consultar(DATABASE,sql)
-    # return datos
-    return jsonify({"FICHA":datos[0][1],"DNI":datos[0][2],"NOMBRE":datos[0][3],"ESTADOAP":datos[0][4],"EMAIL":datos[0][6]})
+    datos=FichaAprendiz.select().where(FichaAprendiz.EMAIL)
+    return jsonify({"FICHA":datos.FICHA})
+    # return jsonify( "FICHA":datos[0][1],"DNI":datos[0][2],"NOMBRE":datos[0][3],"ESTADOAP":datos[0][4],"EMAIL":datos[0][6]})
 
 @app.route('/a/1/<email>', methods=['GET']) # Entrega ficha del aprendiz
 def FichaAprendiz1(email):
@@ -240,5 +257,4 @@ if __name__ == '__main__':
     app.register_error_handler(405, metodo_no_aceptado)
     app.register_error_handler(503, servicio_no_dispoible)
     app.run(debug=True,port=5556)
-    
     

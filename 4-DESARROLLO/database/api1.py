@@ -45,22 +45,17 @@ def Ejecutar(db,sql):
         return("400")
 @app.route('/u/1/<id>', methods=['GET']) # Detemina tipo de usuario
 def TipoUsuario(id):
-    # email = email.strip().lower()
-    sql=f"SELECT COUNT(*) CANT FROM Fichaaprendiz    WHERE DNIA='{id}'".format(id)
-    datos=ConsultarUno(DATABASE,sql)
-    # total = FichaAprendiz.select(FichaAprendiz.EMAIL).where(fn.LOWER(FichaAprendiz.EMAIL) == email).count()
-    # print("oooo>",total)
-    if datos[0]:
-        return str(1)
-    sql=f"SELECT COUNT(*) CANT FROM fichainstructor WHERE DNI='{id}'".format(id)
-    datos=ConsultarUno(DATABASE,sql)
-    if datos[0]:
-        return str(2)
-    sql=f"SELECT COUNT(*) CANT FROM admin WHERE CLA='{id}'".format(id)
-    datos=ConsultarUno(DATABASE,sql)
-    if datos[0]:
-        return str(3)
-    return str(-1)
+    cantidad = FichaAprendiz.select().where(FichaAprendiz.DNIA == id).count()
+    if cantidad:
+        return str(cantidad)
+    cantidad = FichaInstructor.select().where(FichaInstructor.DNI == id).count()
+    if cantidad:
+        return str(cantidad)
+    cantidad = Admin.select().where(Admin.NOM == id).count()
+    if cantidad:
+        return str(cantidad)
+    
+    return str(0)
 
 @app.route('/yyyy/<id>', methods=['GET'])
 def UsuarioAprendiz(id):
@@ -82,26 +77,29 @@ def UsuarioAprendiz(id):
         # Puedes loguear `str(e)` aquí si deseas
         return jsonify({"Error": "Error interno del servidor"}), 500
     
-# def UsuarioInstructor(id):
-#     try:
-#         datos=FichaInstructor.get(FichaInstructor.DNI==id)
-#         return jsonify({"TIPO":2,"FICHA":datos.FICHA,"DNI":datos.DNI,"NOMBRE":datos.NOMINST,"EMAIL":datos.EMAIL})
-#     except Exception as e:
-#         print(e)
-#         return jsonify({"Error":f"Usuario {id} no encontrado "})
+def UsuarioInstructor(id):
+    try:
+        datos=FichaInstructor.get(FichaInstructor.DNI==id)
+        return jsonify({"TIPO":2,"FICHA":datos.FICHA,"DNI":datos.DNI,"NOMBRE":datos.NOMINST,"EMAIL":datos.EMAIL})
+    except Exception as e:
+        print(e)
+        return jsonify({"Error":f"Usuario {id} no encontrado "})
 
-@app.route('/u/<id>', methods=['GET']) # Entrega Datos del Usuario
-@app.route('/u/<id>', methods=['GET'])  # Entrega Datos del Usuario
-def AllAprendiz(id):
+@app.route('/u/<id>/<pwd>', methods=['GET'])  # Entrega Datos del Usuario
+def AllUsuario(id,pwd):
     tipo = TipoUsuario(id)
-    print("-->",tipo)
-    if tipo == 1:
+
+    if tipo == "1":
         datos = UsuarioAprendiz(id)
-        if isinstance(datos, tuple):  # Significa que hubo un error (jsonify, código)
-            return datos
-        return jsonify(datos)
-    else:
-        return jsonify({"Error": f"Usuario {id} no es un aprendiz autorizado"}), 403
+        return session['datos']
+    elif tipo== "2":
+        datos = UsuarioInstructor(id)
+        return session['datos']
+    #     if isinstance(datos, tuple):  # Significa que hubo un error (jsonify, código)
+    #         return datos
+    #     return jsonify(datos)
+    # else:
+    #     return jsonify({"Error": f"Usuario {id} no es un aprendiz autorizado"}), 403
     
     # return jsonify( "FICHA":datos[0][1],"DNI":datos[0][2],"NOMBRE":datos[0][3],"ESTADOAP":datos[0][4],"EMAIL":datos[0][6]})
 @app.route('/a/0/<email>', methods=['GET']) # Entrega ficha del aprendiz

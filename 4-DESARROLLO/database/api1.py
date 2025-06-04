@@ -47,17 +47,16 @@ def Ejecutar(db,sql):
 def TipoUsuario(id):
     cantidad = FichaAprendiz.select().where(FichaAprendiz.DNIA == id).count()
     if cantidad:
-        return str(cantidad)
+        return str(1)
     cantidad = FichaInstructor.select().where(FichaInstructor.DNI == id).count()
     if cantidad:
-        return str(cantidad)
+        return str(2)
     cantidad = Admin.select().where(Admin.NOM == id).count()
     if cantidad:
-        return str(cantidad)
+        return str(3)
     
     return str(0)
 
-@app.route('/yyyy/<id>', methods=['GET'])
 def UsuarioAprendiz(id):
     try:
         datos = FichaAprendiz.get(FichaAprendiz.DNIA == id)
@@ -84,24 +83,42 @@ def UsuarioInstructor(id):
     except Exception as e:
         print(e)
         return jsonify({"Error":f"Usuario {id} no encontrado "})
+@app.route('/yyyy/<tipo>/<usuario>/<clave>', methods=['GET'])
+def ValidaClave(tipo,usuario,clave):
+    if tipo=="1":
+        cantidad=FichaAprendiz.select().where(FichaAprendiz.PWDAP==clave and FichaAprendiz.DNIA==usuario).count()
+        if cantidad:
+            return "1"
+    elif tipo=="2":
+        cantidad=FichaInstructor.select().where((FichaInstructor.PWD==clave) and (FichaInstructor.DNI==usuario)).count()
+        if cantidad:
+            return "1"
+    elif tipo=="3":
+        cantidad=Admin.select().where(Admin.CLA==clave and FichaAprendiz.NOM==usuario).count()
+        if cantidad:
+            return "1"
+    
+    return "0"
 
 @app.route('/u/<id>/<pwd>', methods=['GET'])  # Entrega Datos del Usuario
 def AllUsuario(id,pwd):
     tipo = TipoUsuario(id)
-
+    
     if tipo == "1":
         datos = UsuarioAprendiz(id)
-        return session['datos']
-    elif tipo== "2":
-        datos = UsuarioInstructor(id)
-        return session['datos']
-    #     if isinstance(datos, tuple):  # Significa que hubo un error (jsonify, código)
-    #         return datos
-    #     return jsonify(datos)
-    # else:
-    #     return jsonify({"Error": f"Usuario {id} no es un aprendiz autorizado"}), 403
+        entra= ValidaClave(1,id,pwd)
+        return entra
+    elif tipo == "2":    
+        datos = UsuarioInstructor(id)    
+        entra= ValidaClave("2",id,pwd)
+        return entra
+        return entra
+    elif tipo== "3":        
+        entra= ValidaClave(3,id,pwd)
+        return entra
+    else:
+        return jsonify({"Error": f"Usuario {id} no es un aprendiz autorizado"}), 403
     
-    # return jsonify( "FICHA":datos[0][1],"DNI":datos[0][2],"NOMBRE":datos[0][3],"ESTADOAP":datos[0][4],"EMAIL":datos[0][6]})
 @app.route('/a/0/<email>', methods=['GET']) # Entrega ficha del aprendiz
 def Aprendiz(email):
     sql=f"SELECT * FROM FICHAAPRENDIZ WHERE EMAIL='{email}'".format(email)

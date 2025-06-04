@@ -66,36 +66,36 @@ def valida():
     # au.registra(30,'Intento de logueo',usua)
     
     pw=request.form.get('pw')
-    Tipo=tipoUsuario(usua)
-    if Tipo<3:
-        pw1=hashlib.md5(pw.encode()).hexdigest()
-    if Tipo==1:
-        sql=f"SELECT count(*) FROM FICHAPRENDIZ WHERE PWDAP='{pw1}' AND DNIA='{usua}'".format(usua,pw1)
-        hay=ConsultarDB(f"/u/2/{usua}/{pw1}".format(usua,pw1))
-        if hay:
-            N=1
-            sql=f"SELECT * FROM FICHAPRENDIZ WHERE PWDAP='{pw1}' AND DNIA='{usua}'".format(usua,pw1)
-            aprendiz=ConsultarDB(f"/u/{usua}".format(usua))
+    # Tipo=tipoUsuario(usua)
+    # if Tipo<3:
+    #     pw1=hashlib.md5(pw.encode()).hexdigest()
+    # if Tipo==1:
+    #     sql=f"SELECT count(*) FROM FICHAPRENDIZ WHERE PWDAP='{pw1}' AND DNIA='{usua}'".format(usua,pw1)
+    #     hay=ConsultarDB(f"/u/2/{usua}/{pw1}".format(usua,pw1))
+    #     if hay:
+    #         N=1
+    #         sql=f"SELECT * FROM FICHAPRENDIZ WHERE PWDAP='{pw1}' AND DNIA='{usua}'".format(usua,pw1)
+    #         aprendiz=ConsultarDB(f"/u/{usua}".format(usua))
             
-            session['ficha']=aprendiz['FICHA']
-            session['nombreap']= aprendiz['NOM']  
-            session['titulacion']= aprendiz['TITULACION']   
-            session['dnia']= aprendiz['DNI']  
-            # return str(aprendiz)
-            F=aprendiz['FICHA']
-            A=aprendiz['DNI'] 
-            # sql=f"SELECT * FROM FICHAINSTRUCTOR WHERE DNI NOT IN(SELECT IDINSTRUCTOR FROM THEVAL WHERE IDFICHA='{F}' AND IDAPRENDIZ='{A}')".format(F,A)
-            # datos=Consultar(DATABASE,sql)
-            datos=ConsultarDB(f"/i/2/{F}/{A}".format(F,A))
+    #         session['ficha']=aprendiz['FICHA']
+    #         session['nombreap']= aprendiz['NOM']  
+    #         session['titulacion']= aprendiz['TITULACION']   
+    #         session['dnia']= aprendiz['DNI']  
+    #         # return str(aprendiz)
+    #         F=aprendiz['FICHA']
+    #         A=aprendiz['DNI'] 
+    #         # sql=f"SELECT * FROM FICHAINSTRUCTOR WHERE DNI NOT IN(SELECT IDINSTRUCTOR FROM THEVAL WHERE IDFICHA='{F}' AND IDAPRENDIZ='{A}')".format(F,A)
+    #         # datos=Consultar(DATABASE,sql)
+    #         datos=ConsultarDB(f"/i/2/{F}/{A}".format(F,A))
             
-            apr={
-                "ficha":session['ficha'],
-                "aprendiz":session['nombreap'],
-                "titulacion":session['titulacion'],
-                "dnia":session['dnia']
-            }
-            print("---->",datos)
-            # au.registra(30,'Ingresa:'+session['nombreap'])
+    #         apr={
+    #             "ficha":session['ficha'],
+    #             "aprendiz":session['nombreap'],
+    #             "titulacion":session['titulacion'],
+    #             "dnia":session['dnia']
+    #         }
+    #         print("---->",datos)
+    #         # au.registra(30,'Ingresa:'+session['nombreap'])
             return render_template('carga.html',N=1,datos=datos,apr=apr)
   
         else:

@@ -1,3 +1,4 @@
 git add .
-git commit -m "."
+FECHA=$(date +"%Y-%m-%d %H:%M:%S")
+git commit -m FECHA
 

@@ -70,11 +70,11 @@ def valida():
     if Tipo<3:
         pw1=hashlib.md5(pw.encode()).hexdigest()
     if Tipo==1:
-        sql=f"SELECT count(*) FROM FICHAPRENDIZ WHERE PWDAP='{pw1}' AND EMAIL='{usua}'".format(usua,pw1)
+        sql=f"SELECT count(*) FROM FICHAPRENDIZ WHERE PWDAP='{pw1}' AND DNIA='{usua}'".format(usua,pw1)
         hay=ConsultarDB(f"/u/2/{usua}/{pw1}".format(usua,pw1))
         if hay:
             N=1
-            sql=f"SELECT * FROM FICHAPRENDIZ WHERE PWDAP='{pw1}' AND EMAIL='{usua}'".format(usua,pw1)
+            sql=f"SELECT * FROM FICHAPRENDIZ WHERE PWDAP='{pw1}' AND DNIA='{usua}'".format(usua,pw1)
             aprendiz=ConsultarDB(f"/u/{usua}".format(usua))
             
             session['ficha']=aprendiz['FICHA']

@@ -1,4 +1,4 @@
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify,session
 from peewee import *
 from peewee import fn
 from models import *
@@ -61,21 +61,48 @@ def TipoUsuario(id):
     if datos[0]:
         return str(3)
     return str(-1)
+
 @app.route('/yyyy/<id>', methods=['GET'])
 def UsuarioAprendiz(id):
     try:
-        datos=FichaAprendiz.get(FichaAprendiz.DNIA==id)
-        return jsonify({"FICHA":datos.FICHA,"DNI":datos.DNIA,"NOMBRE":datos.NOMBREAP,"ESTADOAP":datos.ESTADOAP,"EMAIL":datos.EMAIL})
+        datos = FichaAprendiz.get(FichaAprendiz.DNIA == id)
+        aprendiz_data = {
+            "TIPO": 1,
+            "FICHA": datos.FICHA,
+            "DNI": datos.DNIA,
+            "NOMBRE": datos.NOMBREAP,
+            "ESTADOAP": datos.ESTADOAP,
+            "EMAIL": datos.EMAIL
+        }
+        session['datos'] = aprendiz_data
+        return session['datos']
+    except FichaAprendiz.DoesNotExist:
+        return jsonify({"Error": f"Usuario {id} no encontrado"}), 401
     except Exception as e:
-        return jsonify("Error":e)
+        # Puedes loguear `str(e)` aquí si deseas
+        return jsonify({"Error": "Error interno del servidor"}), 500
+    
+# def UsuarioInstructor(id):
+#     try:
+#         datos=FichaInstructor.get(FichaInstructor.DNI==id)
+#         return jsonify({"TIPO":2,"FICHA":datos.FICHA,"DNI":datos.DNI,"NOMBRE":datos.NOMINST,"EMAIL":datos.EMAIL})
+#     except Exception as e:
+#         print(e)
+#         return jsonify({"Error":f"Usuario {id} no encontrado "})
 
 @app.route('/u/<id>', methods=['GET']) # Entrega Datos del Usuario
+@app.route('/u/<id>', methods=['GET'])  # Entrega Datos del Usuario
 def AllAprendiz(id):
-    Tipo=TipoUsuario(id)
-    # sql=f"SELECT * FROM FICHAAPENDIZ WHERE EMAIL='{email}'".format(email)
-    # datos=Consultar(DATABASE,sql)
-    datos=FichaAprendiz.get(FichaAprendiz.EMAIL)
-    return jsonify({"FICHA":datos.FICHA})
+    tipo = TipoUsuario(id)
+    print("-->",tipo)
+    if tipo == 1:
+        datos = UsuarioAprendiz(id)
+        if isinstance(datos, tuple):  # Significa que hubo un error (jsonify, código)
+            return datos
+        return jsonify(datos)
+    else:
+        return jsonify({"Error": f"Usuario {id} no es un aprendiz autorizado"}), 403
+    
     # return jsonify( "FICHA":datos[0][1],"DNI":datos[0][2],"NOMBRE":datos[0][3],"ESTADOAP":datos[0][4],"EMAIL":datos[0][6]})
 @app.route('/a/0/<email>', methods=['GET']) # Entrega ficha del aprendiz
 def Aprendiz(email):

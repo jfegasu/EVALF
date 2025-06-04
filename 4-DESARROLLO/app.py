@@ -9,6 +9,7 @@ import socket
 import hashlib
 import logging
 from config import DevelopmentConfig 
+from config import apidb
 from datetime import datetime
 import shutil
 import os
@@ -64,7 +65,6 @@ def valida():
     N=1
     usua=request.form.get('usua')
     # au.registra(30,'Intento de logueo',usua)
-    
     pw=request.form.get('pw')
     # Tipo=tipoUsuario(usua)
     # if Tipo<3:
@@ -96,15 +96,21 @@ def valida():
     #         }
     #         print("---->",datos)
     #         # au.registra(30,'Ingresa:'+session['nombreap'])
-            return render_template('carga.html',N=1,datos=datos,apr=apr)
-  
-        else:
-            msgito="APRENDIZ O CLAVE ERRADOS**"
-            regresa="/login"
-            # au.registra(30,msgito)
-            # *******
-            return render_template('alertas.html',msgito=msgito,regreso=regresa)
-    elif Tipo==2:
+    daticos=requests.get(f'{apidb}/u/{usua}/{pw}')
+    datos=requests.get(f'{apidb}/u/datos/{usua}')
+    ficha=requests.get(f'{apidb}/a/1/{usua}').text
+    session['datos']=datos.text
+    aa=f'{apidb}/i/2/{ficha}/{usua}'
+    datos=requests.get(aa).json()
+    if daticos.text == "1":
+        return render_template('carga.html',N=1,apr=session['datos'],datos=datos)
+    else:
+        msgito="APRENDIZ O CLAVE ERRADOS**"
+        regresa="/login"
+        # au.registra(30,msgito)
+        # *******
+        return render_template('alertas.html',msgito=msgito,regreso=regresa)
+    if Tipo==2:
         sql=f"/i/e/{usua}".format(usua)
         
         datos=ConsultarDB(sql)

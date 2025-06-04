@@ -56,7 +56,7 @@ def TipoUsuario(id):
         return str(3)
     
     return str(0)
-
+@app.route('/u/datos/<id>')
 def UsuarioAprendiz(id):
     try:
         datos = FichaAprendiz.get(FichaAprendiz.DNIA == id)
@@ -103,10 +103,10 @@ def ValidaClave(tipo,usuario,clave):
 @app.route('/u/<id>/<pwd>', methods=['GET'])  # Entrega Datos del Usuario
 def AllUsuario(id,pwd):
     tipo = TipoUsuario(id)
-    
+    # return tipo
     if tipo == "1":
         datos = UsuarioAprendiz(id)
-        entra= ValidaClave(1,id,pwd)
+        entra= ValidaClave("1",id,pwd)
         return entra
     elif tipo == "2":    
         datos = UsuarioInstructor(id)    
@@ -127,11 +127,11 @@ def Aprendiz(email):
     return jsonify({"FICHA":datos.FICHA})
     # return jsonify( "FICHA":datos[0][1],"DNI":datos[0][2],"NOMBRE":datos[0][3],"ESTADOAP":datos[0][4],"EMAIL":datos[0][6]})
 
-@app.route('/a/1/<email>', methods=['GET']) # Entrega ficha del aprendiz
-def FichaAprendiz1(email):
+@app.route('/a/1/<id>', methods=['GET']) # Entrega ficha del aprendiz
+def FichaAprendiz1(id):
 
-    Aux=FichaAprendiz.get(FichaAprendiz.EMAIL==email)
-    return Aux.FICHA
+    Aux=FichaAprendiz.get(FichaAprendiz.DNIA==id)
+    return str(Aux.FICHA)
     
 @app.route('/a/2/<email>', methods=['GET']) # Entrega el DNI del aprendiz
 def DNIAprendiz(email):

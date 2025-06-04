@@ -1,2 +1,3 @@
 git add .
-git commit -m %d-%m-%Y
+git commit -m "."
+

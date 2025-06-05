@@ -66,7 +66,8 @@ def UsuarioAprendiz(id):
             "DNI": datos.DNIA,
             "NOMBRE": datos.NOMBREAP,
             "ESTADOAP": datos.ESTADOAP,
-            "EMAIL": datos.EMAIL
+            "EMAIL": datos.EMAIL,
+            "TITULACION": datos.TITULACION
         }
         session['datos'] = aprendiz_data
         return session['datos']

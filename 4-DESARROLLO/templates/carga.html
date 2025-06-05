@@ -1,13 +1,12 @@
 {% extends "base.html" %}
-{% block content %}
-{{datos}}<br>------<br>{{apr}}
+{% block content %} 
 {% if N==1 %}
 
 {% if datos|length>0%}
 <br>
 <div class="sena d-flex justify-content-center align-items-center  mx-auto" style="width:40%;">
 <table class="table table-striped ">
-<th  style="color:red;font-size: 10px;"><span>INSTRUCTORES DE LA FICHA: {{apr.ficha}}, APRENDIZ: {{apr.aprendiz}}, TITULACION: {{apr.titulacion}}</span>
+<th  style="color:red;font-size: 10px;"><span>INSTRUCTORES DE LA FICHA: {{apr.FICHA}}, APRENDIZ: {{apr.NOMBRE}}, TITULACION: {{apr.TITULACION}}</span>
  </th><th><span class="btn btn-warning" style="text-align: right;"  onclick="window.open('/login','centro')"><i class="fa fa-fast-backward" aria-hidden="true"></i></span>
 </th>
 </tr>
@@ -20,7 +19,7 @@
      onerror="this.onerror=null; this.src='{{ url_for('static', filename='images/dni/silueta.png') }}';"
      style="width: 40px; border: 1px solid black;">
 
-{{data.nominst}} /eval/2/{{data["dninst"]}}
+{{data.nominst}}
 </span>
    </td> 
     
@@ -48,8 +47,11 @@
 <br><br>
 <div class="sena d-flex justify-content-center align-items-center  mx-auto" style="width: 50%;padding-top: 20px;padding-left: 20px;padding-right: 20px;">
     <table class="table table-striped" style="width: 100%;">
-        <th colspan="2" style="color:red;font-size: 10px;"><b>FICHA: {{session['apr'].ficha}}, APRENDIZ: {{session['apr'].aprendiz}}, TITULACION: {{session['apr'].titulacion}}, INSTRUCTOR A EVALUAR: {{nomi}}
-        </th><th> <span class="btn btn-warning" style="text-align: right;"  onclick="window.open('/login','centro')"><i class="fa fa-fast-backward" aria-hidden="true"></i></span>
+        <th colspan="2" style="color:red;font-size: 10px;"><b>FICHA: {{apr.FICHA}}
+            , APRENDIZ: {{session['datos'].NOMBRE}},TITULACION: {{session['datos'].TITULACION}},
+            INSTRUCTOR A EVALUAR:{{nomi}}
+        </th>
+        <th> <span class="btn btn-warning" style="text-align: right;"  onclick="window.open('/login','centro')"><i class="fa fa-fast-backward" aria-hidden="true"></i></span>
     </th>
         <tr>
             <td width=50% class="sena-sombra">
@@ -57,15 +59,14 @@
             </td>
             <td width=50% class="sena-sombra">RESPUESTAS</td>
         </tr>
-        <form action="/eval/3/{{datos[2]}}" method="post">
-      
+        <form action="/eval/3/{{datos[2]}}" method="post">     
 {%for data in preg%}
 
             <tr>
                 <input type="hidden" name="P{{loop.index}}" value="{{data[1]}}">
-                <td>{{data[1]}}</td>
+                <td>{{data.DESCRIPCION}}</td>
                 <td><select name="R{{loop.index}}" style="width: 100%;">
-                    {%for n in data[3].split(',')%}
+                    {%for n in data.VALORES.split(',')%}
                     <option value="{{n}}">{{n}}</option>
                     {%endfor%}
                     

@@ -8,6 +8,8 @@ from utils.Utilitarios import *
 import socket
 import hashlib
 import logging
+from database.models import *
+
 from config import DevelopmentConfig 
 from config import apidb
 from datetime import datetime
@@ -64,6 +66,7 @@ def tipoUsuario(correo):
 def valida():   
     N=1
     usua=request.form.get('usua')
+    session['usua']=usua
     # au.registra(30,'Intento de logueo',usua)
     pw=request.form.get('pw')
     # Tipo=tipoUsuario(usua)
@@ -97,9 +100,10 @@ def valida():
     #         print("---->",datos)
     #         # au.registra(30,'Ingresa:'+session['nombreap'])
     daticos=requests.get(f'{apidb}/u/{usua}/{pw}')
-    datos=requests.get(f'{apidb}/u/datos/{usua}')
+    datos=requests.get(f'{apidb}/u/datos/{usua}').json()
     ficha=requests.get(f'{apidb}/a/1/{usua}').text
-    session['datos']=datos.text
+    session['ficha']=ficha
+    session['datos']=datos
     aa=f'{apidb}/i/2/{ficha}/{usua}'
     datos=requests.get(aa).json()
     if daticos.text == "1":
@@ -110,6 +114,7 @@ def valida():
         # au.registra(30,msgito)
         # *******
         return render_template('alertas.html',msgito=msgito,regreso=regresa)
+    
     if Tipo==2:
         sql=f"/i/e/{usua}".format(usua)
         
@@ -270,18 +275,21 @@ def eval2a(I):
     N=2
     datos=[2,F,I,A]
     print("__________________________>",N)
-    preg=Consultar(DATABASE,'SELECT * FROM PREGUNTA WHERE ESTADO=1')
-    hay=len(preg)
+    # preg=Consultar(DATABASE,'SELECT * FROM PREGUNTA WHERE ESTADO=1')
+    # hay=len(preg)
+    preg=requests.get(f'{apidb}/p').json()
     # au.registra(30,'ENTRA A EVALUAR A: '+getInstructor(I))
-    apr={
-            "ficha":session['ficha'],
-            "aprendiz":session['nombreap'],
-            "titulacion":session['titulacion'],
-            "dnia":session['dnia']
-        }
-    session['apr']=apr
+    # apr={
+    #         "ficha":session['datos'].FICHA,
+    #         "aprendiz":session['datos'].NOMBREAP,
+    #         "titulacion":session['titulacion'],
+    #         "dnia":session['dnia']
+    #     }
     
-    return render_template('carga.html',N=2,datos=datos,preg=preg,hay=hay,nomi=getInstructor(I),apr=apr)
+    # session['apr']=apr
+    
+    return render_template('carga.html',N=2,datos=datos,preg=preg,nomi=getInstructor(I),apr=session['datos'])
+
 @app.route('/eval/3/<I>' ,methods=['POST','GET']) 
 def eval(I):  
     F=session['ficha']

@@ -366,9 +366,10 @@ def evalua(N,I):
         for i in range(1, conta + 1):  # Asegúrate de incluir el último valor
             Resp=request.form.get('R' + str(i))
             Preg=request.form.get('P' + str(i))
-            sql=f"insert into THEVAL(idINSTRUCTOR,idFICHA,idAPRENDIZ,PREGUNTA,RESPUESTA,TITULACION,TRIMESTRE) VALUES({I},{F},{A},'{Preg}','{Resp}','{T}','{TRIMESTRE}')".format(I,F,A,Preg,Resp,T,TRIMESTRE)
             
-            Ejecutar(DATABASE,sql)
+            TheVal=TheVal.create(idINSTRUCTOR=I,idFICHA=F,idAPRENDIZ=A,PREGUNTA=Preg,
+                                 RESPUESTA=Resp,TITULACION=T,TRIMESTRE=TRIMESTRE)
+            
             
         
             

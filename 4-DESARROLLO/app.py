@@ -363,7 +363,7 @@ def evalua(N,I):
         
         conta = int(request.form.get('conta'))
 
-        for i in range(1, conta + 1):  # Asegúrate de incluir el último valor
+        for i in range(1, conta + 1): 
             Resp=request.form.get('R' + str(i))
             Preg=request.form.get('P' + str(i))
             

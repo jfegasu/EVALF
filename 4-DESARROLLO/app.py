@@ -278,6 +278,7 @@ def eval2a(I):
     # preg=Consultar(DATABASE,'SELECT * FROM PREGUNTA WHERE ESTADO=1')
     # hay=len(preg)
     preg=requests.get(f'{apidb}/p').json()
+    hay=len(preg)
     # au.registra(30,'ENTRA A EVALUAR A: '+getInstructor(I))
     # apr={
     #         "ficha":session['datos'].FICHA,
@@ -288,19 +289,20 @@ def eval2a(I):
     
     # session['apr']=apr
     
-    return render_template('carga.html',N=2,datos=datos,preg=preg,nomi=getInstructor(I),apr=session['datos'])
+    return render_template('carga.html',N=2,datos=datos,hay=hay,preg=preg,nomi=getInstructor(I),apr=session['datos'])
 
 @app.route('/eval/3/<I>' ,methods=['POST','GET']) 
 def eval(I):  
-    F=session['ficha']
-    A=session['dnia']
-    T=session['titulacion']
+    # return session['datos']['FICHA']
+    F=session['datos']['FICHA']
+    A=session['datos']['DNI']
+    T=session['datos']['TITULACION']
     TRIMESTRE=obtener_trimestreT(datetime.now())
     
     # I=session['instructor']
     
     conta = int(request.form.get('conta'))
-
+    # conta = 12
     for i in range(1, conta + 1):  # Asegúrate de incluir el último valor
         Resp=request.form.get('R' + str(i))
         Preg=request.form.get('P' + str(i))
@@ -350,7 +352,7 @@ def evalua(N,I):
             }
         session['apr']=apr
         
-        return render_template('carga.html',N=2,datos=datos,preg=preg,hay=hay,nomi=getInstructor(I),apr=apr)
+        return render_template('carga.html',N=2,datos=datos,preg=preg,nomi=getInstructor(I),apr=apr)
     if N=="3":
         F=session['ficha']
         A=session['dnia']

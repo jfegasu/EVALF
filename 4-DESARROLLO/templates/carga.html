@@ -60,7 +60,8 @@
             <td width=50% class="sena-sombra">RESPUESTAS</td>
         </tr>
         <form action="/eval/3/{{datos[2]}}" method="post">     
-{%for data in preg%}
+
+            {%for data in preg%}
 
             <tr>
                 <input type="hidden" name="P{{loop.index}}" value="{{data[1]}}">
@@ -72,6 +73,7 @@
                     
                 </select></td>
             </tr>
+          
 {%endfor%}
 <tr>
     <td colspan="2">
@@ -79,7 +81,7 @@
         <input type="hidden" name="F" value="{{datos[1]}}">
         <input type="hidden" name="I" value="{{datos[2]}}">
         <input type="hidden" name="A" value="{{datos[3]}}">
-        <input type="hidden" name=conta value="{{hay}}">
+        <input type="hidden" name=conta value="{{preg | length}}">
         
         <input type="submit" class="btn btn-primary ovalo" style="width:50%;" value="ENVIAR">
         <!-- <button class="btn btn-warning ovalo" style="width:50%;" onclick="','centro')">ENVIAR</button> -->

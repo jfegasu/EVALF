@@ -65,27 +65,32 @@ def tipoUsuario(correo):
     return ConsultarDB('/u/1/'+correo)
 
 @app.route('/valida' ,methods=['POST','GET']) 
-def valida():   
-    N=1
+def valida():
     usua=request.form.get('usua')
-    session['usua']=usua
+    session['usua']=usua 
+    Tipo= tipoUsuario(usua) 
+    if Tipo=="1":
+        N=1
+        # usua=request.form.get('usua')
+        # session['usua']=usua
     # au.registra(30,'Intento de logueo',usua)
-    pw=request.form.get('pw')
-    daticos=requests.get(f'{apidb}/u/{usua}/{pw}')
-    datos=requests.get(f'{apidb}/u/datos/{usua}').json()
-    ficha=requests.get(f'{apidb}/a/1/{usua}').text
-    session['ficha']=ficha
-    session['datos']=datos
-    aa=f'{apidb}/i/2/{ficha}/{usua}'
-    datos=requests.get(aa).json()
-    if daticos.text == "1":
-        return render_template('carga.html',N=1,apr=session['datos'],datos=datos)
-    else:
-        msgito="APRENDIZ O CLAVE ERRADOS**"
-        regresa="/login"
-        # au.registra(30,msgito)
-        # *******
-        return render_template('alertas.html',msgito=msgito,regreso=regresa)
+        pw=request.form.get('pw')
+        daticos=requests.get(f'{apidb}/u/{usua}/{pw}')
+        datos=requests.get(f'{apidb}/u/datos/{usua}').json()
+        ficha=requests.get(f'{apidb}/a/1/{usua}').text
+        session['ficha']=ficha
+        session['datos']=datos
+        session['usua']=usua
+        aa=f'{apidb}/i/2/{ficha}/{usua}'
+        datos=requests.get(aa).json()
+        if daticos.text == "1":
+            return render_template('carga.html',N=1,apr=session['datos'],datos=datos)
+        else:
+            msgito="APRENDIZ O CLAVE ERRADOS**"
+            regresa="/login"
+            # au.registra(30,msgito)
+            # *******
+            return render_template('alertas.html',msgito=msgito,regreso=regresa)
     
     if Tipo==2:
         sql=f"/i/e/{usua}".format(usua)
@@ -95,11 +100,11 @@ def valida():
         return render_template('foto.html',datos=datos)
         
         
-    elif Tipo==3:
+    elif Tipo == "3":
         session['usua']=usua
         # au.registra(30,"Ingresa un administrador",session['usua'])
         return render_template('menuadmin.html')
-    if Tipo['Tipo']==0:
+    if Tipo=="0":
         msgito="USUARIO NO EXISTE**"
         regresa="/login"
         # au.registra(30,msgito)

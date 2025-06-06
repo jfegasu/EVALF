@@ -9,7 +9,7 @@ import socket
 import hashlib
 import logging
 from database.models import *
-
+from foto.routes import foto
 from config import DevelopmentConfig 
 from config import apidb
 from datetime import datetime
@@ -23,6 +23,8 @@ RESPUESTAS = os.path.join(BASE_DIR, 'static/archivos/RESPUESTAS.csv')
 app.config['apidb'] =  "http://127.0.0.1:5556"
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 app.config['BASE_DIR']=BASE_DIR
+app.register_blueprint(foto, url_prefix='/foto')
+
 # app.config.from_object(DevelopmentConfig) 
 #au=Auditor(app.config['BASE_DIR'])
 
@@ -69,36 +71,6 @@ def valida():
     session['usua']=usua
     # au.registra(30,'Intento de logueo',usua)
     pw=request.form.get('pw')
-    # Tipo=tipoUsuario(usua)
-    # if Tipo<3:
-    #     pw1=hashlib.md5(pw.encode()).hexdigest()
-    # if Tipo==1:
-    #     sql=f"SELECT count(*) FROM FICHAPRENDIZ WHERE PWDAP='{pw1}' AND DNIA='{usua}'".format(usua,pw1)
-    #     hay=ConsultarDB(f"/u/2/{usua}/{pw1}".format(usua,pw1))
-    #     if hay:
-    #         N=1
-    #         sql=f"SELECT * FROM FICHAPRENDIZ WHERE PWDAP='{pw1}' AND DNIA='{usua}'".format(usua,pw1)
-    #         aprendiz=ConsultarDB(f"/u/{usua}".format(usua))
-            
-    #         session['ficha']=aprendiz['FICHA']
-    #         session['nombreap']= aprendiz['NOM']  
-    #         session['titulacion']= aprendiz['TITULACION']   
-    #         session['dnia']= aprendiz['DNI']  
-    #         # return str(aprendiz)
-    #         F=aprendiz['FICHA']
-    #         A=aprendiz['DNI'] 
-    #         # sql=f"SELECT * FROM FICHAINSTRUCTOR WHERE DNI NOT IN(SELECT IDINSTRUCTOR FROM THEVAL WHERE IDFICHA='{F}' AND IDAPRENDIZ='{A}')".format(F,A)
-    #         # datos=Consultar(DATABASE,sql)
-    #         datos=ConsultarDB(f"/i/2/{F}/{A}".format(F,A))
-            
-    #         apr={
-    #             "ficha":session['ficha'],
-    #             "aprendiz":session['nombreap'],
-    #             "titulacion":session['titulacion'],
-    #             "dnia":session['dnia']
-    #         }
-    #         print("---->",datos)
-    #         # au.registra(30,'Ingresa:'+session['nombreap'])
     daticos=requests.get(f'{apidb}/u/{usua}/{pw}')
     datos=requests.get(f'{apidb}/u/datos/{usua}').json()
     ficha=requests.get(f'{apidb}/a/1/{usua}').text

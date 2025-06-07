@@ -93,11 +93,13 @@ def valida():
             return render_template('alertas.html',msgito=msgito,regreso=regresa)
     
     if Tipo==2:
-        sql=f"/i/e/{usua}".format(usua)
+        # sql=f"{apidb}/i/e/{usua}".format(usua)
         
-        datos=ConsultarDB(sql)
-
-        return render_template('foto.html',datos=datos)
+        # datos=ConsultarDB(sql)
+        # session['datos']=datos
+        return redirect('/foto')
+        # return render_template('foto.html',datos=datos)
+        
         
         
     elif Tipo == "3":
@@ -401,12 +403,13 @@ def resp():
 def success():   
     if request.method == 'POST':  
         dni=request.form['dni'] 
+        # return session['usua']
         f = request.files['file'] 
-        LUGAR = os.path.join(BASE_DIR, 'static', 'images','dni',dni+'.png')
+        LUGAR = os.path.join(BASE_DIR, 'foto','static', 'images','dni',session['usua']+'.png')
         # f.save(LUGAR+'/'+f.filename)   
         f.save(LUGAR)   
         msgito="FOTO EDITADA"
-        regreso="/login"
+        regreso="/foto"
         return render_template("alertas.html", msgito=msgito,regreso=regreso)   
 @app.route('/menu1', methods = ['GET'])   
 def menu1():

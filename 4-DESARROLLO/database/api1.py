@@ -284,11 +284,18 @@ def noEvaluados(pficha, paprendiz):
 # or, without the decorator
 
 
-@app.route('/i/e/<email>', methods=['GET'])
-def obtener_instructor_por_email(email):
-    sql=f"SELECT * FROM FICHAINSTRUCTOR WHERE EMAIL='{email}'".format(email)
-    datos=Consultar(DATABASE,sql)
-    return jsonify(datos),404
+@app.route('/i/e/<id>', methods=['GET'])
+def obtener_instructor_por_email(id):
+    # Consulta todos los instructores con el DNI
+    datos = FichaInstructor.select().where(FichaInstructor.DNI == id)
+    
+    if datos:
+        # Convertir los resultados en una lista de diccionarios
+        instructores = [model_to_dict(instructor) for instructor in datos]
+        return jsonify(instructores), 200
+    else:
+        return jsonify({'error': 'Instructor no encontrado'}), 404
+    
 def pagina_no_encontrada(error):
     return "<h1>RUTA NO ENCONTRADA</h1>", 404
 def metodo_no_aceptado(error):

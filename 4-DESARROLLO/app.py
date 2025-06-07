@@ -69,7 +69,8 @@ def valida():
     usua=request.form.get('usua')
     pw=request.form.get('pw')
     pw1=hashlib.md5(pw.encode()).hexdigest()
-    
+    session['pw']=pw
+    session['pw1']=pw1
     session['usua']=usua 
     Tipo= tipoUsuario(usua) 
     if Tipo=="1":
@@ -77,7 +78,7 @@ def valida():
         # usua=request.form.get('usua')
         # session['usua']=usua
     # au.registra(30,'Intento de logueo',usua)
-    
+        
         daticos=requests.get(f'{apidb}/u/{usua}/{pw}')
         datos=requests.get(f'{apidb}/u/datos/{usua}').json()
         ficha=requests.get(f'{apidb}/a/1/{usua}').text

@@ -8,7 +8,10 @@ from utils.Utilitarios import *
 import socket
 import hashlib
 import logging
+from database.models import *
+from foto.routes import foto
 from config import DevelopmentConfig 
+from config import apidb
 from datetime import datetime
 import shutil
 import os
@@ -20,6 +23,8 @@ RESPUESTAS = os.path.join(BASE_DIR, 'static/archivos/RESPUESTAS.csv')
 app.config['apidb'] =  "http://127.0.0.1:5556"
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 app.config['BASE_DIR']=BASE_DIR
+app.register_blueprint(foto, url_prefix='/foto')
+
 # app.config.from_object(DevelopmentConfig) 
 #au=Auditor(app.config['BASE_DIR'])
 
@@ -60,64 +65,48 @@ def tipoUsuario(correo):
     return ConsultarDB('/u/1/'+correo)
 
 @app.route('/valida' ,methods=['POST','GET']) 
-def valida():   
-    N=1
+def valida():
     usua=request.form.get('usua')
+    session['usua']=usua 
+    Tipo= tipoUsuario(usua) 
+    if Tipo=="1":
+        N=1
+        # usua=request.form.get('usua')
+        # session['usua']=usua
     # au.registra(30,'Intento de logueo',usua)
-    
-    pw=request.form.get('pw')
-    Tipo=tipoUsuario(usua)
-    
-    pw1=hashlib.md5(pw.encode()).hexdigest()
-    if Tipo==1:
-        sql=f"SELECT count(*) FROM FICHAPRENDIZ WHERE PWDAP='{pw1}' AND EMAIL='{usua}'".format(usua,pw1)
-        # hay=ConsultarUno(DATABASE,sql)
-        hay=ConsultarDB(f"/u/2/{usua}/{pw1}".format(usua,pw1))
-        if hay:
-            N=1
-            sql=f"SELECT * FROM FICHAPRENDIZ WHERE PWDAP='{pw1}' AND EMAIL='{usua}'".format(usua,pw1)
-            aprendiz=ConsultarDB(f"/u/{usua}".format(usua))
-            
-            session['ficha']=aprendiz['FICHA']
-            session['nombreap']= aprendiz['NOM']  
-            session['titulacion']= aprendiz['TITULACION']   
-            session['dnia']= aprendiz['DNI']  
-            # return str(aprendiz)
-            F=aprendiz['FICHA']
-            A=aprendiz['DNI'] 
-            # sql=f"SELECT * FROM FICHAINSTRUCTOR WHERE DNI NOT IN(SELECT IDINSTRUCTOR FROM THEVAL WHERE IDFICHA='{F}' AND IDAPRENDIZ='{A}')".format(F,A)
-            # datos=Consultar(DATABASE,sql)
-            datos=ConsultarDB(f"/i/2/{F}/{A}".format(F,A))
-            
-            apr={
-                "ficha":session['ficha'],
-                "aprendiz":session['nombreap'],
-                "titulacion":session['titulacion'],
-                "dnia":session['dnia']
-            }
-            print("---->",datos)
-            # au.registra(30,'Ingresa:'+session['nombreap'])
-            return render_template('carga.html',N=1,datos=datos,apr=apr)
-  
+        pw=request.form.get('pw')
+        daticos=requests.get(f'{apidb}/u/{usua}/{pw}')
+        datos=requests.get(f'{apidb}/u/datos/{usua}').json()
+        ficha=requests.get(f'{apidb}/a/1/{usua}').text
+        session['ficha']=ficha
+        session['datos']=datos
+        session['usua']=usua
+        aa=f'{apidb}/i/2/{ficha}/{usua}'
+        datos=requests.get(aa).json()
+        if daticos.text == "1":
+            return render_template('carga.html',N=1,apr=session['datos'],datos=datos)
         else:
             msgito="APRENDIZ O CLAVE ERRADOS**"
             regresa="/login"
             # au.registra(30,msgito)
             # *******
             return render_template('alertas.html',msgito=msgito,regreso=regresa)
-    elif Tipo==2:
-        sql=f"/i/e/{usua}".format(usua)
+    
+    if Tipo==2:
+        # sql=f"{apidb}/i/e/{usua}".format(usua)
         
-        datos=ConsultarDB(sql)
-
-        return render_template('foto.html',datos=datos)
+        # datos=ConsultarDB(sql)
+        # session['datos']=datos
+        return redirect('/foto')
+        # return render_template('foto.html',datos=datos)
         
         
-    elif Tipo==3:
+        
+    elif Tipo == "3":
         session['usua']=usua
         # au.registra(30,"Ingresa un administrador",session['usua'])
         return render_template('menuadmin.html')
-    if Tipo['Tipo']==0:
+    if Tipo=="0":
         msgito="USUARIO NO EXISTE**"
         regresa="/login"
         # au.registra(30,msgito)
@@ -265,29 +254,34 @@ def eval2a(I):
     N=2
     datos=[2,F,I,A]
     print("__________________________>",N)
-    preg=Consultar(DATABASE,'SELECT * FROM PREGUNTA WHERE ESTADO=1')
+    # preg=Consultar(DATABASE,'SELECT * FROM PREGUNTA WHERE ESTADO=1')
+    # hay=len(preg)
+    preg=requests.get(f'{apidb}/p').json()
     hay=len(preg)
     # au.registra(30,'ENTRA A EVALUAR A: '+getInstructor(I))
-    apr={
-            "ficha":session['ficha'],
-            "aprendiz":session['nombreap'],
-            "titulacion":session['titulacion'],
-            "dnia":session['dnia']
-        }
-    session['apr']=apr
+    # apr={
+    #         "ficha":session['datos'].FICHA,
+    #         "aprendiz":session['datos'].NOMBREAP,
+    #         "titulacion":session['titulacion'],
+    #         "dnia":session['dnia']
+    #     }
     
-    return render_template('carga.html',N=2,datos=datos,preg=preg,hay=hay,nomi=getInstructor(I),apr=apr)
+    # session['apr']=apr
+    
+    return render_template('carga.html',N=2,datos=datos,hay=hay,preg=preg,nomi=getInstructor(I),apr=session['datos'])
+
 @app.route('/eval/3/<I>' ,methods=['POST','GET']) 
 def eval(I):  
-    F=session['ficha']
-    A=session['dnia']
-    T=session['titulacion']
+    # return session['datos']['FICHA']
+    F=session['datos']['FICHA']
+    A=session['datos']['DNI']
+    T=session['datos']['TITULACION']
     TRIMESTRE=obtener_trimestreT(datetime.now())
     
     # I=session['instructor']
     
     conta = int(request.form.get('conta'))
-
+    # conta = 12
     for i in range(1, conta + 1):  # Asegúrate de incluir el último valor
         Resp=request.form.get('R' + str(i))
         Preg=request.form.get('P' + str(i))
@@ -337,7 +331,7 @@ def evalua(N,I):
             }
         session['apr']=apr
         
-        return render_template('carga.html',N=2,datos=datos,preg=preg,hay=hay,nomi=getInstructor(I),apr=apr)
+        return render_template('carga.html',N=2,datos=datos,preg=preg,nomi=getInstructor(I),apr=apr)
     if N=="3":
         F=session['ficha']
         A=session['dnia']
@@ -348,12 +342,13 @@ def evalua(N,I):
         
         conta = int(request.form.get('conta'))
 
-        for i in range(1, conta + 1):  # Asegúrate de incluir el último valor
+        for i in range(1, conta + 1): 
             Resp=request.form.get('R' + str(i))
             Preg=request.form.get('P' + str(i))
-            sql=f"insert into THEVAL(idINSTRUCTOR,idFICHA,idAPRENDIZ,PREGUNTA,RESPUESTA,TITULACION,TRIMESTRE) VALUES({I},{F},{A},'{Preg}','{Resp}','{T}','{TRIMESTRE}')".format(I,F,A,Preg,Resp,T,TRIMESTRE)
             
-            Ejecutar(DATABASE,sql)
+            TheVal=TheVal.create(idINSTRUCTOR=I,idFICHA=F,idAPRENDIZ=A,PREGUNTA=Preg,
+                                 RESPUESTA=Resp,TITULACION=T,TRIMESTRE=TRIMESTRE)
+            
             
         
             
@@ -408,12 +403,13 @@ def resp():
 def success():   
     if request.method == 'POST':  
         dni=request.form['dni'] 
+        # return session['usua']
         f = request.files['file'] 
-        LUGAR = os.path.join(BASE_DIR, 'static', 'images','dni',dni+'.png')
+        LUGAR = os.path.join(BASE_DIR, 'foto','static', 'images','dni',session['usua']+'.png')
         # f.save(LUGAR+'/'+f.filename)   
         f.save(LUGAR)   
         msgito="FOTO EDITADA"
-        regreso="/login"
+        regreso="/foto"
         return render_template("alertas.html", msgito=msgito,regreso=regreso)   
 @app.route('/menu1', methods = ['GET'])   
 def menu1():

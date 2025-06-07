@@ -1,4 +1,4 @@
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify,session
 from peewee import *
 from peewee import fn
 from models import *
@@ -43,36 +43,96 @@ def Ejecutar(db,sql):
     except Exception as e:
         print(e)
         return("400")
-@app.route('/u/1/<email>', methods=['GET']) # Detemina tipo de usuario
-def TipoUsuario(email):
-    email = email.strip().lower()
-    sql=f"SELECT COUNT(*) CANT FROM Fichaaprendiz    WHERE EMAIL='{email}'".format(email)
-    datos=ConsultarUno(DATABASE,sql)
-    # total = FichaAprendiz.select(FichaAprendiz.EMAIL).where(fn.LOWER(FichaAprendiz.EMAIL) == email).count()
-    # print("oooo>",total)
-    if datos[0]:
+@app.route('/u/1/<id>', methods=['GET']) # Detemina tipo de usuario
+def TipoUsuario(id):
+    cantidad = FichaAprendiz.select().where(FichaAprendiz.DNIA == id).count()
+    if cantidad:
         return str(1)
-    sql=f"SELECT COUNT(*) CANT FROM fichainstructor WHERE EMAIL='{email}'".format(email)
-    datos=ConsultarUno(DATABASE,sql)
-    if datos[0]:
+    cantidad = FichaInstructor.select().where(FichaInstructor.DNI == id).count()
+    if cantidad:
         return str(2)
-    sql=f"SELECT COUNT(*) CANT FROM admin WHERE EMAIL='{email}'".format(email)
-    datos=ConsultarUno(DATABASE,sql)
-    if datos[0]:
+    cantidad = Admin.select().where(Admin.NOM == id).count()
+    if cantidad:
         return str(3)
-    return str(-1)
+    
+    return str(0)
+@app.route('/u/datos/<id>')
+def UsuarioAprendiz(id):
+    try:
+        datos = FichaAprendiz.get(FichaAprendiz.DNIA == id)
+        aprendiz_data = {
+            "TIPO": 1,
+            "FICHA": datos.FICHA,
+            "DNI": datos.DNIA,
+            "NOMBRE": datos.NOMBREAP,
+            "ESTADOAP": datos.ESTADOAP,
+            "EMAIL": datos.EMAIL,
+            "TITULACION": datos.TITULACION
+        }
+        session['datos'] = aprendiz_data
+        return session['datos']
+    except FichaAprendiz.DoesNotExist:
+        return jsonify({"Error": f"Usuario {id} no encontrado"}), 401
+    except Exception as e:
+        # Puedes loguear `str(e)` aquí si deseas
+        return jsonify({"Error": "Error interno del servidor"}), 500
+    
+def UsuarioInstructor(id):
+    try:
+        datos=FichaInstructor.get(FichaInstructor.DNI==id)
+        return jsonify({"TIPO":2,"FICHA":datos.FICHA,"DNI":datos.DNI,"NOMBRE":datos.NOMINST,"EMAIL":datos.EMAIL})
+    except Exception as e:
+        print(e)
+        return jsonify({"Error":f"Usuario {id} no encontrado "})
+@app.route('/yyyy/<tipo>/<usuario>/<clave>', methods=['GET'])
+def ValidaClave(tipo,usuario,clave):
+    if tipo=="1":
+        cantidad=FichaAprendiz.select().where(FichaAprendiz.PWDAP==clave and FichaAprendiz.DNIA==usuario).count()
+        if cantidad:
+            return "1"
+    elif tipo=="2":
+        cantidad=FichaInstructor.select().where((FichaInstructor.PWD==clave) and (FichaInstructor.DNI==usuario)).count()
+        if cantidad:
+            return "1"
+    elif tipo=="3":
+        cantidad=Admin.select().where(Admin.CLA==clave and FichaAprendiz.NOM==usuario).count()
+        if cantidad:
+            return "1"
+    
+    return "0"
+
+@app.route('/u/<id>/<pwd>', methods=['GET'])  # Entrega Datos del Usuario
+def AllUsuario(id,pwd):
+    tipo = TipoUsuario(id)
+    # return tipo
+    if tipo == "1":
+        datos = UsuarioAprendiz(id)
+        entra= ValidaClave("1",id,pwd)
+        return entra
+    elif tipo == "2":    
+        datos = UsuarioInstructor(id)    
+        entra= ValidaClave("2",id,pwd)
+        return entra
+        return entra
+    elif tipo== "3":        
+        entra= ValidaClave(3,id,pwd)
+        return entra
+    else:
+        return jsonify({"Error": f"Usuario {id} no es un aprendiz autorizado"}), 403
+    
 @app.route('/a/0/<email>', methods=['GET']) # Entrega ficha del aprendiz
 def Aprendiz(email):
     sql=f"SELECT * FROM FICHAAPRENDIZ WHERE EMAIL='{email}'".format(email)
     datos=Consultar(DATABASE,sql)
-    # return datos
-    return jsonify({"FICHA":datos[0][1],"DNI":datos[0][2],"NOMBRE":datos[0][3],"ESTADOAP":datos[0][4],"EMAIL":datos[0][6]})
+    datos=FichaAprendiz.select().where(FichaAprendiz.EMAIL)
+    return jsonify({"FICHA":datos.FICHA})
+    # return jsonify( "FICHA":datos[0][1],"DNI":datos[0][2],"NOMBRE":datos[0][3],"ESTADOAP":datos[0][4],"EMAIL":datos[0][6]})
 
-@app.route('/a/1/<email>', methods=['GET']) # Entrega ficha del aprendiz
-def FichaAprendiz1(email):
+@app.route('/a/1/<id>', methods=['GET']) # Entrega ficha del aprendiz
+def FichaAprendiz1(id):
 
-    Aux=FichaAprendiz.get(FichaAprendiz.EMAIL==email)
-    return Aux.FICHA
+    Aux=FichaAprendiz.get(FichaAprendiz.DNIA==id)
+    return str(Aux.FICHA)
     
 @app.route('/a/2/<email>', methods=['GET']) # Entrega el DNI del aprendiz
 def DNIAprendiz(email):
@@ -224,11 +284,18 @@ def noEvaluados(pficha, paprendiz):
 # or, without the decorator
 
 
-@app.route('/i/e/<email>', methods=['GET'])
-def obtener_instructor_por_email(email):
-    sql=f"SELECT * FROM FICHAINSTRUCTOR WHERE EMAIL='{email}'".format(email)
-    datos=Consultar(DATABASE,sql)
-    return jsonify(datos),404
+@app.route('/i/e/<id>', methods=['GET'])
+def obtener_instructor_por_email(id):
+    # Consulta todos los instructores con el DNI
+    datos = FichaInstructor.select().where(FichaInstructor.DNI == id)
+    
+    if datos:
+        # Convertir los resultados en una lista de diccionarios
+        instructores = [model_to_dict(instructor) for instructor in datos]
+        return jsonify(instructores), 200
+    else:
+        return jsonify({'error': 'Instructor no encontrado'}), 404
+    
 def pagina_no_encontrada(error):
     return "<h1>RUTA NO ENCONTRADA</h1>", 404
 def metodo_no_aceptado(error):
@@ -240,5 +307,4 @@ if __name__ == '__main__':
     app.register_error_handler(405, metodo_no_aceptado)
     app.register_error_handler(503, servicio_no_dispoible)
     app.run(debug=True,port=5556)
-    
     

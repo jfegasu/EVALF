@@ -49,10 +49,18 @@
 }
 .imgfull:hover {
   /* develop 15:56*/
-    position: absolute;
-    transform:scale(4);
-    width: 469px;
-    z-index: 1000;
+    position: sticky;
+    left: 10px;
+    top: 100px;
+    background-color: rgba(255, 0, 0, 0.5);
+    transform:scale(2.5);
+    width: 369px;
+    z-index: 500;
+    box-shadow:
+    inset 0 -3em 3em rgb(0 200 0 / 30%),
+    0 0 0 2px white,
+    0.3em 0.3em 1em rgb(200 0 0 / 60%);
+    
     /* 
     --initial--width:469px;
     width: --initial--width;*/

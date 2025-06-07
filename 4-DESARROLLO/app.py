@@ -74,11 +74,7 @@ def valida():
     session['usua']=usua 
     Tipo= tipoUsuario(usua) 
     if Tipo=="1":
-        N=1
-        # usua=request.form.get('usua')
-        # session['usua']=usua
-    # au.registra(30,'Intento de logueo',usua)
-        
+        N=1        
         daticos=requests.get(f'{apidb}/u/{usua}/{pw}')
         datos=requests.get(f'{apidb}/u/datos/{usua}').json()
         ficha=requests.get(f'{apidb}/a/1/{usua}').text
@@ -97,15 +93,7 @@ def valida():
             return render_template('alertas.html',msgito=msgito,regreso=regresa)
     
     if Tipo==2:
-        # sql=f"{apidb}/i/e/{usua}".format(usua)
-        
-        # datos=ConsultarDB(sql)
-        # session['datos']=datos
         return redirect('/foto')
-        # return render_template('foto.html',datos=datos)
-        
-        
-        
     elif Tipo == "3":
         session['usua']=usua
         # au.registra(30,"Ingresa un administrador",session['usua'])

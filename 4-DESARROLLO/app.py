@@ -10,6 +10,8 @@ import hashlib
 import logging
 from database.models import *
 from foto.routes import foto
+from encuesta.routes import eval
+
 from config import DevelopmentConfig 
 from config import apidb
 from datetime import datetime
@@ -23,7 +25,9 @@ RESPUESTAS = os.path.join(BASE_DIR, 'static/archivos/RESPUESTAS.csv')
 app.config['apidb'] =  "http://127.0.0.1:5556"
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 app.config['BASE_DIR']=BASE_DIR
+# Registrando modulos Blueprint
 app.register_blueprint(foto, url_prefix='/foto')
+app.register_blueprint(eval, url_prefix='/eval')
 
 # app.config.from_object(DevelopmentConfig) 
 #au=Auditor(app.config['BASE_DIR'])

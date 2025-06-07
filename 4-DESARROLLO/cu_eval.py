@@ -48,8 +48,20 @@ class Usuario:
         else: 
             falla={"Tipo":Tipo,"Error":"Usuario no encontrado"}
             return falla
-
+    def Valide_Usuario(self, id, pwd):
+        # Filtrar registros que coincidan con el DNI y la contraseña
+        Tipo = self.get_tipo_usuario(id)    
+        if Tipo == 1:
+            datos = FichaAprendiz.select().where((FichaAprendiz.DNIA == id) & (FichaAprendiz.PWDAP == pwd)).first()    
+        elif Tipo == 2:
+            datos = FichaInstructor.select().where((FichaInstructor.DNI == id) & (FichaInstructor.PWD == pwd)).first()
+        # else:
+        #     datos = None
+        # Verificar si se obtuvo algún dato y si tiene una ficha
+        if datos and datos.FICHA is not None:
+            return 1
+        return 0
 if __name__=='__main__':
     OUsuario =Usuario()
-    print(OUsuario.get_all_datos_usuario(1234))
+    print(OUsuario.Valide_Usuario(1013106019,'5218f316b3f85b751c613a06aa18010d1'))
         

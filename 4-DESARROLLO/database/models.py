@@ -1,7 +1,10 @@
 from peewee import *
 import datetime 
+import os
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+DATABASE = os.path.join(BASE_DIR,  'sena.db')
 # Conexión a la base de datos SQLite
-db = SqliteDatabase('sena.db')  
+db = SqliteDatabase(DATABASE)  
 class BaseModel(Model):
     class Meta:
         database = db

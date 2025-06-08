@@ -17,12 +17,12 @@ input::file-selector-button {
   color: white;
   padding: 0.5em;
   border: thin solid grey;
-font-weight: bold;
+  font-weight: bold;
   font-size: 10pt;
   text-transform: uppercase;
   border-radius: 34px 34px 34px 34px;
--moz-border-radius: 34px 34px 34px 34px;
--webkit-border-radius: 34px 34px 34px 34px;
+  -moz-border-radius: 34px 34px 34px 34px;
+  -webkit-border-radius: 34px 34px 34px 34px;
   transition: background-color 1.5 ease;
 
 }

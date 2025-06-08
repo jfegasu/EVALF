@@ -14,7 +14,7 @@ location.href="#alerta"
       top: 30%;
       left: 50%;
       transform: translate(-50%, -50%);
-      background-color: #ece9e9;
+      background-color: #4d4c4c;
       color: white;
       padding: 20px;
       border-radius: 5px;
@@ -45,12 +45,12 @@ location.href="#alerta"
             <img src="{{url_for('static',filename='images/NOTFOUND.png')}}" style="width:600px;" ><br>
                         <h1 class="sena-sombra"><font color=red  class="caret-sombra-red"><b>{{ msgito}}</font></h1>
                     </div>
-                </center>
-  
-    Desea terminar?
-    <br>
-    <a class="btn btn-primary ovalo col-2" href="javascript:Termina()" class="cerrar">OK</a>
-    <a class="btn btn-danger ovalo col-2" href="http://127.0.0.1:5000/login" class="cerrar">CANCELAR</a>
-  </div>
+    
+    <div class="sena" style="width:50% ;text-align:center;">
+    <p class="sena-sombra mx-auto">Desea salir del sistema?</p>
+    <a class="btn btn-primary ovalo col-4 btn-lg" href="javascript:Termina()" class="cerrar"><b>TERMINAR</b></a>
+    <a class="btn btn-warning ovalo col-4 btn-lg" href="http://127.0.0.1:5000/login" class="cerrar"><b>CANCELAR</b></a>
+</div>  
+</div>
   </div>
   {% endblock content %} 

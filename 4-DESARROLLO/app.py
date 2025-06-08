@@ -434,7 +434,7 @@ def menu1():
     },
     {
         "titulo":"TERMINAR",
-        "items":[{"texto":"SALIR DEL APLICATIVO","url":"/salir","svg":"","fa":"fa fa-window-close"}]
+        "items":[{"texto":"SALIR DEL APLICATIVO","url":"/saliendo","svg":"","fa":"fa fa-window-close"}]
 
     }
 ]

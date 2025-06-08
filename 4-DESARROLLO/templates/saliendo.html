@@ -1,4 +1,56 @@
+{% extends "base.html" %}
+{% block content %} 
 <script>
+    function Termina(){
 const miventana = document.getElementById('xxx');
 open(location, '_parent').close()
+    }
+location.href="#alerta"
 </script>
+<style>
+    .alerta {
+      display: none;
+      position: fixed;
+      top: 30%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background-color: #ece9e9;
+      color: white;
+      padding: 20px;
+      border-radius: 5px;
+      z-index: 999;
+      width: 300px;
+      text-align: center;
+    }
+
+    #alerta:target {
+      display: block;
+    }
+
+    .cerrar {
+      display: inline-block;
+      margin-top: 15px;
+      padding: 5px 10px;
+      background: #fff;
+      color: #f44336;
+      text-decoration: none;
+      border-radius: 3px;
+    }
+  </style>
+</head>
+<body>
+    <div class=" mx-auto" style="width:70%;">
+<div id="alerta"  class=""  style="width:120%;text-align:auto;">
+                    <div class=" w-50 col-4" style="text-align:center">
+            <img src="{{url_for('static',filename='images/NOTFOUND.png')}}" style="width:600px;" ><br>
+                        <h1 class="sena-sombra"><font color=red  class="caret-sombra-red"><b>{{ msgito}}</font></h1>
+                    </div>
+                </center>
+  
+    Desea terminar?
+    <br>
+    <a class="btn btn-primary ovalo col-2" href="javascript:Termina()" class="cerrar">OK</a>
+    <a class="btn btn-danger ovalo col-2" href="http://127.0.0.1:5000/login" class="cerrar">CANCELAR</a>
+  </div>
+  </div>
+  {% endblock content %} 

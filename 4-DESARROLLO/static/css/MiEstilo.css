@@ -17,12 +17,12 @@
       top: 30%;
       left: 50%;
       transform: translate(-50%, -50%);
-      background-color: #f44336;
+      
       color: white;
       padding: 20px;
       border-radius: 5px;
       z-index: 999;
-      width: 300px;
+      width: auto;
       text-align: center;
     }
 #alerta:target {
@@ -52,14 +52,14 @@
     position: sticky;
     left: 10px;
     top: 100px;
-    background-color: rgba(255, 0, 0, 0.5);
+    /* background-color: rgba(255, 0, 0, 0.5); */
     transform:scale(2.5);
     width: 369px;
     z-index: 500;
     box-shadow:
     inset 0 -3em 3em rgb(0 200 0 / 30%),
     0 0 0 2px white,
-    0.3em 0.3em 1em rgb(200 0 0 / 60%);
+    0.3em 0.3em 1em rgba(233, 231, 231, 0.6);
     
     /* 
     --initial--width:469px;

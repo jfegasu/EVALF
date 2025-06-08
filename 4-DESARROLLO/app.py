@@ -11,6 +11,7 @@ import logging
 from database.models import *
 from foto.routes import foto
 from encuesta.routes import eval
+from admin.routes import admin
 
 from config import DevelopmentConfig 
 from config import apidb
@@ -28,6 +29,7 @@ app.config['BASE_DIR']=BASE_DIR
 # Registrando modulos Blueprint
 app.register_blueprint(foto, url_prefix='/foto')
 app.register_blueprint(eval, url_prefix='/eval')
+app.register_blueprint(admin, url_prefix='/admin')
 
 # app.config.from_object(DevelopmentConfig) 
 #au=Auditor(app.config['BASE_DIR'])
@@ -92,7 +94,7 @@ def valida():
     elif Tipo == 3 :
         session['usua']=usua
         # au.registra(30,"Ingresa un administrador",session['usua'])
-        return render_template('menuadmin.html')
+        return redirect('/admin')
     elif Tipo == 0 :
         msgito="USUARIO NO EXISTE**"
         regresa="/login"

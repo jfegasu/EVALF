@@ -85,21 +85,30 @@ def UsuarioInstructor(id):
         print(e)
         return jsonify({"Error":f"Usuario {id} no encontrado "})
 @app.route('/yyyy/<tipo>/<usuario>/<clave>', methods=['GET'])
-def ValidaClave(tipo,usuario,clave):
-    if tipo=="1":
-        cantidad=FichaAprendiz.select().where(FichaAprendiz.PWDAP==clave and FichaAprendiz.DNIA==usuario).count()
+def ValidaClave(tipo, usuario, clave):
+    if tipo == "1":
+        cantidad = FichaAprendiz.select().where(
+            (FichaAprendiz.PWDAP == clave) & (FichaAprendiz.DNIA == usuario)
+        ).count()
         if cantidad:
             return "1"
-    elif tipo=="2":
-        cantidad=FichaInstructor.select().where((FichaInstructor.PWD==clave) and (FichaInstructor.DNI==usuario)).count()
+
+    elif tipo == "2":
+        cantidad = FichaInstructor.select().where(
+            (FichaInstructor.PWD == clave) & (FichaInstructor.DNI == usuario)
+        ).count()
         if cantidad:
             return "1"
-    elif tipo=="3":
-        cantidad=Admin.select().where(Admin.CLA==clave and FichaAprendiz.NOM==usuario).count()
+
+    elif tipo == "3":
+        cantidad = Admin.select().where(
+            (Admin.CLA == clave) & (Admin.NOM == usuario)
+        ).count()
         if cantidad:
             return "1"
-    
+
     return "0"
+
 
 @app.route('/u/<id>/<pwd>', methods=['GET'])  # Entrega Datos del Usuario
 def AllUsuario(id,pwd):

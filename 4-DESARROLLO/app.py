@@ -80,22 +80,12 @@ def valida():
     
     if Tipo == 1:
         # N=1        
-        # daticos=requests.get(f'{apidb}/u/{usua}/{pw}')
-        # datos=requests.get(f'{apidb}/u/datos/{usua}').json()
-        # ficha=requests.get(f'{apidb}/a/1/{usua}').text
-        # session['ficha']=ficha
-        # session['datos']=datos
-        # session['usua']=usua
-        # aa=f'{apidb}/i/2/{ficha}/{usua}'
-        # datos=requests.get(aa).json()
-        # if daticos.text == "1":
-        #     return render_template('carga.html',N=1,apr=session['datos'],datos=datos)
-        # else:
-        #     msgito="APRENDIZ O CLAVE ERRADOS**"
-        #     regresa="/login"
-        #     # au.registra(30,msgito)
-        #     # *******
-        #     return render_template('alertas.html',msgito=msgito,regreso=regresa)
+        daticos=requests.get(f'{apidb}/u/{usua}/{pw1}')
+        if daticos.text != "1":
+            msgito="APRENDIZ O CLAVE ERRADOS**"
+            regresa="/login"
+            # au.registra(30,msgito)
+            return render_template('alertas.html',msgito=msgito,regreso=regresa)
         return redirect('/eval')
     if Tipo == 2:
         return redirect('/foto')

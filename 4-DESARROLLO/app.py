@@ -32,7 +32,7 @@ app.register_blueprint(eval, url_prefix='/eval')
 app.register_blueprint(admin, url_prefix='/admin')
 
 # app.config.from_object(DevelopmentConfig) 
-#au=Auditor(app.config['BASE_DIR'])
+au=Auditor(app.config['BASE_DIR'])
 
 @app.route('/') 
 def raiz():   
@@ -41,7 +41,7 @@ def raiz():
 def indexppal():  
     server_ip = socket.gethostbyname(socket.gethostname())
     session['server_ip']=server_ip
-    # au.registra(30,'Inicia Aplicacion') 
+    au.registra(30,'Inicia Aplicacion') 
     return render_template('indexppal.html',server_ip=session['server_ip'])
 @app.route('/banner') 
 def banner():  
@@ -86,7 +86,7 @@ def valida():
         if daticos.text != "1":
             msgito="APRENDIZ O CLAVE ERRADOS**"
             regresa="/login"
-            # au.registra(30,msgito)
+            au.registra(30,msgito,usua)
             return render_template('alertas.html',msgito=msgito,regreso=regresa)
         return redirect('/eval')
     if Tipo == 2:
@@ -281,7 +281,7 @@ def eval(I):
     
         
     
-    # au.registra(30,'EVALUO A: '+getInstructor(I))
+    au.registra(30,'EVALUO A: '+getInstructor(I))
     msgito="Respuestas registrada"
     regreso="/login"
     return render_template("alertas.html",msgito=msgito,regreso=regreso)

@@ -39,8 +39,8 @@ class Auditor():
         fecha=datetime.now()
         fe=str(fecha.year)+str(fecha.month)+str(fecha.day)
         # print("** Inicia **")
-        LOG = os.path.join('/log')
-        # os.makedirs(LOG,exist_ok=True)
+        LOG = os.path.join(f'{base1}/log')
+        os.makedirs(LOG,exist_ok=True)
         logger = logging.getLogger('werkzeug')
         self.logger =logger 
         logging.basicConfig(format='%(asctime)s %(levelname)s %(message)s ',filename=LOG+'/'+fe+'.log', encoding='utf-8',level=logging.WARNING)
@@ -60,7 +60,7 @@ class Auditor():
             self.logger.info(client_ip+' '+msg+' '+usua)
         elif tipo==30:
             a=30
-            # self.logger.warning(client_ip+' '+msg+' '+usua)
+            self.logger.warning(client_ip+' '+msg+' '+usua)
         elif tipo==40:
             # print(client_ip+' '+msg+' '+usua)
             self.logger.error(client_ip+' '+msg+' ['+usua+']')

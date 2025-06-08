@@ -163,7 +163,9 @@ border: 0px solid #000000;
 border: 3px;
 font-weight: bold;
   font-size: 12pt;
-    transition: background-color 0.5 ease;
+  text-transform: uppercase;
+  
+    transition: background-color 1.5 ease;
   }
   .ovalo:hover{
   background-color: black;
@@ -326,7 +328,7 @@ select:hover{
   color:white;
 }
 select:focus{
-  background-color:rgb(219, 218, 218);
+  background-color:whitesmoke;
   color:black;
 }
 .sena-fondo{

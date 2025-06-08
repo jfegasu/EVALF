@@ -46,12 +46,13 @@
 {% if N==2 %}
 <div class=" d-flex justify-content-center align-items-center  mx-auto" style="width: 50%;padding-top: 20px;padding-left: 20px;padding-right: 20px;">
     <table class="sena table table-striped" style="width: 100%;">
-        <th colspan="2" class="sena-sombra" style="color:red;font-size: 10px;"><b>FICHA: {{apr.FICHA}}
+        <th colspan="3" class="sena-sombra"><h1 style="text-align:center;">RESPUESTAS ENCUESTA</h1></th></tR>
+        <th colspan="3" class="sena-sombra" style="color:red;font-size: 10px;"><b>FICHA: {{apr.FICHA}}
             , APRENDIZ: {{session['datos'].NOMBRE}},TITULACION: {{session['datos'].TITULACION}},
             INSTRUCTOR A EVALUAR:{{nomi}}
         </th>
-        <th> <span class="btn btn-warning" style="text-align: right;"  onclick="window.open('/login','centro')"><i class="fa fa-fast-backward" aria-hidden="true"></i></span>
-    </th>
+        <th> <span class="btn btn-warning ovalo" style="text-align: right;"  onclick="window.open('/login','centro')"><i class="fa fa-fast-backward" aria-hidden="true"></i></span>
+    </th></tr>
         <tr>
             <td width=50% class="sena-sombra">
                 PREGUNTAS A RESPONDER

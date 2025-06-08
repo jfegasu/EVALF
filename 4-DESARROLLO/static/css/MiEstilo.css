@@ -11,6 +11,26 @@
 .danger {background-image: linear-gradient(to right, #dc3545, #e0666e);} 
 .danger:hover {background-image: linear-gradient(to right, #d32838, #e0666e);}
 
+input::file-selector-button {
+  background-color:blue;
+  font-weight: bold;
+  color: white;
+  padding: 0.5em;
+  border: thin solid grey;
+font-weight: bold;
+  font-size: 10pt;
+  text-transform: uppercase;
+  border-radius: 34px 34px 34px 34px;
+-moz-border-radius: 34px 34px 34px 34px;
+-webkit-border-radius: 34px 34px 34px 34px;
+  transition: background-color 1.5 ease;
+
+}
+input::file-selector-button:hover {
+background-color:black;
+color:yellow;
+font-size: 12pt;
+}
 .alerta {
       display: none;
       position: fixed;
@@ -162,7 +182,7 @@ border: 0px solid #000000;
 -webkit-border-radius: 34px 34px 34px 34px;
 border: 3px;
 font-weight: bold;
-  font-size: 12pt;
+  font-size: 10pt;
   text-transform: uppercase;
   
     transition: background-color 1.5 ease;

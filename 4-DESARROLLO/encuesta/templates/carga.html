@@ -44,9 +44,8 @@
 {% endif%}
 
 {% if N==2 %}
-<br><br>
-<div class="sena d-flex justify-content-center align-items-center  mx-auto" style="width: 50%;padding-top: 20px;padding-left: 20px;padding-right: 20px;">
-    <table class="table table-striped" style="width: 100%;">
+<div class=" d-flex justify-content-center align-items-center  mx-auto" style="width: 50%;padding-top: 20px;padding-left: 20px;padding-right: 20px;">
+    <table class="sena table table-striped" style="width: 100%;">
         <th colspan="2" class="sena-sombra" style="color:red;font-size: 10px;"><b>FICHA: {{apr.FICHA}}
             , APRENDIZ: {{session['datos'].NOMBRE}},TITULACION: {{session['datos'].TITULACION}},
             INSTRUCTOR A EVALUAR:{{nomi}}
@@ -65,7 +64,7 @@
 
             <tr>
                 <input type="hidden" name="P{{loop.index}}" value="{{data.DESCRIPCION}}">
-                <td>{{data.DESCRIPCION}}</td>
+                <td style="padding-left:20px;">{{data.DESCRIPCION}}</td>
                 <td><select name="R{{loop.index}}" style="width: 100%;">
                     {%for n in data.VALORES.split(',')%}
                     <option value="{{n}}">{{n}}</option>
@@ -85,7 +84,7 @@
         
         <input type="submit" class="btn btn-primary ovalo" style="width:50%;" value="ENVIAR">
         <!-- <button class="btn btn-warning ovalo" style="width:50%;" onclick="','centro')">ENVIAR</button> -->
-        <button type="button" class="btn btn-warning ovalo" style="width:49%;" onclick="window.open('/login','centro')">CANCELAR</button>
+        <button type="button" class="btn btn-warning ovalo" style="width:49%;" onclick="window.open('/login','centro')"><b>CANCELAR</b></button>
 
     </td>
 </tr>

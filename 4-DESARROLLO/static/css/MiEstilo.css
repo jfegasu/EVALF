@@ -135,6 +135,13 @@ border: 0px solid #000000;
     font-stretch: condensed;
     background: ##DAF7A6;
   }
+  table{
+    font-family: 'Roboto', Courier, monospace;
+    font-size: x-small;
+    font-weight: bold;
+    font-stretch: condensed;
+    border-color:#000;
+  }
   table>th{
     font-weight: bold;
     background-color: #4CAF50;
@@ -153,7 +160,16 @@ border: 0px solid #000000;
     border-radius: 34px 34px 34px 34px;
 -moz-border-radius: 34px 34px 34px 34px;
 -webkit-border-radius: 34px 34px 34px 34px;
-border: 0px;
+border: 3px;
+font-weight: bold;
+  font-size: 12pt;
+    transition: background-color 0.5 ease;
+  }
+  .ovalo:hover{
+  background-color: black;
+  color:yellow;
+  font-weight: bold;
+  font-size: 12pt;
   }
   .texto3d {
     text-align: left; 

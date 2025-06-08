@@ -13,4 +13,4 @@ def index():
     session['datos']=datos
     aa=f'{apidb}/i/2/{ficha}/{usua}'
     datos=requests.get(aa).json()
-    return render_template('eval_carga.html',N=1,datos=datos,apr=session['datos'])
+    return render_template('carga.html',N=1,datos=datos,apr=session['datos'])

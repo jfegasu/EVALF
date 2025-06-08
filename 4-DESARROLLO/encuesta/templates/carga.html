@@ -55,7 +55,7 @@
     </th>
         <tr>
             <td width=50% class="sena-sombra">
-                PREGUNTAS A RESPONDER
+                PREGUNTAS A RESPONDER ***
             </td>
             <td width=50% class="sena-sombra">RESPUESTAS</td>
         </tr>
@@ -64,7 +64,7 @@
             {%for data in preg%}
 
             <tr>
-                <input type="hidden" name="P{{loop.index}}" value="{{data[1]}}">
+                <input type="hidden" name="P{{loop.index}}" value="{{data.DESCRIPCION}}">
                 <td>{{data.DESCRIPCION}}</td>
                 <td><select name="R{{loop.index}}" style="width: 100%;">
                     {%for n in data.VALORES.split(',')%}

@@ -275,7 +275,7 @@ def eval(I):
         Resp=request.form.get('R' + str(i))
         Preg=request.form.get('P' + str(i))
         sql=f"insert into THEVAL(idINSTRUCTOR,idFICHA,idAPRENDIZ,PREGUNTA,RESPUESTA,TITULACION,TRIMESTRE) VALUES({I},{F},{A},'{Preg}','{Resp}','{T}','{TRIMESTRE}')".format(I,F,A,Preg,Resp,T,TRIMESTRE)
-        
+        print(sql) 
         Ejecutar(DATABASE,sql)
         
     

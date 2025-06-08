@@ -63,5 +63,5 @@ class Usuario:
         return 0
 if __name__=='__main__':
     OUsuario =Usuario()
-    print(OUsuario.Valide_Usuario(1013106019,'5218f316b3f85b751c613a06aa18010d1'))
+    print(OUsuario.Valide_Usuario(1013106019,'5218f316b3f85b751c613a06aa18010d'))
         

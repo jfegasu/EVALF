@@ -77,123 +77,124 @@ def valida():
     session['pw1']=pw1
     session['usua']=usua 
     Tipo= tipoUsuario(usua) 
-    if Tipo=="1":
-        N=1        
-        daticos=requests.get(f'{apidb}/u/{usua}/{pw}')
-        datos=requests.get(f'{apidb}/u/datos/{usua}').json()
-        ficha=requests.get(f'{apidb}/a/1/{usua}').text
-        session['ficha']=ficha
-        session['datos']=datos
-        session['usua']=usua
-        aa=f'{apidb}/i/2/{ficha}/{usua}'
-        datos=requests.get(aa).json()
-        if daticos.text == "1":
-            return render_template('carga.html',N=1,apr=session['datos'],datos=datos)
-        else:
-            msgito="APRENDIZ O CLAVE ERRADOS**"
-            regresa="/login"
-            # au.registra(30,msgito)
-            # *******
-            return render_template('alertas.html',msgito=msgito,regreso=regresa)
     
-    if Tipo==2:
+    if Tipo == 1:
+        # N=1        
+        # daticos=requests.get(f'{apidb}/u/{usua}/{pw}')
+        # datos=requests.get(f'{apidb}/u/datos/{usua}').json()
+        # ficha=requests.get(f'{apidb}/a/1/{usua}').text
+        # session['ficha']=ficha
+        # session['datos']=datos
+        # session['usua']=usua
+        # aa=f'{apidb}/i/2/{ficha}/{usua}'
+        # datos=requests.get(aa).json()
+        # if daticos.text == "1":
+        #     return render_template('carga.html',N=1,apr=session['datos'],datos=datos)
+        # else:
+        #     msgito="APRENDIZ O CLAVE ERRADOS**"
+        #     regresa="/login"
+        #     # au.registra(30,msgito)
+        #     # *******
+        #     return render_template('alertas.html',msgito=msgito,regreso=regresa)
+        return redirect('/eval')
+    if Tipo == 2:
         return redirect('/foto')
-    elif Tipo == "3":
+    elif Tipo == 3 :
         session['usua']=usua
         # au.registra(30,"Ingresa un administrador",session['usua'])
         return render_template('menuadmin.html')
-    if Tipo=="0":
+    elif Tipo == 0 :
         msgito="USUARIO NO EXISTE**"
         regresa="/login"
         # au.registra(30,msgito)
         # *******
         return render_template('alertas.html',msgito=msgito,regreso=regresa)
-    
-    sql=f"SELECT count(*) FROM FICHAPRENDIZ WHERE PWDAP='{pw1}' AND EMAIL='{usua}'".format(usua,pw1)
-    hay=ConsultarUno(DATABASE,sql)
-    if hay[0]>0:
-        N=1
-        sql=f"SELECT * FROM FICHAPRENDIZ WHERE PWDAP='{pw1}' AND EMAIL='{usua}'".format(usua,pw1)
-        aprendiz=ConsultarUno(DATABASE,sql)
-        session['ficha']=aprendiz[0]
-        session['nombreap']= aprendiz[2]   
-        session['titulacion']= aprendiz[6]   
-        session['dnia']= aprendiz[1]  
-        # return str(aprendiz)
-        F=aprendiz[0]
-        A=aprendiz[1] 
-        sql=f"SELECT * FROM FICHAINSTRUCTOR WHERE DNI NOT IN(SELECT IDINSTRUCTOR FROM THEVAL WHERE IDFICHA='{F}' AND IDAPRENDIZ='{A}')".format(F,A)
-        datos=Consultar(DATABASE,sql)
+    return "400"
+    # sql=f"SELECT count(*) FROM FICHAPRENDIZ WHERE PWDAP='{pw1}' AND EMAIL='{usua}'".format(usua,pw1)
+    # hay=ConsultarUno(DATABASE,sql)
+    # if hay[0]>0:
+    #     N=1
+    #     sql=f"SELECT * FROM FICHAPRENDIZ WHERE PWDAP='{pw1}' AND EMAIL='{usua}'".format(usua,pw1)
+    #     aprendiz=ConsultarUno(DATABASE,sql)
+    #     session['ficha']=aprendiz[0]
+    #     session['nombreap']= aprendiz[2]   
+    #     session['titulacion']= aprendiz[6]   
+    #     session['dnia']= aprendiz[1]  
+    #     # return str(aprendiz)
+    #     F=aprendiz[0]
+    #     A=aprendiz[1] 
+    #     sql=f"SELECT * FROM FICHAINSTRUCTOR WHERE DNI NOT IN(SELECT IDINSTRUCTOR FROM THEVAL WHERE IDFICHA='{F}' AND IDAPRENDIZ='{A}')".format(F,A)
+    #     datos=Consultar(DATABASE,sql)
         
-        apr={
-            "ficha":session['ficha'],
-            "aprendiz":session['nombreap'],
-            "titulacion":session['titulacion'],
-            "dnia":session['dnia']
-        }
-        render_template('carga.html',N=N,datos=datos,apr=apr)
-    sql=f"SELECT count(*) FROM FICHAPRENDIZ WHERE PWDAP='{pw1}' AND EMAIL='{usua}'".format(usua,pw1)
-    hay=ConsultarUno(DATABASE,sql)
+    #     apr={
+    #         "ficha":session['ficha'],
+    #         "aprendiz":session['nombreap'],
+    #         "titulacion":session['titulacion'],
+    #         "dnia":session['dnia']
+    #     }
+    #     render_template('carga.html',N=N,datos=datos,apr=apr)
+    # sql=f"SELECT count(*) FROM FICHAPRENDIZ WHERE PWDAP='{pw1}' AND EMAIL='{usua}'".format(usua,pw1)
+    # hay=ConsultarUno(DATABASE,sql)
     
 
-    # return str(hay)
-    try:
-        hay=ConsultarUno(DATABASE,f"SELECT count(*) FROM FICHAPRENDIZ WHERE DNIA='{usua}' AND EMAIL='{pw1}'".format(usua,pw1))
-    except Exception as e:
-        msgito="USUARIO O CLAVE ERRADOS**"
-        regresa="/login"
-        # au.registra(30,'USUARIO O CLAVE ERRADOS')
-        return render_template('login.html',msgito=msgito,regreso=regresa)
+    # # return str(hay)
+    # try:
+    #     hay=ConsultarUno(DATABASE,f"SELECT count(*) FROM FICHAPRENDIZ WHERE DNIA='{usua}' AND EMAIL='{pw1}'".format(usua,pw1))
+    # except Exception as e:
+    #     msgito="USUARIO O CLAVE ERRADOS**"
+    #     regresa="/login"
+    #     # au.registra(30,'USUARIO O CLAVE ERRADOS')
+    #     return render_template('login.html',msgito=msgito,regreso=regresa)
     
-    hay=hay[0]
-    # return "->"+str(hay)
-    if hay=="0":
-        # au.registra(30,'USUARIO O CLAVE ERRADOS')
-        return render_template("alertas.html",msgito="USUARIO O CLAVE INCORRECTO***",regreso="/login")
-    
-    
+    # hay=hay[0]
+    # # return "->"+str(hay)
+    # if hay=="0":
+    #     # au.registra(30,'USUARIO O CLAVE ERRADOS')
+    #     return render_template("alertas.html",msgito="USUARIO O CLAVE INCORRECTO***",regreso="/login")
     
     
-    try:
-        sql=f"SELECT * FROM FICHAPRENDIZ WHERE EMAIL='{usua}' AND PWDAP='{pw1}'".format(usua,pw)
-        aprendiz=ConsultarUno(DATABASE,sql)
-        session['ficha'] = aprendiz[0]
-        session['dnia'] = aprendiz[1]
-        session['nombreap'] = aprendiz[2]
-        session['titulacion'] = aprendiz[6]
+    
+    
+    # try:
+    #     sql=f"SELECT * FROM FICHAPRENDIZ WHERE EMAIL='{usua}' AND PWDAP='{pw1}'".format(usua,pw)
+    #     aprendiz=ConsultarUno(DATABASE,sql)
+    #     session['ficha'] = aprendiz[0]
+    #     session['dnia'] = aprendiz[1]
+    #     session['nombreap'] = aprendiz[2]
+    #     session['titulacion'] = aprendiz[6]
         
-    except:
-        # au.registra(30,'USUARIO O CLAVE ERRADOS')
-        msgito="USUARIO O CLAVE ERRADOS**"
-        regresa="/login"
-        return render_template('alertas.html',msgito=msgito,regreso=regresa)
+    # except:
+    #     # au.registra(30,'USUARIO O CLAVE ERRADOS')
+    #     msgito="USUARIO O CLAVE ERRADOS**"
+    #     regresa="/login"
+    #     return render_template('alertas.html',msgito=msgito,regreso=regresa)
     
-    F=session['ficha']
-    A=session['dnia']
-    N=1
-    sql=f"SELECT count(*) FROM FICHAINSTRUCTOR WHERE DNI NOT IN(SELECT IDINSTRUCTOR FROM THEVAL WHERE IDFICHA='{F}' AND IDAPRENDIZ='{A}')".format(F,A)
-    # au.registra(30,'INGRESO ',session['nombreap'])
+    # F=session['ficha']
+    # A=session['dnia']
+    # N=1
+    # sql=f"SELECT count(*) FROM FICHAINSTRUCTOR WHERE DNI NOT IN(SELECT IDINSTRUCTOR FROM THEVAL WHERE IDFICHA='{F}' AND IDAPRENDIZ='{A}')".format(F,A)
+    # # au.registra(30,'INGRESO ',session['nombreap'])
 
-    hay=ConsultarUno(DATABASE,sql)
+    # hay=ConsultarUno(DATABASE,sql)
 
-    if hay[0]=="0":
-        msgito="NO HAY INSTRUCTORES PARA EVALUAR"
-        # au.registra(30,msgito,session['nombreap'])
+    # if hay[0]=="0":
+    #     msgito="NO HAY INSTRUCTORES PARA EVALUAR"
+    #     # au.registra(30,msgito,session['nombreap'])
 
-        regresa="/login"
-        return render_template('alertas.html',msgito=msgito,regreso=regresa)
-    else:
-        sql=f"SELECT * FROM FICHAINSTRUCTOR WHERE DNI NOT IN(SELECT IDINSTRUCTOR FROM THEVAL WHERE IDFICHA='{F}' AND IDAPRENDIZ='{A}')".format(F,A)
-        datos=Consultar(DATABASE,sql)
-        apr={
-            "ficha":session['ficha'],
-            "aprendiz":session['nombreap'],
-            "titulacion":session['titulacion'],
-            "dnia":session['dnia']
-        }
-        # au.registra(30,str(apr),session['nombreap'])
-        session['apr']=apr
-        return render_template('carga.html',N=N,datos=datos,apr=apr)
+    #     regresa="/login"
+    #     return render_template('alertas.html',msgito=msgito,regreso=regresa)
+    # else:
+    #     sql=f"SELECT * FROM FICHAINSTRUCTOR WHERE DNI NOT IN(SELECT IDINSTRUCTOR FROM THEVAL WHERE IDFICHA='{F}' AND IDAPRENDIZ='{A}')".format(F,A)
+    #     datos=Consultar(DATABASE,sql)
+    #     apr={
+    #         "ficha":session['ficha'],
+    #         "aprendiz":session['nombreap'],
+    #         "titulacion":session['titulacion'],
+    #         "dnia":session['dnia']
+    #     }
+    #     # au.registra(30,str(apr),session['nombreap'])
+    #     session['apr']=apr
+    #     return render_template('carga.html',N=N,datos=datos,apr=apr)
 def getInstructor(id):
     sql=f"SELECT NOMINST FROM FICHAINSTRUCTOR WHERE  dni='{id}'".format(str(id))
     datos=ConsultarUno(DATABASE,sql)

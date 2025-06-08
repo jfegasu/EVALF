@@ -4,7 +4,7 @@
 
 {% if datos|length>0%}
 <br>
-<div class="sena d-flex justify-content-center align-items-center  mx-auto" style="width:40%;">
+<div class="sena d-flex justify-content-center align-items-center  mx-auto" style="width:50%; height:auto;">
 <table class="table table-striped ">
 <th  style="color:red;font-size: 10px;"><span>INSTRUCTORES DE LA FICHA: {{apr.FICHA}}, APRENDIZ: {{apr.NOMBRE}}, TITULACION: {{apr.TITULACION}}</span>
  </th><th><span class="btn btn-warning" style="text-align: right;"  onclick="window.open('/login','centro')"><i class="fa fa-fast-backward" aria-hidden="true"></i></span>
@@ -15,7 +15,7 @@
     <td>
     {% with im = url_for('static', filename='images/dni/' ~ data['dninst'] ~ '.png') %}
 <span style="cursor: pointer;margin: 10px;" onclick="window.open('/ev/2/{{data["dninst"]}}','centro')">
-<img class="imgfull ovalo" src="{{ im }}"
+<img class=" ovalo" src="{{ im }}"
      onerror="this.onerror=null; this.src='{{ url_for('static', filename='images/dni/silueta.png') }}';"
      style="width: 40px; border: 1px solid black;">
 

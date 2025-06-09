@@ -1,14 +1,15 @@
 # config.py
 import os
 apidb="http://127.0.0.1:5556"
-
+BASE_DIR=os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
+# CONFIG_PATH = os.path.join(BASE_DIR, 'config.json')
 class Config:
     DEBUG = False
     TESTING = False
     SECRET_KEY = 'tu_clave_secreta_segura'
     # SQLALCHEMY_DATABASE_URI = 'sqlite:///app.db'
     apidb="http://127.0.0.1:5556"
-    BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+    # BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 
 
 class DevelopmentConfig(Config):

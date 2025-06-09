@@ -161,7 +161,7 @@ def NomAprendiz(email):
 @app.route('/u/2/<email>/<pwd>', methods=['GET']) # Valida clave de acceso a usuario
 def ValidaUsuario(email,pwd):
     Tipo=TipoUsuario(email)
-    print("-->",Tipo)
+    # print("-->",Tipo)
     if Tipo:
         total = FichaAprendiz.select().where((FichaAprendiz.EMAIL==email) and (FichaAprendiz.PWDAP==pwd)).count()
         if total:
@@ -311,6 +311,7 @@ def metodo_no_aceptado(error):
     return "<h1>Este metodo no esta permitido para esta ruta</h1>", 423
 def servicio_no_dispoible(error):
     return "<h1>Este metodo no esta permitido para esta ruta</h1>", 423
+
 if __name__ == '__main__':
     app.register_error_handler(404, pagina_no_encontrada)
     app.register_error_handler(405, metodo_no_aceptado)

@@ -1,4 +1,4 @@
-from flask import Flask,Blueprint, jsonify, render_template,session,request ,redirect,url_for,send_from_directory
+from flask import Flask,Blueprint, jsonify, render_template,session,request ,redirect,url_for,send_from_directory,current_app
 from flask_session import Session
 import pandas as pd
 from flask_cors import CORS
@@ -10,7 +10,7 @@ import hashlib
 import logging
 from database.models import *
 from foto.routes import foto
-from encuesta.routes import eval
+from encuesta.routes import eval_bp
 from admin.routes import admin
 
 from config import DevelopmentConfig 
@@ -19,20 +19,28 @@ from datetime import datetime
 import shutil
 import os
 app = Flask(__name__) 
+# Ruta al directorio de la app
+APP_ROOT = os.path.dirname(os.path.abspath(__file__))
+
+# Ruta absoluta al archivo SQLite
+app.config['DATABASE'] = os.path.join(APP_ROOT, 'database', 'sena.db')
+
 app.secret_key = 'BAD_SECRET_KEY'
-BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-DATABASE = os.path.join(BASE_DIR, 'database', 'sena.db')
+# BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+
+# BASE_DIR=os.path.join(os.path.dirname(__file__))
+# BASE_DIR=current_app['BASE_DIR']
 RESPUESTAS = os.path.join(BASE_DIR, 'static/archivos/RESPUESTAS.csv')
 app.config['apidb'] =  "http://127.0.0.1:5556"
-BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-app.config['BASE_DIR']=BASE_DIR
+# DATABASE = os.path.join(BASE_DIR, 'database', 'sena.db')
+# print(BASE_DIR)
 # Registrando modulos Blueprint
 app.register_blueprint(foto, url_prefix='/foto')
-app.register_blueprint(eval, url_prefix='/eval')
+app.register_blueprint(eval_bp, url_prefix='/eval')
 app.register_blueprint(admin, url_prefix='/admin')
 
 # app.config.from_object(DevelopmentConfig) 
-au=Auditor(app.config['BASE_DIR'])
+au=Auditor(BASE_DIR)
 
 @app.route('/') 
 def raiz():   
@@ -102,91 +110,6 @@ def valida():
         # *******
         return render_template('alertas.html',msgito=msgito,regreso=regresa)
     return "400"
-    # sql=f"SELECT count(*) FROM FICHAPRENDIZ WHERE PWDAP='{pw1}' AND EMAIL='{usua}'".format(usua,pw1)
-    # hay=ConsultarUno(DATABASE,sql)
-    # if hay[0]>0:
-    #     N=1
-    #     sql=f"SELECT * FROM FICHAPRENDIZ WHERE PWDAP='{pw1}' AND EMAIL='{usua}'".format(usua,pw1)
-    #     aprendiz=ConsultarUno(DATABASE,sql)
-    #     session['ficha']=aprendiz[0]
-    #     session['nombreap']= aprendiz[2]   
-    #     session['titulacion']= aprendiz[6]   
-    #     session['dnia']= aprendiz[1]  
-    #     # return str(aprendiz)
-    #     F=aprendiz[0]
-    #     A=aprendiz[1] 
-    #     sql=f"SELECT * FROM FICHAINSTRUCTOR WHERE DNI NOT IN(SELECT IDINSTRUCTOR FROM THEVAL WHERE IDFICHA='{F}' AND IDAPRENDIZ='{A}')".format(F,A)
-    #     datos=Consultar(DATABASE,sql)
-        
-    #     apr={
-    #         "ficha":session['ficha'],
-    #         "aprendiz":session['nombreap'],
-    #         "titulacion":session['titulacion'],
-    #         "dnia":session['dnia']
-    #     }
-    #     render_template('carga.html',N=N,datos=datos,apr=apr)
-    # sql=f"SELECT count(*) FROM FICHAPRENDIZ WHERE PWDAP='{pw1}' AND EMAIL='{usua}'".format(usua,pw1)
-    # hay=ConsultarUno(DATABASE,sql)
-    
-
-    # # return str(hay)
-    # try:
-    #     hay=ConsultarUno(DATABASE,f"SELECT count(*) FROM FICHAPRENDIZ WHERE DNIA='{usua}' AND EMAIL='{pw1}'".format(usua,pw1))
-    # except Exception as e:
-    #     msgito="USUARIO O CLAVE ERRADOS**"
-    #     regresa="/login"
-    #     # au.registra(30,'USUARIO O CLAVE ERRADOS')
-    #     return render_template('login.html',msgito=msgito,regreso=regresa)
-    
-    # hay=hay[0]
-    # # return "->"+str(hay)
-    # if hay=="0":
-    #     # au.registra(30,'USUARIO O CLAVE ERRADOS')
-    #     return render_template("alertas.html",msgito="USUARIO O CLAVE INCORRECTO***",regreso="/login")
-    
-    
-    
-    
-    # try:
-    #     sql=f"SELECT * FROM FICHAPRENDIZ WHERE EMAIL='{usua}' AND PWDAP='{pw1}'".format(usua,pw)
-    #     aprendiz=ConsultarUno(DATABASE,sql)
-    #     session['ficha'] = aprendiz[0]
-    #     session['dnia'] = aprendiz[1]
-    #     session['nombreap'] = aprendiz[2]
-    #     session['titulacion'] = aprendiz[6]
-        
-    # except:
-    #     # au.registra(30,'USUARIO O CLAVE ERRADOS')
-    #     msgito="USUARIO O CLAVE ERRADOS**"
-    #     regresa="/login"
-    #     return render_template('alertas.html',msgito=msgito,regreso=regresa)
-    
-    # F=session['ficha']
-    # A=session['dnia']
-    # N=1
-    # sql=f"SELECT count(*) FROM FICHAINSTRUCTOR WHERE DNI NOT IN(SELECT IDINSTRUCTOR FROM THEVAL WHERE IDFICHA='{F}' AND IDAPRENDIZ='{A}')".format(F,A)
-    # # au.registra(30,'INGRESO ',session['nombreap'])
-
-    # hay=ConsultarUno(DATABASE,sql)
-
-    # if hay[0]=="0":
-    #     msgito="NO HAY INSTRUCTORES PARA EVALUAR"
-    #     # au.registra(30,msgito,session['nombreap'])
-
-    #     regresa="/login"
-    #     return render_template('alertas.html',msgito=msgito,regreso=regresa)
-    # else:
-    #     sql=f"SELECT * FROM FICHAINSTRUCTOR WHERE DNI NOT IN(SELECT IDINSTRUCTOR FROM THEVAL WHERE IDFICHA='{F}' AND IDAPRENDIZ='{A}')".format(F,A)
-    #     datos=Consultar(DATABASE,sql)
-    #     apr={
-    #         "ficha":session['ficha'],
-    #         "aprendiz":session['nombreap'],
-    #         "titulacion":session['titulacion'],
-    #         "dnia":session['dnia']
-    #     }
-    #     # au.registra(30,str(apr),session['nombreap'])
-    #     session['apr']=apr
-    #     return render_template('carga.html',N=N,datos=datos,apr=apr)
 def getInstructor(id):
     sql=f"SELECT NOMINST FROM FICHAINSTRUCTOR WHERE  dni='{id}'".format(str(id))
     datos=ConsultarUno(DATABASE,sql)
@@ -198,155 +121,8 @@ def getAprendiz(id):
         "FICHA":datos['FICHA']
     }
     return datos[0]
-# @app.route('/otro' ,methods=['POST','GET']) 
-# def otro():
-#     hay=ConsultarUno(DATABASE,f"SELECT count(*) FROM FICHAPRENDIZ WHERE DNIA='{usua}' AND EMAIL='{pw}'".format(usua,pw))
-#     hay=hay[0]
-#     if hay=="0":
-#         session[usua]=usua
+    # return render_template('carga.html',N=N,datos=datos)
 
-#         return render_template("alertas.html",msgito="USUARIO O CLAVE INCORRECTO",regreso="/login")
-#     sql=f"SELECT * FROM FICHAPRENDIZ WHERE EMAIL='{usua}' AND PWDAP='{pw}'".format(usua,pw)
-#     aprendiz=ConsultarUno(DATABASE,sql)
-#     session['ficha'] = aprendiz[0]
-#     session['dnia'] = aprendiz[1]
-#     session['nombreap'] = aprendiz[2]
-#     session['titulacion'] = aprendiz[6]
-#     F=session['ficha']
-#     A=session['dnia']
-#     N=1
-#     sql=f"SELECT * FROM FICHAINSTRUCTOR WHERE DNI NOT IN(SELECT IDINSTRUCTOR FROM THEVAL WHERE IDFICHA='{F}' AND IDAPRENDIZ='{A}')".format(F,A)
-#     datos=Consultar(DATABASE,sql)
-#     session['instructor'] = datos[1]
-#     session['ninstructor'] = datos[0]
-
-    return render_template('carga.html',N=N,datos=datos)
-
-@app.route('/eval/1/<I>' ,methods=['POST','GET']) 
-def eval1(I):  
-    F=session['ficha']
-    A=session['dnia']
-    sql=f"SELECT * FROM THEVAL WHERE idFICHA={F} AND idAPRENDIZ={A}".format(F,A)
-    datos=ConsultarUno(DATABASE,sql)
-    
-    session['instructor']=datos[3]
-    I=session['instructor']
-    datos=[N,F,I,A]
-    return render_template('carga.html',N=1,datos=datos)
-@app.route('/ev/2/<I>' ,methods=['POST','GET']) 
-def eval2a(I):  
-    # F=session['ficha']
-    F=3147246
-    # A=session['dnia']
-    A=1013106019
-    # I=session['instructor']
-    N=2
-    datos=[2,F,I,A]
-    print("__________________________>",N)
-    # preg=Consultar(DATABASE,'SELECT * FROM PREGUNTA WHERE ESTADO=1')
-    # hay=len(preg)
-    preg=requests.get(f'{apidb}/p').json()
-    hay=len(preg)
-    # au.registra(30,'ENTRA A EVALUAR A: '+getInstructor(I))
-    # apr={
-    #         "ficha":session['datos'].FICHA,
-    #         "aprendiz":session['datos'].NOMBREAP,
-    #         "titulacion":session['titulacion'],
-    #         "dnia":session['dnia']
-    #     }
-    
-    # session['apr']=apr
-    
-    return render_template('carga.html',N=2,datos=datos,hay=hay,preg=preg,nomi=getInstructor(I),apr=session['datos'])
-
-@app.route('/eval/3/<I>' ,methods=['POST','GET']) 
-def eval(I):  
-    # return session['datos']['FICHA']
-    F=session['datos']['FICHA']
-    A=session['datos']['DNI']
-    T=session['datos']['TITULACION']
-    TRIMESTRE=obtener_trimestreT(datetime.now())
-    
-    # I=session['instructor']
-    
-    conta = int(request.form.get('conta'))
-    # conta = 12
-    for i in range(1, conta + 1):  # Asegúrate de incluir el último valor
-        Resp=request.form.get('R' + str(i))
-        Preg=request.form.get('P' + str(i))
-        sql=f"insert into THEVAL(idINSTRUCTOR,idFICHA,idAPRENDIZ,PREGUNTA,RESPUESTA,TITULACION,TRIMESTRE) VALUES({I},{F},{A},'{Preg}','{Resp}','{T}','{TRIMESTRE}')".format(I,F,A,Preg,Resp,T,TRIMESTRE)
-        print(sql) 
-        Ejecutar(DATABASE,sql)
-        
-    
-        
-    
-    au.registra(30,'EVALUO A: '+getInstructor(I))
-    msgito="Respuestas registrada"
-    regreso="/login"
-    return render_template("alertas.html",msgito=msgito,regreso=regreso)
-
-@app.route('/evalua/<N>/<I>' ,methods=['POST','GET']) 
-def evalua(N,I):  
-    print("xxxxxxxxxxxxxxxx>",N)
-    if N=="1":
-       
-        F=session['ficha']
-        A=session['dnia']
-        sql=f"SELECT * FROM THEVAL WHERE idFICHA={F} AND idAPRENDIZ={A}".format(F,A)
-        datos=ConsultarUno(DATABASE,sql)
-        
-        session['instructor']=datos[3]
-        I=session['instructor']
-        datos=[N,F,I,A]
-        return "->"+str(N)
-        return render_template('carga.html',N=N,datos=datos)
-    if N=="2":
-        # F=session['ficha']
-        F=3147246
-        # A=session['dnia']
-        A=1013106019
-        # I=session['instructor']
-        datos=[N,F,I,A]
-        print("__________________________>",N)
-        preg=Consultar(DATABASE,'SELECT * FROM PREGUNTA WHERE ESTADO=1')
-        hay=len(preg)
-        # au.registra(30,'ENTRA A EVALUAR A: '+getInstructor(I))
-        apr={
-                "ficha":session['ficha'],
-                "aprendiz":session['nombreap'],
-                "titulacion":session['titulacion'],
-                "dnia":session['dnia']
-            }
-        session['apr']=apr
-        
-        return render_template('carga.html',N=2,datos=datos,preg=preg,nomi=getInstructor(I),apr=apr)
-    if N=="3":
-        F=session['ficha']
-        A=session['dnia']
-        T=session['titulacion']
-        TRIMESTRE=obtener_trimestreT(datetime.now())
-        
-        # I=session['instructor']
-        
-        conta = int(request.form.get('conta'))
-
-        for i in range(1, conta + 1): 
-            Resp=request.form.get('R' + str(i))
-            Preg=request.form.get('P' + str(i))
-            
-            TheVal=TheVal.create(idINSTRUCTOR=I,idFICHA=F,idAPRENDIZ=A,PREGUNTA=Preg,
-                                 RESPUESTA=Resp,TITULACION=T,TRIMESTRE=TRIMESTRE)
-            
-            
-        
-            
-        
-        # au.registra(30,'EVALUO A: '+getInstructor(I))
-        msgito="Respuestas registrada"
-        regreso="/login"
-        return render_template("alertas.html",msgito=msgito,regreso=regreso)
-    return "Nada"    
 @app.route('/descargar')
 def descargar():
     # au.registra(30,"Descarga Respuestas")

@@ -21,10 +21,11 @@ import os
 app = Flask(__name__) 
 # Ruta al directorio de la app
 APP_ROOT = os.path.dirname(os.path.abspath(__file__))
+APP_ROOT=os.getcwd()
 
 # Ruta absoluta al archivo SQLite
 app.config['DATABASE'] = os.path.join(APP_ROOT, 'database', 'sena.db')
-
+app.config['APP_ROOT'] = APP_ROOT
 app.secret_key = 'BAD_SECRET_KEY'
 # BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 
@@ -164,19 +165,6 @@ def resp():
     print("PROCESO TERMINADO")
     return redirect('/descargar')
 
-@app.route('/success', methods = ['POST'])   
-def success():   
-    if request.method == 'POST':  
-        dni=request.form['dni'] 
-        # return session['usua']
-        f = request.files['file'] 
-        LUGAR = os.path.join(BASE_DIR, 'foto','static', 'images','dni',session['usua']+'.png')
-        # f.save(LUGAR+'/'+f.filename)   
-        f.save(LUGAR)   
-        msgito="FOTO EDITADA"
-        regreso="/foto"
-        return render_template("alertas.html", msgito=msgito,regreso=regreso)   
-    # return render_template("menu1.html",menu=menu)   
 
 @app.route('/CargaInicial', methods = ['GET'])   
 def CargaInicial():
@@ -203,6 +191,7 @@ def salir():
 @app.route('/saliendo')
 def saliendo():
     return render_template("saliendo.html")
+
 
 if __name__=='__main__':
     app.run(debug=True,port=5000)

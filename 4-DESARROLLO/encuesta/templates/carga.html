@@ -7,7 +7,7 @@
 <div class="sena d-flex justify-content-center align-items-center  mx-auto" style="width:50%; height:auto;">
 <table class="table table-striped ">
 <th  style="color:black;font-size: 12px;"><span class="sena-sombra">INSTRUCTORES DE LA FICHA: {{apr.FICHA}}, APRENDIZ: {{apr.NOMBRE}}, TITULACION: {{apr.TITULACION}}</span>
- </th><th><span class="btn btn-warning" style="text-align: right;"  onclick="window.open('/login','centro')"><i class="fa fa-fast-backward" aria-hidden="true"></i></span>
+ </th><th><span class="btn btn-warning ovalo" style="text-align: right;"  onclick="window.open('/login','centro')"><i class="fa fa-fast-backward" aria-hidden="true"></i></span>
 </th>
 </tr>
 {%for data in datos%}
@@ -19,7 +19,7 @@
      onerror="this.onerror=null; this.src='{{ url_for('static', filename='images/dni/silueta.png') }}';"
      style="width: 40px; border: 1px solid black;">
 
-{{data.nominst}}---{{data.dninst}}
+<x class="sena-sombra"> {{data.nominst}}</x>
 </span>
    </td> 
     
@@ -51,7 +51,7 @@
             , APRENDIZ: {{session['datos'].NOMBRE}},TITULACION: {{session['datos'].TITULACION}},
             INSTRUCTOR A EVALUAR:{{nomi}}
         </th>
-        <th> <span class="btn btn-warning ovalo" style="text-align: right;"  onclick="window.open('/login','centro')"><i class="fa fa-fast-backward" aria-hidden="true"></i></span>
+        <th> <span class="btn btn-warning ovalo" style="text-align: right;"  onclick="javascript:history.back()"><i class="fa fa-fast-backward" aria-hidden="true"></i></span>
     </th></tr>
         <tr>
             <td width=50% class="sena-sombra">

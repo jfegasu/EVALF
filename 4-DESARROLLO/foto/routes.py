@@ -1,4 +1,4 @@
-from flask import Blueprint,render_template,session,request,jsonify
+from flask import Blueprint,render_template,session,request,jsonify,url_for
 import requests
 from config import apidb
 import os
@@ -18,16 +18,19 @@ def index():
     datos=requests.get(sql).json()
 
     return render_template('foto.html',datos=datos[0])
+
 @foto.route('/success', methods = ['POST'])   
 def success():   
     if request.method == 'POST':  
         dni=request.form['dni'] 
-        print("-->",dni)
+        
+        # return session['usua']
         f = request.files['file'] 
-        LUGAR = os.path.join(BASE_DIR, 'foto','static', 'images','dni',dni+'.png')
-        return LUGAR
+        BASE_DIR=os.path.join(os.path.dirname(__file__))
+        LUGAR = os.path.join(BASE_DIR, 'static', 'images','dni',session['usua']+'.png')
+        
         # f.save(LUGAR+'/'+f.filename)   
         f.save(LUGAR)   
         msgito="FOTO EDITADA"
-        regreso="/login"
+        regreso="/foto"
         return render_template("alertas.html", msgito=msgito,regreso=regreso)   

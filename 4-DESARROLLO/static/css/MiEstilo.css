@@ -107,6 +107,10 @@ width: 40px;       /* asegúrate de que width = height */
     font-weight: bold;
     font-size: 12px;
   }
+  .cpsi body::-webkit-scrollbar {
+    width: 21px;
+  }
+
 
   .alerta {
       display: none;

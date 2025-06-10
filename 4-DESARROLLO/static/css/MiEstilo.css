@@ -176,7 +176,7 @@ border: 0px solid #000000;
     background-color: #4CAF50;
     
   }
-  .ovalo{
+  .ovalobtn{
     border-radius: 34px 34px 34px 34px;
 -moz-border-radius: 34px 34px 34px 34px;
 -webkit-border-radius: 34px 34px 34px 34px;
@@ -187,7 +187,24 @@ font-weight: bold;
   
     transition: background-color 1.5 ease;
   }
+  .ovalo{
+width: 40px;       /* asegúrate de que width = height */
+  height: 40px;
+  object-fit: cover;  /* recorta para que llene bien el círculo */
+  border-radius: 50%;
+  border: 2px solid #ccc;font-weight: bold;
+  font-size: 10pt;
+  text-transform: uppercase;
+  
+    transition: background-color 1.5 ease;
+  }
   .ovalo:hover{
+  background-color: black;
+  color:yellow;
+  font-weight: bold;
+  font-size: 12pt;
+  }
+  .ovalobtn:hover{
   background-color: black;
   color:yellow;
   font-weight: bold;

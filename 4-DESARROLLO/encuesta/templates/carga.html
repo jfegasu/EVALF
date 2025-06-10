@@ -7,7 +7,7 @@
 <div class="sena d-flex justify-content-center align-items-center  mx-auto" style="width:50%; height:auto;">
 <table class="table table-striped ">
 <th  style="color:black;font-size: 12px;"><span class="sena-sombra">INSTRUCTORES DE LA FICHA: {{apr.FICHA}}, APRENDIZ: {{apr.NOMBRE}}, TITULACION: {{apr.TITULACION}}</span>
- </th><th><span class="btn btn-warning ovalo" style="text-align: right;"  onclick="window.open('/login','centro')"><i class="fa fa-fast-backward" aria-hidden="true"></i></span>
+ </th><th><span class="btn btn-warning ovalobtn" style="text-align: right;"  onclick="window.open('/login','centro')"><i class="fa fa-fast-backward" aria-hidden="true"></i></span>
 </th>
 </tr>
 {%for data in datos%}
@@ -25,11 +25,15 @@
     
      {% endwith %}
      </tr>
+     <tr>
+        <td>&nbsp;</td>
+     </tr>
 {%endfor%}
 </table>
-<br><br><br><br>
+<br><br><br><br><br>
 </div>
-<br><br>
+_______
+
 {%else%}
 <div class="alert alert-danger" role="alert">
 <h1>NO HAY INSTRUCTORES PARA EVALUAR</h1>
@@ -51,7 +55,7 @@
             , APRENDIZ: {{session['datos'].NOMBRE}},TITULACION: {{session['datos'].TITULACION}},
             INSTRUCTOR A EVALUAR:{{nomi}}
         </th>
-        <th> <span class="btn btn-warning ovalo" style="text-align: right;"  onclick="javascript:history.back()"><i class="fa fa-fast-backward" aria-hidden="true"></i></span>
+        <th> <span class="btn btn-warning ovalobtn" style="text-align: right;"  onclick="javascript:history.back()"><i class="fa fa-fast-backward" aria-hidden="true"></i></span>
     </th></tr>
         <tr>
             <td width=50% class="sena-sombra">
@@ -83,9 +87,9 @@
         <input type="hidden" name="A" value="{{datos[3]}}">
         <input type="hidden" name=conta value="{{preg | length}}">
         
-        <input type="submit" class="btn btn-primary ovalo" style="width:50%;" value="ENVIAR">
+        <input type="submit" class="btn btn-primary ovalobtn" style="width:50%;" value="ENVIAR">
         <!-- <button class="btn btn-warning ovalo" style="width:50%;" onclick="','centro')">ENVIAR</button> -->
-        <button type="button" class="btn btn-warning ovalo" style="width:49%;" onclick="window.open('/login','centro')"><b>CANCELAR</b></button>
+        <button type="button" class="btn btn-warning ovalobtn" style="width:49%;" onclick="window.open('/login','centro')"><b>CANCELAR</b></button>
 
     </td>
 </tr>

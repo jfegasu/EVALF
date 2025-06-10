@@ -4,7 +4,7 @@
 
 {% if datos|length>0%}
 <br>
-<div class="sena d-flex justify-content-center align-items-center  mx-auto" style="width:50%; height:auto;">
+<div class="cpsi d-flex justify-content-center align-items-center  mx-auto" style="width:50%; height:auto;">
 <table class="table table-striped ">
 <th  style="color:black;font-size: 12px;"><span class="sena-sombra">INSTRUCTORES DE LA FICHA: {{apr.FICHA}}, APRENDIZ: {{apr.NOMBRE}}, TITULACION: {{apr.TITULACION}}</span>
  </th><th><span class="btn btn-warning ovalobtn" style="text-align: right;"  onclick="window.open('/login','centro')"><i class="fa fa-fast-backward" aria-hidden="true"></i></span>
@@ -12,7 +12,7 @@
 </tr>
 {%for data in datos%}
 <tr>
-    <td>
+    <td colspan="2">
     {% with im = url_for('foto.static', filename='images/dni/' ~ data['dninst'] ~ '.png') %}
 <span style="cursor: pointer;margin: 10px;" onclick="window.open('/eval/2/{{data.dninst}}','centro')">
 <img class="imgfull ovalo" src="{{ im }}"
@@ -25,14 +25,13 @@
     
      {% endwith %}
      </tr>
-     <tr>
-        <td>&nbsp;</td>
-     </tr>
+     <td colspan="2">&nbsp;</td>
+    </tr>
 {%endfor%}
 </table>
 <br><br><br><br><br>
 </div>
-_______
+
 
 {%else%}
 <div class="alert alert-danger" role="alert">
@@ -48,7 +47,7 @@ _______
 {% endif%}
 
 {% if N==2 %}
-<div class=" d-flex justify-content-center align-items-center  mx-auto" style="width: 50%;padding-top: 20px;padding-left: 20px;padding-right: 20px;">
+<div class="cpsi d-flex justify-content-center align-items-center  mx-auto" style="width: 50%;padding-top: 20px;padding-left: 20px;padding-right: 20px;">
     <table class="sena table table-striped" style="width: 100%;">
         <th colspan="3" class="sena-sombra"><h1 style="text-align:center;">RESPUESTAS ENCUESTA</h1></th></tR>
         <th colspan="3" class="sena-sombra" style="color:red;font-size: 10px;"><b>FICHA: {{apr.FICHA}}

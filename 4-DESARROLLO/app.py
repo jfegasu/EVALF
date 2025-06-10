@@ -102,7 +102,7 @@ def valida():
         return redirect('/foto')
     elif Tipo == 3 :
         session['usua']=usua
-        # au.registra(30,"Ingresa un administrador",session['usua'])
+        au.registra(30,"Ingresa un administrador",session['usua'])
         return redirect('/admin')
     elif Tipo == 0 :
         msgito="USUARIO NO EXISTE**"
@@ -148,7 +148,7 @@ def verlog():
     ruta_destino='static/archivos/'+fe+'.txt'
     shutil.copy(ruta_origen, ruta_destino)
     # return ver
-    return render_template('verlog.html',ver=ruta_destino)
+    return render_template('/admin/verlog.html',ver=ruta_destino)
 
 @app.route('/cargar')
 def cargar():
@@ -168,13 +168,13 @@ def resp():
 
 @app.route('/CargaInicial', methods = ['GET'])   
 def CargaInicial():
-    # au.registra(30,'Carga Inicial de la base de datos terminada con exito')
+    au.registra(30,'Carga Inicial de la base de datos terminada con exito')
     from Carga import Cargando
     aux= Cargando()
     return render_template("alertas.html",msgito=aux, regreso="/menuadmin")
 @app.route('/menuadmin')
 def menuadmin():
-    # au.registra(30,'ingresa menuadmin')
+    au.registra(30,'ingresa menuadmin',session['usua'])
     return render_template('menuadmin.html')
 @app.route('/aprendiz')
 def aprendiz():
@@ -187,9 +187,12 @@ def construir():
 @app.route('/salir')
 def salir():
     msgito="SALIENDO DEL APLICATIVO"
+    au.registra(30,"Saliendo el administrador de la encuesta",session['usua'])
     return render_template("alertas.html",msgito=msgito,regreso='/saliendo')
 @app.route('/saliendo')
 def saliendo():
+    au.registra(30,"Saliendo de la encuesta",session['usua'])
+        
     return render_template("saliendo.html")
 
 

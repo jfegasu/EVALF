@@ -87,8 +87,12 @@ def valida():
     session['pw']=pw
     session['pw1']=pw1
     session['usua']=usua 
-    Tipo= tipoUsuario(usua) 
-    
+    try:
+        Tipo= tipoUsuario(usua) 
+    except Exception as e:
+        msgito="500 SERVIDOR FUERA DE LINEA"
+        regresa="/login"
+        return render_template('alertas.html',msgito=msgito,regreso=regresa)
     if Tipo == 1:
         # N=1        
         daticos=requests.get(f'{apidb}/u/{usua}/{pw1}')
@@ -137,18 +141,6 @@ def descargarlog():
     # return fe
     # 'static/archivos/'+fe+'.txt'
     return send_from_directory('static/archivos', fe+'.txt',as_attachment=True)
-@app.route('/verlog')
-def verlog():
-    fecha=datetime.now()
-    fe=str(fecha.year)+str(fecha.month)+str(fecha.day)
-    
-    # au.registra(30,"Observa el Log de Transacciones:"+str(fecha))
-    # return fe
-    ruta_origen='static/log/'+fe+'.log'
-    ruta_destino='static/archivos/'+fe+'.txt'
-    shutil.copy(ruta_origen, ruta_destino)
-    # return ver
-    return render_template('/admin/verlog.html',ver=ruta_destino)
 
 @app.route('/cargar')
 def cargar():

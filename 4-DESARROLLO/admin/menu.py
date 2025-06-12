@@ -25,7 +25,7 @@ menus = [
     "titulo": "AUDITORIA",
         "items": [
             {"texto": "DESCARGA LOG TRANSACCIONES", "url": "/descargarlog","svg":"","fa":"fa fa-cloud-download"},
-            {"texto": "VER LOG DE TRANSACCIONES", "url": "/verlog","svg":"","fa":"fa fa-television"},
+            {"texto": "VER LOG DE TRANSACCIONES", "url": "/admin/verlog","svg":"","fa":"fa fa-television"},
         ]
     },
     {

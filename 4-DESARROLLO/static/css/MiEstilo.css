@@ -67,7 +67,7 @@
   font-size: 12pt;
 }
 .cpsi input::file-selector-button {
-  /* background-color:blue; */
+  background-color:blue;
   font-weight: bold;
   color: white;
   padding: 0.5em;

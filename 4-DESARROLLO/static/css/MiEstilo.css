@@ -10,7 +10,6 @@
 .warning:hover {background-image: linear-gradient(to right, #ffb200, #ffda4e);}
 .danger {background-image: linear-gradient(to right, #dc3545, #e0666e);} 
 .danger:hover {background-image: linear-gradient(to right, #d32838, #e0666e);}
-
 .cpsi{
     font-size: 10px;
     font-weight: bold;

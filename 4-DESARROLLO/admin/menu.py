@@ -9,10 +9,10 @@ menus = [
     {
         "titulo": "CARGUE DE DATOS",
         "items": [
-            {"texto": "CARGA MASIVA", "url": "/CargaInicial","svg":"9981","fa":""},
+            {"texto": "CARGA MASIVA", "url": "cargas","svg":"9981","fa":""},
             {"texto": "APRENDICES", "url": "/construir","svg":"","fa":"fa fa-users"},
             {"texto": "INSTRUCTORES", "url": "/construir","svg":"","fa":"fa fa-graduation-cap"},
-            {"texto": "PREGUNTAS", "url": "/construir","svg":"","fa":"fa fa-question"},
+            {"texto": "PREGUNTAS", "url": "/CargaInicial","svg":"","fa":"fa fa-question"},
         ]
     },
     {

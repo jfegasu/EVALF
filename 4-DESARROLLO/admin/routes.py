@@ -22,6 +22,9 @@ def index():
 def menu1():
     return render_template("menu1.html",menu=menus)
 
+@admin.route('/cargas')
+def Cargas():
+    return render_template("cargamasiva.html")
 @admin.route('/verlog')
 def verlog():
     fecha=datetime.now()

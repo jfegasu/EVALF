@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% block content %}
+<br>
+{{datos[2]}}
+<div class="cpsi d-flex  mx-auto" style="width:60%">
+  <div class="w3-card-4 w3-center" style="width:100%;max-width:100%">
+    <header class="w3-container w3-blue">
+      <h2 class="sena-sombra">INSTRUCTOR: {{datos['NOMINST']}}</h2>
+      <h4 class="sena-sombra">Cambiar fotografia del instructor</h4>
+    </header>
+  
+    {% set im = url_for('foto.static', filename='images/dni/' ~ session['usua'] ~ '.png') %}
+  <span style="cursor: pointer;">
+    <img class="imgfull sena" src="{{ im }}" 
+         style="width: 120px; border: 0;" 
+         onerror="this.onerror=null; this.src='{{ url_for('foto.static', filename='images/dni/silueta.png') }}';">
+</span>
+
+    <div class="w3-container w3-center">
+         <form action = "/foto/success" method = "post" enctype="multipart/form-data"> 
+            
+          <input type="hidden" name="dni" value="{{datos[2]}}">  
+          <hr>
+        <input  type="file" name="file" />   
+        <input class="btn btn-primary ovalobtn btn-success" type = "submit" value="Cargar archivo">  
+        <button type="button" class="btn btn-warning ovalobtn"  onclick="window.open('/login','centro')">cancelar</button>
+    </form>
+     <hr>
+    </div>
+   
+  </div>
+</div>
+</div>
+<br>
+{% endblock content %}

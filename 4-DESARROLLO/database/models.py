@@ -1,7 +1,14 @@
 from peewee import *
+from peewee import SqliteDatabase
 import datetime 
+import os
+from flask import Blueprint, current_app, g
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+DATABASE = os.path.join(BASE_DIR,  'sena.db')
+# DATABASE=current_app.config['DATABASE']
+
 # Conexión a la base de datos SQLite
-db = SqliteDatabase('sena.db')  
+db = SqliteDatabase(DATABASE)  
 class BaseModel(Model):
     class Meta:
         database = db

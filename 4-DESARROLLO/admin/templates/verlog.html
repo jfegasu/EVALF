@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% block content %}
+
+{%set archi= url_for('static',filename='archivos/' ~ ver)%}
+{%set archi=ver%}
+{{ver}}
+<div class="cpsi" style="float:right;padding-right: 50px;margin-bottom: 20px;">
+<form id="search-form">
+    <input type="text" id="search-input" placeholder="Buscar...">
+    <button type="submit">Buscar</button>
+</form>
+</div><br>
+
+<h3 style="position: absolute;top: 45px;left: 430px;top: 5px;left: 410px;" class="sena-sombra">LOG DE TRANSACCIONES</h3>
+<div class="cpsi d-flex  mx-auto" style="width:65%;position: absolute;top: 45px;left: 300px;height: auto;top: 45px;left: 400px;">
+    <br>
+<iframe  src="{{archi}}" style="width:100%;height:300px;overflow-y: scroll;  scrollbar-color: #007 #bada55;"></iframe>
+</div>
+<div id="contenido1"></div>
+<div id="contenido" class="cpsi d-flex  mx-auto ps-3 position-absolute" style=" cursor:default; width:350px;top: 45px;left: 10px;height: auto;"></div>
+<div id="contenido2" class="cpsi d-flex  mx-auto ps-3 position-absolute" style="cursor:default; width:920px;position: absolute;top: 435px;left: 400px;height: auto;"></div>
+
+
+<script>
+    
+    CargaHtml('contenido','/admin/menu1');
+    CargaHtml('contenido2','/footer');
+
+</script>
+
+{% endblock content %}

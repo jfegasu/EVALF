@@ -41,4 +41,22 @@
         document.forms['mio'].submit();    
      
        }
-       
+
+       const searchInput = document.getElementById('search-input');
+    const contentList = document.getElementById('content');
+
+    searchInput.addEventListener('input', function() {
+        const searchTerm = this.value.toLowerCase();
+        const listItems = contentList.getElementsByTagName('li');
+
+        for (let i = 0; i < listItems.length; i++) {
+            const listItem = listItems[i];
+            const listItemText = listItem.textContent.toLowerCase();
+
+            if (listItemText.includes(searchTerm)) {
+                listItem.style.display = ''; // Mostrar
+            } else {
+                listItem.style.display = 'none'; // Ocultar
+            }
+        }
+    });

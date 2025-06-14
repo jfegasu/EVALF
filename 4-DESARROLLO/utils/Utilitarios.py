@@ -39,11 +39,10 @@ class Auditor():
         fecha=datetime.now()
         fe=str(fecha.year)+str(fecha.month)+str(fecha.day)
         # print("** Inicia **")
-        LOG = os.path.join('/log')
-        # os.makedirs(LOG,exist_ok=True)
+        os.makedirs('/log',exist_ok=True)
         logger = logging.getLogger('werkzeug')
         self.logger =logger 
-        logging.basicConfig(format='%(asctime)s %(levelname)s %(message)s ',filename=LOG+'/'+fe+'.log', encoding='utf-8',level=logging.WARNING)
+        logging.basicConfig(format='%(asctime)s %(levelname)s %(message)s ',filename='/log/'+fe+'.log', encoding='utf-8',level=logging.WARNING)
         self.logger.setLevel(logging.WARNING  )
         # logger.setLevel(logging.INFO)
         # self.logger.warning("inicia")
@@ -60,7 +59,7 @@ class Auditor():
             self.logger.info(client_ip+' '+msg+' '+usua)
         elif tipo==30:
             a=30
-            # self.logger.warning(client_ip+' '+msg+' '+usua)
+            self.logger.warning(client_ip+' '+msg+' '+usua)
         elif tipo==40:
             # print(client_ip+' '+msg+' '+usua)
             self.logger.error(client_ip+' '+msg+' ['+usua+']')
@@ -299,35 +298,3 @@ def obtener_trimestreT(fecha):
     anual=fecha.year
     trimestre = (mes - 1) // 3 + 1
     return "T"+str(anual)+"-"+str(trimestre)
-
-menu = [
-    {
-        "titulo": "CONFIGURACION",
-        "items": [
-            {"texto": "DATOS INICIALES", "url": "/construir","svg":"","fa":"fa fa-address-book"},
-            {"texto": "APERTURA ENCUESTA", "url": "/construir","svg":"9211","fa":""}
-        ]
-    },
-    {
-        "titulo": "CARGUE DE DATOS",
-        "items": [
-            {"texto": "CARGA MASIVA", "url": "/CargaInicial","svg":"9981","fa":""},
-            {"texto": "APRENDICES", "url": "/construir","svg":"","fa":"fa fa-users"},
-            {"texto": "INSTRUCTORES", "url": "/construir","svg":"","fa":"fa fa-graduation-cap"},
-            {"texto": "PREGUNTAS", "url": "/construir","svg":"","fa":"fa fa-question"},
-        ]
-    },
-    {
-    "titulo": "RESULTADOS",
-        "items": [
-            {"texto": "EXPORTAR RESULTADOS(CSV)", "url": "/resp","svg":"","fa":"fa fa-table"},
-        ]
-    },
-        {
-    "titulo": "AUDITORIA",
-        "items": [
-            {"texto": "DESCARGA LOG TRANSACCIONES", "url": "/descargarlog","svg":"","fa":"fa fa-cloud-download"},
-            {"texto": "VER LOG DE TRANSACCIONES", "url": "/verlog","svg":"","fa":"fa fa-television"},
-        ]
-    },
-]

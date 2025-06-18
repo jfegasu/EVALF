@@ -90,7 +90,7 @@ def valida():
     try:
         Tipo= tipoUsuario(usua) 
     except Exception as e:
-        msgito="500 SERVIDOR FUERA DE LINEA"
+        msgito="503 SERVIDOR NO DISPONIBLE"
         regresa="/login"
         return render_template('alertas.html',msgito=msgito,regreso=regresa)
     if Tipo == 1:
@@ -187,6 +187,25 @@ def saliendo():
         
     return render_template("saliendo.html")
 
+def pagina_no_encontrada(error):
+    msgito="RUTA NO ENCONTRADA"
+    return render_template("alertas.html",msgito=msgito,regreso='#')
+    # return "<h1>RUTA NO ENCONTRADA</h1>", 404
+def metodo_no_aceptado(error):
+    msgito="405 METODO NO PERMITIDO"
+    return render_template("alertas.html",msgito=msgito,regreso='#')
+    # return "<h1>Este metodo no esta permitido para esta ruta</h1>", 423
+def servicio_no_dispoible(error):
+    msgito="503 SERVIDOR NO DISPONIBLE *"
+    return render_template("alertas.html",msgito=msgito,regreso='#')
+def servicio_errado(error):
+    msgito="500 ALGO SALIO MAL"
+    return render_template("alertas.html",msgito=msgito,regreso='#')
+
 
 if __name__=='__main__':
+    app.register_error_handler(404, pagina_no_encontrada)
+    app.register_error_handler(405, metodo_no_aceptado)
+    app.register_error_handler(503, servicio_no_dispoible)
+    app.register_error_handler(500, servicio_errado)
     app.run(debug=True,port=5000)

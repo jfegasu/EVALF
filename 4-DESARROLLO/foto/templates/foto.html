@@ -10,9 +10,9 @@
     </header>
   
     {% set im = url_for('foto.static', filename='images/dni/' ~ session['usua'] ~ '.png') %}
-  <span style="cursor: pointer;">
+  <span style="cursor: pointer;border-radius: 12px;">
     <img class="imgfull sena" src="{{ im }}" 
-         style="width: 120px; border: 0;" 
+         style="width: 110px; border: 0; border-radius: 12px;" 
          onerror="this.onerror=null; this.src='{{ url_for('foto.static', filename='images/dni/silueta.png') }}';">
 </span>
 

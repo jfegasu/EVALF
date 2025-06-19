@@ -78,7 +78,7 @@ def eval(I):
         Preg=request.form.get('P' + str(i)) 
         pre=TheVal.create(idINSTRUCTOR=I,idFICHA=F,idAPRENDIZ=A,PREGUNTA=Preg,RESPUESTA=Resp,TITULACION=T,TRIMESTRE=TRIMESTRE)
     # au.registra(30,'EVALUO A: '+getInstructor(I))
-    msgito="Respuestas registrada"
+    msgito="200-Respuestas registradas"
     regreso="/login"
     return render_template("alertas.html",msgito=msgito,regreso=regreso)
 

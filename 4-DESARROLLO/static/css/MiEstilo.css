@@ -17,6 +17,10 @@
     align-items: center;
     height: auto;
 }
+.cpsi img{
+  border-radius: 12px;
+  border: black;
+}
 .boton-flotante {
     position: fixed;
     top: 80px;       /* distancia desde la parte inferior */
@@ -33,6 +37,7 @@
     z-index: 1000;
     transition: background-color 0.3s ease;
 }
+
 .boton-flotante1 {
     position: fixed;
     top: 100px;       /* distancia desde la parte inferior */

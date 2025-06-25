@@ -51,6 +51,7 @@ def indexppal():
     server_ip = socket.gethostbyname(socket.gethostname())
     session['server_ip']=server_ip
     au.registra(30,'Inicia Aplicacion') 
+    return render_template('login.html',server_ip=session['server_ip'])
     return render_template('indexppal.html',server_ip=session['server_ip'])
 @app.route('/banner') 
 def banner():  
@@ -89,20 +90,26 @@ def valida():
     session['usua']=usua 
     try:
         Tipo= tipoUsuario(usua) 
+        session["Tipo"]=Tipo
     except Exception as e:
         msgito="503 SERVIDOR NO DISPONIBLE"
         regresa="/login"
         return render_template('alertas.html',msgito=msgito,regreso=regresa)
+    
     if Tipo == 1:
-        # N=1        
-        daticos=requests.get(f'{apidb}/u/{usua}/{pw1}')
+        # N=1   
+        aa=f'{apidb}/u/{usua}/{pw1}'     
+        daticos=requests.get(aa)
+        
         if daticos.text != "1":
             msgito="APRENDIZ O CLAVE ERRADOS**"
             regresa="/login"
             au.registra(30,msgito,usua)
             return render_template('alertas.html',msgito=msgito,regreso=regresa)
-        return redirect('/eval')
+        # return redirect('/eval')
+        return render_template('indexppal.html',Tipo=Tipo)
     if Tipo == 2:
+        # return render_template('/foto/index.html' ,Tipo=Tipo)
         return redirect('/foto')
     elif Tipo == 3 :
         session['usua']=usua
@@ -128,6 +135,22 @@ def getAprendiz(id):
     return datos[0]
     # return render_template('carga.html',N=N,datos=datos)
 
+@app.route('/encuesta/<id>')
+def encuesta(id):
+    # usua=session["usua"]
+    usua=id
+    # 
+
+    apr=requests.get(f'{apidb}/u/datos/1013106019')
+    # session["ficha"]=apr['FICHA']
+    apr1=apr.json()
+    ficha=apr1['FICHA']
+    usua=apr1['DNI']
+    a=f'{apidb}/i/2/{ficha}/{usua}'
+    # return a
+    datos=requests.get(a)
+    
+    return render_template("carga.html",N=1,datos=datos,apr1=datos)
 @app.route('/descargar')
 def descargar():
     # au.registra(30,"Descarga Respuestas")

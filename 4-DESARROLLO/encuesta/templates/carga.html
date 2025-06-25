@@ -7,8 +7,9 @@
 <div class="cpsi d-flex justify-content-center align-items-center  mx-auto" style="width:50%; height:auto;">
 <table class="table table-striped ">
 <th  style="color:black;font-size: 12px;"><span class="sena-sombra">INSTRUCTORES DE LA FICHA: {{apr.FICHA}}, APRENDIZ: {{apr.NOMBRE}}, TITULACION: {{apr.TITULACION}}</span>
- </th><th><span class="boton-flotante" style="text-align: right;"  onclick="window.open('/login','centro')"><i class="fa fa-chevron-circle-left" aria-hidden="true"></i></span>
-</th>
+ </th>
+ <!-- <th><span class="boton-flotante" style="text-align: right;"  onclick="window.open('/login','centro')"><i class="fa fa-chevron-circle-left" aria-hidden="true"></i></span> -->
+<!-- </th>   -->
 </tr>
 {%for data in datos%}
 <tr>
@@ -54,8 +55,8 @@
             , APRENDIZ: {{session['datos'].NOMBRE}},TITULACION: {{session['datos'].TITULACION}},
             INSTRUCTOR A EVALUAR:{{nomi}}
         </th>
-        <th> <span class=" boton-flotante" style="text-align: right;"  onclick="javascript:history.back()"><i class="fa fa-chevron-circle-left" aria-hidden="true"></i></span>
-    </th></tr>
+        <!-- <th> <span class=" boton-flotante" style="text-align: right;"  onclick="javascript:history.back()"><i class="fa fa-chevron-circle-left" aria-hidden="true"></i></span> </th>-->
+        </tr>
         <tr>
             <td width=80% style="font-family: 'Caprasimo', serif;">
                 PREGUNTAS A RESPONDER
@@ -88,7 +89,7 @@
         
         <input type="submit" class="btn btn-primary ovalobtn" style="width:50%;" value="ENVIAR">
         <!-- <button class="btn btn-warning ovalo" style="width:50%;" onclick="','centro')">ENVIAR</button> -->
-        <button type="button" class="btn btn-warning ovalobtn" style="width:49%;" onclick="window.open('/login','centro')"><b>CANCELAR</b></button>
+        <!-- <button type="button" class="btn btn-warning ovalobtn" style="width:49%;" onclick="window.close('/login','xxx')"><b>CANCELAR</b></button> -->
 
     </td>
 </tr>

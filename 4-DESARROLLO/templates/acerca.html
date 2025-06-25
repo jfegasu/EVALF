@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 {% block content %}
-    
+    <div class="cpsi mx-auto" style="width:60%">
     <div style="width:70%;overflow:auto" class="w3-w3-green mx-auto">
         <br>
       <img loading="lazy" class="tabla" src="{{url_for('static',filename='images/cpsi.png')}}" style="border:true;width:95%; height: 200px;border-color:black;">
@@ -13,14 +13,16 @@
       </ul>
       <BR>
       </b>
+      <button class="btn btn-primary mx-auto" style="width:100%;" onclick="Voy()">ACEPTAR</button>
     </div>
     <br><br>
+    
     <script>
         function Voy(){
         {% if regreso%}
-        location.href="{{regreso}}"
+        location.href="/login"
         {% else %}
-        window.open("/","xxx")
+        window.open("/login","xxx")
         {% endif %}
         }
         //setTimeout('Voy()',5000)

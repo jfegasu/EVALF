@@ -2,6 +2,9 @@
 {% block content %}
 <br>
 {{datos[2]}}
+
+<br>
+<div class="cpsi d-flex">
 <div class="cpsi d-flex  mx-auto" style="width:60%">
   <div class="w3-card-4 w3-center" style="width:100%;max-width:100%">
     <header class="w3-container w3-blue">
@@ -32,4 +35,28 @@
 </div>
 </div>
 <br>
+</div>
+
+        <script>
+    const dialogo=document.getElementById("midialogo")
+    // const botonabrir=document.getElementById("abrir")
+    // const botoncerrar=document.getElementById("cerrar")
+    dialogo.showModal();
+    // setTimeout('Voy()',5000)
+    // botonabrir.addEventListener('click',function(){
+    //     dialogo.showModal();
+    // })
+    // botoncerrar.addEventListener('click',function(){
+    //     dialogo.close();
+    // })
+    
+            function Voy(){
+            {% if regreso %}
+            dialogo.close()
+            window.open("{{regreso}}","centro")
+            {% endif %}
+            }
+            // setTimeout('Voy()',5000)
+        </script>
+
 {% endblock content %}

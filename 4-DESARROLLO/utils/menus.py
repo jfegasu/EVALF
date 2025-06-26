@@ -1,5 +1,5 @@
 from flask import session
-tipous=0
+
 menuadm = [
         {
             "titulo": "CONFIGURACION",

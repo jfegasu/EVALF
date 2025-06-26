@@ -1,0 +1,34 @@
+xml version=1.0 encoding=UTF-8
+XMI
+  XMI.header
+    XMI.documentation
+      XMI.exporterWhiteStarUMLXMI.exporter
+      XMI.exporterVersion1.32XMI.exporterVersion
+    XMI.documentation
+  XMI.header
+  XMI.content
+    UMLModel xmi.id=model1 name=Modelo Evaluación
+      UMLNamespace.ownedElement
+        UMLUseCaseDiagram xmi.id=ucd1 name=Evaluación de Instructores
+          UMLDiagram.element
+            !-- Actores --
+            UMLActor xmi.id=actor1 name=Aprendiz
+            UMLActor xmi.id=actor2 name=Administrador
+            
+            !-- Casos de uso --
+            UMLUseCase xmi.id=uc1 name=Iniciar sesión
+            UMLUseCase xmi.id=uc2 name=Seleccionar ficha
+            UMLUseCase xmi.id=uc3 name=Ver instructores asignados
+            UMLUseCase xmi.id=uc4 name=Contestar preguntas de evaluación
+            UMLUseCase xmi.id=uc5 name=Enviar evaluación
+            UMLUseCase xmi.id=uc6 name=Ver confirmación de envío
+            UMLUseCase xmi.id=uc7 name=Ver resultados de evaluación
+
+            !-- Relaciones --
+            UMLAssociation xmi.id=rel1
+              UMLAssociation.connection
+                UMLAssociationEnd xmi.id=end1 participant=actor1
+                UMLAssociationEnd xmi.id=end2 participant=uc1
+              UMLAssociation.connection
+            UMLAssociation
+            UMLAssoci

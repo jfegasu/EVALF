@@ -1,0 +1,2 @@
+los aprendices evaluan a los instructores de su ficha, contestando una serie de preguntas de acuerdo a escalas de respuestas.
+Genere una diagrama de casos de uso de acuerdo al aplicativo whtestaruml

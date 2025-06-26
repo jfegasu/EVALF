@@ -4,22 +4,34 @@ from config import apidb,BASE_DIR
 from database.models import *
 import os
 from utils.Utilitarios import *
+from utils.menus import *
+
 # BASE_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
 
 
-eval_bp = Blueprint('eval', __name__, template_folder='templates',static_folder='static', static_url_path='/encuesta/static')
+eval_bp = Blueprint('evalu', __name__, template_folder='templates',static_folder='static', static_url_path='/encuesta/static')
 @eval_bp.route('/')
 def index(): 
-    usua=session['usua']   
-    au=Auditor(BASE_DIR)
-    au.registra(30,'Entra a responder la encuesta',usua) 
+    
+    usua=session['usua']  
+    # au=Auditor(BASE_DIR)
+    # au.registra(30,'Entra a responder la encuesta',usua) 
     
     datos=requests.get(f'{apidb}/u/datos/{usua}').json()
     ficha=requests.get(f'{apidb}/a/1/{usua}').text
+    
+    
     session['datos']=datos
     aa=f'{apidb}/i/2/{ficha}/{usua}'
     datos=requests.get(aa).json()
+    session['menu']=miMenu(1)
+    return render_template("evalmenu.html",menu=miMenu(1)    )
+
     return render_template('carga.html',N=1,datos=datos,apr=session['datos'])
+@eval_bp.route('/menu1', methods = ['GET'])   
+def menu1():
+    return render_template("menu1.html",menu=menus)
+
 @eval_bp.route('/1/<I>' ,methods=['POST','GET']) 
 def eval1(I):  
     
@@ -32,32 +44,24 @@ def eval1(I):
     I=session['instructor']
     datos=[N,F,I,A]
     return render_template('carga.html',N=1,datos=datos)
-@eval_bp.route('/2/<I>' ,methods=['GET']) 
-def eval2a(I):  
+@eval_bp.route('/2/<I>/<F>/<A>' ,methods=['GET']) 
+def eval2a(I,F,A):  
     # return '/2/<I>'
     # F=session['ficha']
-    F=3147246
+    # return F
+    # F=3147246
     # A=session['dnia']
-    A=1013106019
+    # A=1013106019
     # I=session['instructor']
-    N=2
+    # N=2
+
     datos=[2,F,I,A]
-    print("__________________________>",N)
+    # print("__________________________>",N)
     # preg=Consultar(DATABASE,'SELECT * FROM PREGUNTA WHERE ESTADO=1')
     # hay=len(preg)
     preg=requests.get(f'{apidb}/p').json()
     hay=len(preg)
 
-    
-    # au.registra(30,'ENTRA A EVALUAR A: '+getInstructor(I))
-    # apr={
-    #         "ficha":session['datos'].FICHA,
-    #         "aprendiz":session['datos'].NOMBREAP,
-    #         "titulacion":session['titulacion'],
-    #         "dnia":session['dnia']
-    #     }
-    
-    # session['apr']=apr
     NOMI=requests.get(f'{apidb}/i/e/{I}').json()
     # return NOMI[0]['NOMINST']
     return render_template('carga.html',N=2,datos=datos,hay=hay,preg=preg,nomi=NOMI[0]['NOMINST'],apr=session['datos'])
@@ -78,7 +82,7 @@ def eval(I):
         Preg=request.form.get('P' + str(i)) 
         pre=TheVal.create(idINSTRUCTOR=I,idFICHA=F,idAPRENDIZ=A,PREGUNTA=Preg,RESPUESTA=Resp,TITULACION=T,TRIMESTRE=TRIMESTRE)
     # au.registra(30,'EVALUO A: '+getInstructor(I))
-    msgito="Respuestas registrada"
+    msgito="200-Respuestas registradas"
     regreso="/login"
     return render_template("alertas.html",msgito=msgito,regreso=regreso)
 

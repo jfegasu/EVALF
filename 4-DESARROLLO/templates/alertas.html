@@ -1,18 +1,31 @@
 {% extends "base.html" %}
 {% block content %}
-            
-                <center><br>
-                    <div class="sena w-50 col-4" style="text-align:center">
+ <div class="cpsi">           
+ <dialog id="midialogo">               <center>
+                    <div class="cpsi w-90 h-80 col-6" style="text-align:center;width:100%;height: auto;">
             <img src="{{url_for('static',filename='images/NOTFOUND.png')}}" width="400px" ><br>
                         <h1 class="sena-sombra"><font color=red  class="caret-sombra-red"><b>{{ msgito}}</font></h1>
                     </div>
-                </center>
-
-
+                    <button id="cerrar" class="btn btn-primary" onclick="javascript:location.href='/login'">Cerrar</button>
                 
+</dialog>
+</div>
         <script>
+    const dialogo=document.getElementById("midialogo")
+    const botonabrir=document.getElementById("abrir")
+    const botoncerrar=document.getElementById("cerrar")
+    dialogo.showModal();
+            setTimeout('Voy()',5000)
+    botonabrir.addEventListener('click',function(){
+        dialogo.showModal();
+    })
+    botoncerrar.addEventListener('click',function(){
+        dialogo.close();
+    })
+    
             function Voy(){
             {% if regreso %}
+            dialogo.close()
             window.open("{{regreso}}","centro")
             {% endif %}
             }

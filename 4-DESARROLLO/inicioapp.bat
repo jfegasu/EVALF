@@ -1,5 +1,3 @@
-@echo on
-d:
-cd D:\PROY\EVALF\4-DESARROLLO
+ qu@echo on
 start python app.py
 start http://127.0.0.1:5000

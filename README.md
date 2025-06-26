@@ -1,4 +1,7 @@
+<<<<<<< HEAD
+=======
 ## SERVICIO NACIONAL DE APRENDIZAJE - SENA - CPSI -
+>>>>>>> develop
 <ul>
 <li>Descargue el archivo desde este github</li>
 <li>Descomprima el archivo descargado</li>
@@ -9,4 +12,8 @@
 <li>Instale los requerimientos necesarios requeri.bat ó escriba el comando: pip install -r requirements.txt</li>
 <li>Inicie el servidor web y la API con el archivo multi.bat desde el ambiente virtual</li>
 <li>Ingrese al navegador y escriba la url http://127.0.0.1:5000
+<<<<<<< HEAD
 </ul>
+=======
+</ul>
+>>>>>>> develop

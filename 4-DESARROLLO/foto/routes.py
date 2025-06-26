@@ -3,6 +3,7 @@ import requests
 from config import apidb
 import os
 from utils.Utilitarios import *
+from utils.menus import *
 foto = Blueprint('foto', __name__, template_folder='templates',static_folder='static',
     static_url_path='/foto/static')
 
@@ -12,12 +13,12 @@ BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 def index():
     usua=session['usua']
     usua=session['usua']
-    au=Auditor(BASE_DIR)
-    au.registra(30,'Inicia un instructor',usua) 
+    # au=Auditor(BASE_DIR)
+    # au.registra(30,'Inicia un instructor',usua) 
     sql=f"{apidb}/i/e/{usua}".format(usua)    
     datos=requests.get(sql).json()
-
-    return render_template('foto.html',datos=datos[0])
+    session['menu']=miMenu(2)
+    return render_template('/foto.html',datos=datos[0],menus=miMenu(2))
 
 @foto.route('/success', methods = ['POST'])   
 def success():   

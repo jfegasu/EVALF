@@ -1,3 +1,1 @@
-call database\inicioapi.bat
-python api.py
-pause
+start python api1.py

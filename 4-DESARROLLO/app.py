@@ -5,6 +5,7 @@ from flask_cors import CORS
 import requests
 import json
 from utils.Utilitarios import *
+from utils.menus import *
 import socket
 import hashlib
 import logging
@@ -37,7 +38,7 @@ app.config['apidb'] =  "http://127.0.0.1:5556"
 # print(BASE_DIR)
 # Registrando modulos Blueprint
 app.register_blueprint(foto, url_prefix='/foto')
-app.register_blueprint(eval_bp, url_prefix='/eval')
+app.register_blueprint(eval_bp, url_prefix='/evalu')
 app.register_blueprint(admin, url_prefix='/admin')
 
 # app.config.from_object(DevelopmentConfig) 
@@ -51,7 +52,7 @@ def indexppal():
     server_ip = socket.gethostbyname(socket.gethostname())
     session['server_ip']=server_ip
     au.registra(30,'Inicia Aplicacion') 
-    return render_template('login.html',server_ip=session['server_ip'])
+    # return render_template('login.html',server_ip=session['server_ip'])
     return render_template('indexppal.html',server_ip=session['server_ip'])
 @app.route('/banner') 
 def banner():  
@@ -90,7 +91,10 @@ def valida():
     session['usua']=usua 
     try:
         Tipo= tipoUsuario(usua) 
-        session["Tipo"]=Tipo
+        
+        # session["Tipo"]=Tipo
+        menus=miMenu(Tipo)
+        # return str(Tipo)
     except Exception as e:
         msgito="503 SERVIDOR NO DISPONIBLE"
         regresa="/login"
@@ -106,8 +110,9 @@ def valida():
             regresa="/login"
             au.registra(30,msgito,usua)
             return render_template('alertas.html',msgito=msgito,regreso=regresa)
-        # return redirect('/eval')
-        return render_template('indexppal.html',Tipo=Tipo)
+        # return "Entrando a la evaluacion"
+        return redirect('/evalu')
+        return render_template('/eval/menueval.html',menu=menus)
     if Tipo == 2:
         # return render_template('/foto/index.html' ,Tipo=Tipo)
         return redirect('/foto')
@@ -135,22 +140,21 @@ def getAprendiz(id):
     return datos[0]
     # return render_template('carga.html',N=N,datos=datos)
 
-@app.route('/encuesta/<id>')
-def encuesta(id):
-    # usua=session["usua"]
-    usua=id
+@app.route('/encuesta')
+def encuesta():
+    usua=session["usua"]
+    # usua=id
     # 
 
-    apr=requests.get(f'{apidb}/u/datos/1013106019')
+    apr=requests.get(f'{apidb}/u/datos/{usua}')
     # session["ficha"]=apr['FICHA']
     apr1=apr.json()
     ficha=apr1['FICHA']
-    usua=apr1['DNI']
+    # usua=apr1['DNI']
     a=f'{apidb}/i/2/{ficha}/{usua}'
-    # return a
-    datos=requests.get(a)
     
-    return render_template("carga.html",N=1,datos=datos,apr1=datos)
+    datos=requests.get(a).json()
+    return render_template("carga.html",N=1,datos=datos,apr=datos)
 @app.route('/descargar')
 def descargar():
     # au.registra(30,"Descarga Respuestas")
@@ -191,6 +195,11 @@ def CargaInicial():
 def menuadmin():
     au.registra(30,'ingresa menuadmin',session['usua'])
     return render_template('menuadmin.html')
+@app.route('/menu1')
+def menu1():
+    # au.registra(30,'ingresa menuadmin',session['usua'])
+    return render_template('menu1.html')
+
 @app.route('/aprendiz')
 def aprendiz():
     return render_template("aprendices.html")
@@ -206,14 +215,13 @@ def salir():
     return render_template("alertas.html",msgito=msgito,regreso='/saliendo')
 @app.route('/saliendo')
 def saliendo():
-    au.registra(30,"Saliendo de la encuesta",session['usua'])
-        
+    au.registra(30,"Saliendo de la encuesta",session['usua'])       
     return render_template("saliendo.html")
 
 def pagina_no_encontrada(error):
-    msgito="RUTA NO ENCONTRADA"
+    msgito="RUTA NO ENCONTRADA:"+str(error)
     return render_template("alertas.html",msgito=msgito,regreso='#')
-    # return "<h1>RUTA NO ENCONTRADA</h1>", 404
+    return "<h1>RUTA NO ENCONTRADA</h1>", 404
 def metodo_no_aceptado(error):
     msgito="405 METODO NO PERMITIDO"
     return render_template("alertas.html",msgito=msgito,regreso='#')

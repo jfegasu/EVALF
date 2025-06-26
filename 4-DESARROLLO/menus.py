@@ -1,6 +1,5 @@
 from flask import session
-if session['Tipo']==3:
-    menu = [
+menuadm = [
         {
             "titulo": "CONFIGURACION",
             "items": [
@@ -31,4 +30,19 @@ if session['Tipo']==3:
             ]
         },
     ]
-elif 
+
+menuapr = [
+        {
+            "titulo": "CONFIGURACION",
+            "items": [
+                {"texto": "DATOS INICIALES", "url": "/construir","svg":"","fa":"fa fa-address-book"},
+                {"texto": "APERTURA ENCUESTA", "url": "/construir","svg":"9211","fa":""}
+            ]
+        },
+]
+if session['Tipo']==3:
+    menu=menuadm    
+elif session['Tipo']==1:
+    menu=menuapr
+
+# session['menu']=menu

@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% block content %}
+{% set menu = session['menu']%}
+<h4 class="sena-sombra">📁 MENU PRINCIPAL EVAL</h4>
+<ul id="myUL">
+{% for i in menu %}
+  <li><span class="caret">{{ i.titulo }}</span>
+  <ul class="nested">
+  {% for y in i["items"] %}
+
+      <li>
+        <a style="text-decoration: none;"
+       {% if y.url %}
+        href="{{ y.url }}" 
+       {% else %}
+        href="#"
+       {%endif%}
+       >
+        {%if y.svg%}
+        &#{{y.svg}};
+        {%endif%} 
+        {%if y.fa%}
+        <i class="{{y.fa}}"></i>
+        {%endif%} 
+        {{ y.texto }}</a></li>
+    {% endfor %}
+    </ul>
+{% endfor %}
+
+
+
+{% endblock content %}
+

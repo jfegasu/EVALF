@@ -4,6 +4,7 @@
 
 {% if datos|length>0%}
 <br>
+
 <div class="cpsi d-flex justify-content-center align-items-center  mx-auto" style="width:50%; height:auto;">
 <table class="table table-striped ">
 <th  style="color:black;font-size: 12px;"><span class="sena-sombra">INSTRUCTORES DE LA FICHA: {{apr.FICHA}}, APRENDIZ: {{apr.NOMBRE}}, TITULACION: {{apr.TITULACION}}</span>
@@ -15,7 +16,7 @@
 <tr>
     <td colspan="2">
     {% with im = url_for('foto.static', filename='images/dni/' ~ data['dninst'] ~ '.png') %}
-<span style="cursor: pointer;margin: 10px;" onclick="window.open('/eval/2/{{data.dninst}}','centro')">
+<span style="cursor: pointer;margin: 10px;" onclick="window.open('/evalu/2/{{data.dninst}}/{{data.ficha}}/{{data.dniap}}','centro')">
 <img class="imgfull ovalo" src="{{ im }}"
      onerror="this.onerror=null; this.src='{{ url_for('foto.static', filename='images/dni/silueta.png') }}';"
      style="width: 40px; border: 1px solid black;">
@@ -63,7 +64,7 @@
             </td>
             <td width=50% style="font-family: 'Caprasimo', serif;">RESPUESTAS</td>
         </tr>
-        <form action="/eval/3/{{datos[2]}}" method="post">     
+        <form action="/evalu/3/{{datos[2]}}" method="post">     
 
             {%for data in preg%}
 

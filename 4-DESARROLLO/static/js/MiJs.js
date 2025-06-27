@@ -60,3 +60,8 @@
             }
         }
     });
+
+    function Noche(){
+        document.body.classList.toggle('dark');
+    
+    }

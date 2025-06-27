@@ -11,6 +11,22 @@
 .warning:hover {background-image: linear-gradient(to right, #ffb200, #ffda4e);}
 .danger {background-image: linear-gradient(to right, #dc3545, #e0666e);} 
 .danger:hover {background-image: linear-gradient(to right, #d32838, #e0666e);}
+*{
+  padding: 0;
+}
+body{
+  background-color: #121212 ;
+  box-shadow: 0.3s;
+}
+body.dark .card{
+  background: #2f2e2e;
+  background-color: #2f2e2e;
+  box-shadow: 0 4px 12px rgb(255, 255, 255,0.05);
+}
+.dark {
+  background-color: black;
+  color: white; /* Opcional: para que el texto sea visible */
+}
 .cpsi{
     font-size: 10px;
     font-weight: bold;
@@ -161,6 +177,10 @@ width: 40px;       /* asegúrate de que width = height */
     background-image: url('./static/images/logosena.png');
     padding-left: 10px;
 
+  }
+  .cpsi body.dark {
+    background-color: black;
+  color: black;
   }
 .cpsi table{
   color: #000;

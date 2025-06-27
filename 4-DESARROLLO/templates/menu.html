@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% block content %}
 <!--https://fontawesome.com/v4/icons/-->
-<nav class="navbar navbar-light bg-light " >
+<nav class="navbar navbar-light bg-light dark" >
   <form class="form-inline d-flex" >
     {%for op in opci%}
     <span   style="  font-weight: bold;font-size: 1rem; cursor: pointer;color:rgb(18, 18, 18);"
@@ -16,5 +16,6 @@
     &nbsp;<font color= gray ><b style="text-align: right;">ACERCA DE....</b></font>
     </span><p style="text-align: right;">&nbsp;[{{session['server_ip']}}]</p> 
   </form>
+  
 </nav>
 {%endblock%}

@@ -4,7 +4,7 @@ menuadm = [
             "titulo": "CONFIGURACION",
             "items": [
                 {"texto": "DATOS INICIALES", "url": "/construir","svg":"","fa":"fa fa-address-book"},
-                {"texto": "APERTURA ENCUESTA", "url": "/construir","svg":"9211","fa":""}
+                {"texto": "APERTURA ENCUESTA", "url": "/construir","svg":"&#xf187;","fa":"fas fa-server"}
             ]
         },
         {
@@ -40,9 +40,21 @@ menuapr = [
             ]
         },
 ]
-if session['Tipo']==3:
-    menu=menuadm    
-elif session['Tipo']==1:
-    menu=menuapr
+menuinst = [
+        {
+            "titulo": "CONFIGURACION",
+            "items": [
+                {"texto": "DATOS PERSONALES", "url": "/construir","svg":"","fa":"fa fa-address-book"},
+                {"texto": "APERTURA ENCUESTA", "url": "/construir","svg":"9211","fa":""}
+            ]
+        },
+]
+def miMenu(Tipo):
+    if Tipo==3:
+        menu=menuadm    
+    elif Tipo==1:
+        menu=menuapr
+    elif Tipo==2:
+        menu=menuinst
+    return menu
 
-# session['menu']=menu

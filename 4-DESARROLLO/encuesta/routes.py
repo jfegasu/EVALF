@@ -1,7 +1,7 @@
 from flask import Blueprint,render_template,session,request,jsonify
 import requests
 from config import apidb,BASE_DIR
-from database.models import *
+# from database.models import *
 import os
 from utils.Utilitarios import *
 from utils.menus import *
@@ -23,6 +23,7 @@ def index():
     
     session['datos']=datos
     aa=f'{apidb}/i/2/{ficha}/{usua}'
+    return aa
     datos=requests.get(aa).json()
     session['menu']=miMenu(1)
     return render_template("evalmenu.html",menu=miMenu(1)    )

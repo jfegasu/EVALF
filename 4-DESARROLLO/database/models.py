@@ -3,12 +3,18 @@ from peewee import SqliteDatabase
 import datetime 
 import os
 from flask import Blueprint, current_app, g
+import sys
+from  pkgcnx.cnx import *
+
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 DATABASE = os.path.join(BASE_DIR,  'sena.db')
 # DATABASE=current_app.config['DATABASE']
 
 # Conexión a la base de datos SQLite
-db = SqliteDatabase(DATABASE)  
+# db = SqliteDatabase(DATABASE)  
+db = MYSQL
+
+
 class BaseModel(Model):
     class Meta:
         database = db
@@ -105,6 +111,11 @@ db.connect()
 
 
 if __name__ == '__main__':
-    
-    db.create_tables([Admin, FichaInstructor, FichaAprendiz, Menu, Pregunta, TheVal])
-    print("PROCESO FINALIZADO")
+    if len(sys.argv) != 2:
+        print('Uso Crear tablas en evalf: models.py -c')
+    else:
+        if sys.argv[1] == "-c":  
+            db.create_tables([Admin, FichaInstructor, FichaAprendiz, Menu, Pregunta, TheVal])
+            print("PROCESO FINALIZADO")
+        else:
+            print('Error Uso: models.py -c')

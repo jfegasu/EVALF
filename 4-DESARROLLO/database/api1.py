@@ -9,6 +9,7 @@ import sqlite3
 import json
 import sentry_sdk
 
+
 app = Flask(__name__) 
 app.secret_key = 'BAD_SECRET_KEY'
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
@@ -42,10 +43,15 @@ def Ejecutar(db,sql):
         return '200' 
     except Exception as e:
         print(e)
-        return("400")
+        return("ERROR:"+str(e))
 @app.route('/u/1/<id>', methods=['GET']) # Detemina tipo de usuario
 def TipoUsuario(id):
-    cantidad = FichaAprendiz.select().where(FichaAprendiz.DNIA == id).count()
+    # cantidad = FichaAprendiz.select().where(FichaAprendiz.DNIA == id).count()
+    cantidad = (FichaAprendiz
+            .select(fn.COUNT(FichaAprendiz.id))
+            .where(FichaAprendiz.DNIA == str(id))
+            .scalar())
+    # return str(cantidad)
     if cantidad:
         return str(1)
     cantidad = FichaInstructor.select().where(FichaInstructor.DNI == id).count()
@@ -114,6 +120,7 @@ def ValidaClave(tipo, usuario, clave):
 def AllUsuario(id,pwd):
     tipo = TipoUsuario(id)
     # return tipo
+    # return tipo
     if tipo == "1":
         datos = UsuarioAprendiz(id)
         entra= ValidaClave("1",id,pwd)
@@ -158,35 +165,36 @@ def NomAprendiz(email):
     Aux=FichaAprendiz.get(FichaAprendiz.EMAIL==email)
     return Aux.NOMBREAP
     
-@app.route('/u/2/<email>/<pwd>', methods=['GET']) # Valida clave de acceso a usuario
-def ValidaUsuario(email,pwd):
-    Tipo=TipoUsuario(email)
+@app.route('/u/2/<id>/<pwd>', methods=['GET']) # Valida clave de acceso a usuario
+def ValidaUsuario(id,pwd):
+    Tipo=TipoUsuario(id)
+    # return Tipo
     # print("-->",Tipo)
     if Tipo:
-        total = FichaAprendiz.select().where((FichaAprendiz.EMAIL==email) and (FichaAprendiz.PWDAP==pwd)).count()
+        total = FichaAprendiz.select().where((FichaAprendiz.DNIA==id) and (FichaAprendiz.PWDAP==pwd)).count()
         if total:
             return "1"
         else:
             return "0"
     if Tipo=="2":
-        total = FichaInstructor.select().where((FichaInstructor.EMAIL==email) and (FichaInstructor.PWD==pwd)).count()
+        total = FichaInstructor.select().where((FichaInstructor.DNI==id) and (FichaInstructor.PWD==pwd)).count()
         if total:
             return "1"
         else:
             return "0"
     return jsonify({"ERROR":401})
 
-@app.route('/u/<email>', methods=['GET']) # Datos de usuario
-def DatosUsuario(email):
-    Tipo=TipoUsuario(email)
+@app.route('/u/<id>', methods=['GET']) # Datos de usuario
+def DatosUsuario(id):
+    Tipo=TipoUsuario(id)
     if Tipo=="1":
-        datos = FichaAprendiz.get(FichaAprendiz.EMAIL==email)
-        return jsonify({"FICHA":datos.FICHA,"DNI":datos.DNIA,"NOM":datos.NOMBREAP,"EMAIL":datos.EMAIL,"ESTADO":datos.ESTADOAP,"TITULACION":datos.TITULACION})
+        datos = FichaAprendiz.get(FichaAprendiz.DNIA==id)
+        return jsonify({"FICHA":datos.FICHA,"DNI":datos.DNIA,"NOM":datos.NOMBREAP,"EMAIL":datos.EMAIL,"ESTADO":datos.ESTADOAP,"TITULACION":datos.TITULACION,"TIPO":1})
     if Tipo=="2":
-        sql=f"SELECT  * FROM FICHAINSTRUCTOR WHERE EMAIL='{email}'".format(email)
+        sql=f"SELECT  * FROM FICHAINSTRUCTOR WHERE EMAIL='{id}'".format(id)
         datos=ConsultarUno(DATABASE,sql)
-        datos = FichaInstructor.get(FichaInstructor.EMAIL==email)
-        return jsonify({"FICHA":datos.FICHA,"DNI":datos.DNI,"NOM":datos.NOMINST,"EMAIL":datos.EMAIL})
+        datos = FichaInstructor.get(FichaInstructor.DNI==id)
+        return jsonify({"FICHA":datos.FICHA,"DNI":datos.DNI,"NOM":datos.NOMINST,"EMAIL":datos.EMAIL,"ESTADO":1, "TIPO":2})
 
 @app.route('/i/1/<email>', methods=['GET']) # Instructores por evaluar por el aprendiz
 def InstructorUsuarioXEvaluar(email):

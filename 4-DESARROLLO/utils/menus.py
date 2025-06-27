@@ -83,3 +83,10 @@ def miMenu(tipous):
     elif tipous==2:
         menu=menuinst
     return menu
+
+general=[
+    {"Titulo":"CRM DE PERSECCION DE LA FORMACION DEL SENA V2.0.0"},
+]
+def generalApp():
+    return general
+

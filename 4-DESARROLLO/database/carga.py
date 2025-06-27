@@ -1,6 +1,7 @@
 from models import *
+import CNX
 # Configuración de base de datos
-db = SqliteDatabase('sena.db')
+# db = SqliteDatabase('sena.db')
 # ADMIN
 Admin.create(NOM='ADMIN', EMAIL='admin@sena.edu.co', CLA='5218f316b3f85b751c613a06aa18010d')
 

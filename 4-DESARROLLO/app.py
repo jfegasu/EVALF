@@ -9,7 +9,7 @@ from utils.menus import *
 import socket
 import hashlib
 import logging
-from database.models import *
+# from database.models import *
 from foto.routes import foto
 from encuesta.routes import eval_bp
 from admin.routes import admin
@@ -34,6 +34,7 @@ app.secret_key = 'BAD_SECRET_KEY'
 # BASE_DIR=current_app['BASE_DIR']
 RESPUESTAS = os.path.join(BASE_DIR, 'static/archivos/RESPUESTAS.csv')
 app.config['apidb'] =  "http://127.0.0.1:5556"
+apidb="http://127.0.0.1:5556"
 # DATABASE = os.path.join(BASE_DIR, 'database', 'sena.db')
 # print(BASE_DIR)
 # Registrando modulos Blueprint
@@ -78,8 +79,11 @@ def login():
 @app.route('/acerca') 
 def acerca():   
     return render_template('acerca.html')
-def tipoUsuario(correo):
-    return ConsultarDB('/u/1/'+correo)
+def tipoUsuario(id):
+    aa=f'{apidb}/u/datos/{id}'
+    bb=requests.get(aa).json()
+    Tipo=bb['TIPO']
+    return Tipo
 
 @app.route('/valida' ,methods=['POST','GET']) 
 def valida():
@@ -90,22 +94,22 @@ def valida():
     session['pw1']=pw1
     session['usua']=usua 
     try:
-        Tipo= tipoUsuario(usua) 
-        
-        # session["Tipo"]=Tipo
+        Tipo= tipoUsuario(usua)
         menus=miMenu(Tipo)
         # return str(Tipo)
     except Exception as e:
-        msgito="503 SERVIDOR NO DISPONIBLE"
+        msgito="503 SERVIDOR NO DISPONIBLE"+str(e)
         regresa="/login"
         return render_template('alertas.html',msgito=msgito,regreso=regresa)
     
     if Tipo == 1:
         # N=1   
-        aa=f'{apidb}/u/{usua}/{pw1}'     
-        daticos=requests.get(aa)
         
-        if daticos.text != "1":
+        aa=f'{apidb}/u/{usua}/{pw1}' 
+        # return aa    
+        daticos=requests.get(aa).json()
+        # return "-->"+str(daticos)
+        if str(daticos) != '1':
             msgito="APRENDIZ O CLAVE ERRADOS**"
             regresa="/login"
             au.registra(30,msgito,usua)

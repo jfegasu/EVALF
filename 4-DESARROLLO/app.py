@@ -119,7 +119,7 @@ def valida():
     
     aa=f'/u/{usua}/{pw1}' 
     daticos=Consulte(aa)
-    if str(daticos) != '1' and (Tipo != 3):
+    if str(daticos) != '1' and (Tipo < 2):
         msgito="APRENDIZ O CLAVE ERRADOS**"
         regresa="/login"
         au.registra(30,msgito,usua)

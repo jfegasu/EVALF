@@ -1,1 +1,20 @@
-'/u/<id>' -> Datos de Usuario
+ENDPOINT;DESCRIPCION;FUNCION
+'/u/<id>' ; Datos de Usuario ; DatosUsuario(id)
+'/u/2/<id>/<pwd>' ; Valida Clave ; ValidaUsuario(id,pwd)
+'/u/<id>/<pwd>' ; Valida Clave ; AllUsuario(id,pwd)
+'/u/1/<id>' ; Tipo de usuario ; TipoUsuario(id)
+
+'/a/<id>' ; Datos Aprendiz ; UsuarioAprendiz(id)
+'/a/1/<id>' ; Ficha del aprendiz ; FichaAprendiz1(id)
+'/a/2/<id>' ; DNI del aprendiz ; DNIAprendiz(id)
+'/a/3/<id>' ; Estado del aprendiz ; EstaAprendiz(id)
+'/a/4/<id>' ; Nombre del aprendiz ; NomAprendiz(id)
+
+'/i/<id>' ; Datos del Instructor ; UsuarioInstructor(id)
+'/i/1/<id>' ;  (obsoleto) ; InstructorUsuarioXEvaluar(id)
+'/i/2/<pficha>/<paprendiz>' ; Instructores sin evaluar ; oEvaluados(pficha, paprendiz)
+'/i/2a/<ficha>' ; Instructores para evaluar (obsoleta) ; InstructoresXFicha(ficha)
+
+'/act1' ; Crea Actividad ; insertar_asistencia()
+'/p' ; Preguntas ; Preguntas()
+

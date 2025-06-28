@@ -1,4 +1,4 @@
-from flask import Blueprint,render_template,session,request,jsonify
+from flask import Blueprint,render_template,session,request,jsonify,current_app
 import requests
 from config import apidb,BASE_DIR
 # from database.models import *
@@ -23,7 +23,7 @@ def index():
     
     session['datos']=datos
     aa=f'{apidb}/i/2/{ficha}/{usua}'
-    return aa
+    # return aa
     datos=requests.get(aa).json()
     session['menu']=miMenu(1)
     return render_template("evalmenu.html",menu=miMenu(1)    )

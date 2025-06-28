@@ -1,4 +1,4 @@
-from flask import Blueprint,render_template,session,request,jsonify,url_for
+from flask import Blueprint,render_template,session,request,jsonify,url_for, current_app
 import requests
 from config import apidb
 import os
@@ -11,10 +11,8 @@ BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 
 @foto.route('/')
 def index():
+    apidb= current_app.config['apidb']
     usua=session['usua']
-    usua=session['usua']
-    # au=Auditor(BASE_DIR)
-    # au.registra(30,'Inicia un instructor',usua) 
     sql=f"{apidb}/i/e/{usua}".format(usua)    
     datos=requests.get(sql).json()
     session['menu']=miMenu(2)

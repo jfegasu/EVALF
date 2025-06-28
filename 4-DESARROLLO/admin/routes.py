@@ -13,7 +13,7 @@ au=Auditor(BASE_DIR)
 @admin.route('/')
 def index():
     usua=session['usua']
-
+    
     au.registra(30,'Inicia un administrador',usua) 
     session['menu']=miMenu(3)
 
@@ -30,7 +30,6 @@ def verlog():
     fecha=datetime.now()
     fe=str(fecha.year)+str(fecha.month)+str(fecha.day)
     # au.registra(30,"Observa el Log de Transacciones:"+str(fecha))
-    # return fe
     # os.makedirs(url_for('static',filename='archivos'),exist_ok=True)
     ruta_origen = os.path.join('/log/', f'{fe}.log')
     # return ruta_origen

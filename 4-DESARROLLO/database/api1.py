@@ -63,6 +63,7 @@ def TipoUsuario(id):
     
     return str(0)
 @app.route('/u/datos/<id>')
+@app.route('/a/<id>')
 def UsuarioAprendiz(id):
     try:
         datos = FichaAprendiz.get(FichaAprendiz.DNIA == id)
@@ -83,6 +84,7 @@ def UsuarioAprendiz(id):
         # Puedes loguear `str(e)` aquí si deseas
         return jsonify({"Error": "Error interno del servidor"}), 500
     
+@app.route('/i/<id>', methods=['GET'])
 def UsuarioInstructor(id):
     try:
         datos=FichaInstructor.get(FichaInstructor.DNI==id)
@@ -135,34 +137,25 @@ def AllUsuario(id,pwd):
         return entra
     else:
         return jsonify({"Error": f"Usuario {id} no es un aprendiz autorizado"}), 403
-    
-@app.route('/a/0/<email>', methods=['GET']) # Entrega ficha del aprendiz
-def Aprendiz(email):
-    sql=f"SELECT * FROM FICHAAPRENDIZ WHERE EMAIL='{email}'".format(email)
-    datos=Consultar(DATABASE,sql)
-    datos=FichaAprendiz.select().where(FichaAprendiz.EMAIL)
-    return jsonify({"FICHA":datos.FICHA})
-    # return jsonify( "FICHA":datos[0][1],"DNI":datos[0][2],"NOMBRE":datos[0][3],"ESTADOAP":datos[0][4],"EMAIL":datos[0][6]})
 
 @app.route('/a/1/<id>', methods=['GET']) # Entrega ficha del aprendiz
 def FichaAprendiz1(id):
-
     Aux=FichaAprendiz.get(FichaAprendiz.DNIA==id)
     return str(Aux.FICHA)
     
-@app.route('/a/2/<email>', methods=['GET']) # Entrega el DNI del aprendiz
-def DNIAprendiz(email):
-    Aux=FichaAprendiz.get(FichaAprendiz.EMAIL==email)
+@app.route('/a/2/<id>', methods=['GET']) # Entrega el DNI del aprendiz
+def DNIAprendiz(id):
+    Aux=FichaAprendiz.get(FichaAprendiz.DNIA==id)
     return Aux.DNIA
 
-@app.route('/a/3/<email>', methods=['GET']) # Entrega el estado del aprendiz
-def EstaAprendiz(email):
-    Aux=FichaAprendiz.get(FichaAprendiz.EMAIL==email)
+@app.route('/a/3/<id>', methods=['GET']) # Entrega el estado del aprendiz
+def EstaAprendiz(id):
+    Aux=FichaAprendiz.get(FichaAprendiz.DNIA==id)
     return str(Aux.ESTADOAP)
 
-@app.route('/a/4/<email>', methods=['GET']) # Entrega el estado del aprendiz
-def NomAprendiz(email):
-    Aux=FichaAprendiz.get(FichaAprendiz.EMAIL==email)
+@app.route('/a/4/<id>', methods=['GET']) # Entrega el estado del aprendiz
+def NomAprendiz(id):
+    Aux=FichaAprendiz.get(FichaAprendiz.DNIA==id)
     return Aux.NOMBREAP
     
 @app.route('/u/2/<id>/<pwd>', methods=['GET']) # Valida clave de acceso a usuario
@@ -196,10 +189,10 @@ def DatosUsuario(id):
         datos = FichaInstructor.get(FichaInstructor.DNI==id)
         return jsonify({"FICHA":datos.FICHA,"DNI":datos.DNI,"NOM":datos.NOMINST,"EMAIL":datos.EMAIL,"ESTADO":1, "TIPO":2})
 
-@app.route('/i/1/<email>', methods=['GET']) # Instructores por evaluar por el aprendiz
-def InstructorUsuarioXEvaluar(email):
-    Ficha=FichaAprendiz1(email)
-    DNI=DNIAprendiz(email)
+@app.route('/i/1/<id>', methods=['GET']) # Instructores por evaluar por el aprendiz (obsoleto)
+def InstructorUsuarioXEvaluar(id):
+    Ficha=FichaAprendiz1(id)
+    DNI=DNIAprendiz(id)
     sql=f"SELECT * FROM FICHAINSTRUCTOR FI WHERE FI.FICHA={Ficha} AND FI.DNI NOT IN (SELECT idINSTRUCTOR FROM THEVAL WHERE IDFICHA={Ficha} AND idAPRENDIZ={DNI})".format(Ficha,DNI)
     datos=Consultar(DATABASE,sql)
     # return datos
@@ -230,14 +223,14 @@ def Preguntas():
     except Exception as e:
         return jsonify({"error": str(e)}), 400
 
-@app.route('/i/2a/<ficha>', methods=['GET']) # Instructores por evaluar por el aprendiz
+@app.route('/i/2a/<ficha>', methods=['GET']) # Instructores por evaluar por el aprendiz (obsoleto)
 def InstructoresXFicha(ficha):
     sql=f"SELECT * FROM FICHAINSTRUCTOR WHERE FICHA={ficha}".format(ficha)
     datos=Consultar(DATABASE,sql)
     return datos
 import sqlite3
 
-@app.route('/act', methods=['POST','GET'])  # Instructores por evaluar por el aprendiz
+@app.route('/act', methods=['POST','GET'])  # Instructores por evaluar por el aprendiz (obsoleto)
 def inserta():
     datos = request.get_json()
     a = datos['ACTIVIDAD']

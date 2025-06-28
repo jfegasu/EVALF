@@ -1,4 +1,4 @@
-from flask import Flask,Blueprint, jsonify, render_template,session,request ,redirect,url_for,send_from_directory,current_app
+from flask import Flask,Blueprint, jsonify, render_template,session,request ,redirect,url_for,send_from_directory,app
 from flask_session import Session
 import pandas as pd
 from flask_cors import CORS
@@ -27,14 +27,21 @@ APP_ROOT=os.getcwd()
 # Ruta absoluta al archivo SQLite
 app.config['DATABASE'] = os.path.join(APP_ROOT, 'database', 'sena.db')
 app.config['APP_ROOT'] = APP_ROOT
-app.secret_key = 'BAD_SECRET_KEY'
+app.secret_key = 'BAD_SECRET_KEY'   
 # BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 
 # BASE_DIR=os.path.join(os.path.dirname(__file__))
-# BASE_DIR=current_app['BASE_DIR']
+# BASE_DIR=app['BASE_DIR']
 RESPUESTAS = os.path.join(BASE_DIR, 'static/archivos/RESPUESTAS.csv')
 app.config['apidb'] =  "http://127.0.0.1:5556"
 apidb="http://127.0.0.1:5556"
+
+app.config['MYSQL_DATABASE_HOST'] = 'localhost'
+app.config['MYSQL_DATABASE_USER'] = 'root'
+app.config['MYSQL_DATABASE_PASSWORD'] = ''
+app.config['MYSQL_DATABASE_DB'] = 'evalf'
+app.config['apidb'] =  "http://127.0.0.1:5556"
+
 # DATABASE = os.path.join(BASE_DIR, 'database', 'sena.db')
 # print(BASE_DIR)
 # Registrando modulos Blueprint
@@ -69,7 +76,8 @@ def centro():
 @app.route('/menu') 
 def menu():   
     sql="SELECT * FROM MENU WHERE ROL='APR' order by 2"
-    opci=Consultar(DATABASE,sql)
+    # opci=Consultar(DATABASE,sql)
+    opci={"idMenu":1,"LUGAR":1,"NOM": "INICIO","RUTA":"/login","ROL":"APR","ICONO":"fa fa-home"}
     ip_local = socket.gethostbyname(socket.gethostname())
     return render_template('menu.html',mip=ip_local,opci=opci)
 @app.route('/login') 
@@ -84,6 +92,11 @@ def tipoUsuario(id):
     bb=requests.get(aa).json()
     Tipo=bb['TIPO']
     return Tipo
+# def Consulte(clave):
+#     # apidb=session['apidb']
+#     aa=f'{apidb}{clave}'
+#     datos=requests.get(aa).json()
+#     return (datos)
 
 @app.route('/valida' ,methods=['POST','GET']) 
 def valida():
@@ -93,32 +106,35 @@ def valida():
     session['pw']=pw
     session['pw1']=pw1
     session['usua']=usua 
+    # return Consulte(f'/u/1/{usua}')
     try:
-        Tipo= tipoUsuario(usua)
-        menus=miMenu(Tipo)
-        # return str(Tipo)
+        Tipo=Consulte(f'/u/1/{usua}')
+        session['Tipo']=str(Tipo)
+        menus=jsonify(miMenu(Tipo))
     except Exception as e:
-        msgito="503 SERVIDOR NO DISPONIBLE"+str(e)
+        msgito="503 SERVIDOR NO DISPONIBLE: [{str(e)}]"
         regresa="/login"
         return render_template('alertas.html',msgito=msgito,regreso=regresa)
     
+    aa=f'/u/{usua}/{pw1}' 
+    daticos=Consulte(aa)
+    if str(daticos) != '1' and (Tipo != 3):
+        msgito="APRENDIZ O CLAVE ERRADOS**"
+        regresa="/login"
+        au.registra(30,msgito,usua)
+        return render_template('alertas.html',msgito=msgito,regreso=regresa)
+
     if Tipo == 1:
-        # N=1   
-        
-        aa=f'{apidb}/u/{usua}/{pw1}' 
-        # return aa    
+    #    return "1"
+       aa=f'{apidb}/u/{usua}' 
+       daticos=requests.get(aa).json()
+       session['Datos']=daticos
+       return redirect('/evalu') 
+    elif Tipo == 2:
+        # return "2"
+        aa=f'{apidb}/u/{usua}' 
         daticos=requests.get(aa).json()
-        # return "-->"+str(daticos)
-        if str(daticos) != '1':
-            msgito="APRENDIZ O CLAVE ERRADOS**"
-            regresa="/login"
-            au.registra(30,msgito,usua)
-            return render_template('alertas.html',msgito=msgito,regreso=regresa)
-        # return "Entrando a la evaluacion"
-        return redirect('/evalu')
-        return render_template('/eval/menueval.html',menu=menus)
-    if Tipo == 2:
-        # return render_template('/foto/index.html' ,Tipo=Tipo)
+        session['Datos']=daticos
         return redirect('/foto')
     elif Tipo == 3 :
         session['usua']=usua

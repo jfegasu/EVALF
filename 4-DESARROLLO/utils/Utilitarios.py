@@ -1,4 +1,4 @@
-from flask import request,render_template,session
+from flask import request,render_template,session,current_app
 import logging
 import requests
 import os
@@ -298,3 +298,15 @@ def obtener_trimestreT(fecha):
     anual=fecha.year
     trimestre = (mes - 1) // 3 + 1
     return "T"+str(anual)+"-"+str(trimestre)
+# current_app.config['MYSQL_DATABASE_HOST'] = 'localhost'
+# current_app.config['MYSQL_DATABASE_USER'] = 'root'
+# current_app.config['MYSQL_DATABASE_PASSWORD'] = ''
+# current_app.config['MYSQL_DATABASE_DB'] = 'evalf'
+# current_app.config['apidb'] =  "http://127.0.0.1:5556"
+
+def Consulte(clave):
+    # apidb=session['apidb']
+    apidb=current_app.config['apidb']
+    aa=f'{apidb}{clave}'
+    datos=requests.get(aa).json()
+    return (datos)

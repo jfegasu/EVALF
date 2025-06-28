@@ -75,7 +75,7 @@ menuinst = [
             ]
         },
 ]
-def miMenu(tipous):
+def miMenu(tipous:int):
     if tipous==3:
         menu=menuadm       
     elif tipous==1:

@@ -5,6 +5,11 @@
   <form class="form-inline d-flex" >
     {%for op in opci%}
     <span   style="  font-weight: bold;font-size: 1rem; cursor: pointer;color:rgb(18, 18, 18);"
+    onclick="window.open('/login','centro')">
+    <i class="fa fa-home" style="padding-left: 30px;  font-size:2rem; border:none;" aria-hidden="true"></i>
+    &nbsp;<font color= gray ><b>INICIO</b></font>
+    
+    <!-- <span   style="  font-weight: bold;font-size: 1rem; cursor: pointer;color:rgb(18, 18, 18);"
     onclick="window.open('{{op[3]}}','centro')">
     <i class="{{op[5]}}" style="padding-left: 30px;  font-size:2rem; border:none;" aria-hidden="true"></i>
     &nbsp;<font color= gray ><b>{{op[2]}}</b></font>
@@ -14,7 +19,7 @@
     onclick="window.open('/acerca','centro')">
     <i class="fa fa-group " style="padding-left: 30px; color:black; font-size:2rem; border:none;" aria-hidden="true"></i>
     &nbsp;<font color= gray ><b style="text-align: right;">ACERCA DE....</b></font>
-    </span><p style="text-align: right;">&nbsp;[{{session['server_ip']}}]</p> 
+    </span><p style="text-align: right;">&nbsp;[{{session['server_ip']}}]</p>  -->
   </form>
 </nav>
 {%endblock%}

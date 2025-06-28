@@ -1,0 +1,66 @@
+<link href="/static/css/MiEstilo.css" rel="stylesheet">
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+<style>
+    .menuf{
+position: absolute;
+display: flex;
+top: 150px;
+right: 3px;
+width: 6px;
+height: 20px;
+text-align: center;
+margin:auto;
+padding: 10px;
+
+align-items: center;
+font-weight: bold; 
+font-size: 16px;
+
+box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75);
+-webkit-box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75);
+-moz-box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75);
+
+border-radius: 95px 10px 10px 80px;
+-webkit-border-radius: 95px 10px 10px 80px;
+-moz-border-radius: 95px 10px 10px 80px;
+border: 1px;
+
+border: 3px solid #06b644;
+background: #fbf7f7;
+}
+</style>
+
+<div class="menuf" id="miDiv">
+  <a onclick="achica()" style="cursor: pointer;">
+    <i id="iconoToggle" class="fas fa-chevron-circle-left"></i></a>
+  <a id="uno">&nbsp; <i class="fas fa-power-off" title="Salir"></i></a>
+  <a id="uno">&nbsp; <i class="fas fa-plug" title="Desconectar"></i></a>
+</div>
+
+<script>
+  let recortado = true;
+
+  function achica() {
+    const div = document.getElementById('miDiv');
+    const ocultable = document.getElementById('uno');
+    const icono = document.getElementById('iconoToggle');
+
+    if (recortado) {
+      div.style.width = '60px';
+      ocultable.style.display = 'inline-block';
+      icono.classList.remove('fa-chevron-circle-left');
+      icono.classList.add('fa-chevron-circle-right');
+    } else {
+      div.style.width = '10px';
+      ocultable.style.display = 'none';
+      icono.classList.remove('fa-chevron-circle-right');
+      icono.classList.add('fa-chevron-circle-left');
+    }
+
+    recortado = !recortado;
+  }
+</script>
+
+

@@ -17,6 +17,14 @@
     align-items: center;
     height: auto;
 }
+.cpsi .menuf{
+position: absolute;
+top: 5px;
+right: 3px;
+border-radius: 95px 10px 10px 80px;
+-webkit-border-radius: 95px 10px 10px 80px;
+-moz-border-radius: 95px 10px 10px 80px;
+}
 .cpsi img{
   border-radius: 12px;
   border: black;

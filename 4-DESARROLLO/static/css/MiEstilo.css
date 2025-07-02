@@ -16,6 +16,31 @@
   cursor: pointer;
   text-decoration: none;
 }
+#miDivd{
+position: absolute;
+display: flex;
+top: 15px;
+left: 8px;
+height: auto;
+
+}
+.menud{
+position: absolute;
+display: flex;
+text-align: left;
+top: 35px;
+left: 8px;
+max-width: 350px;
+height: auto;
+
+margin:auto;
+padding: 20px;
+display: flex;
+
+
+transition: all 1s ease, background-color 1s ease;
+}
+
 .menuf{
 position: absolute;
 display: flex;
@@ -26,7 +51,7 @@ width: 100px;
 height: 70px;
 
 margin:auto;
-padding: 10px;
+padding: 30px;
 display: flex;
 
 align-items: center;

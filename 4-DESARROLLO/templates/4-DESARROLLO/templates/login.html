@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+{% block content %}
+<dialog id="midialogo">
+<br>
+<div class="cpsi d-flex">
+<div class="  mx-auto" style="width: 100%;margin:auto;padding-left: 20px; padding-bottom: 10px;">
+<!--<div class="col-sm-12 col-md-4 col-lg-6 col-xl-4">-->
+    <br>
+    <table style="padding-left: 10px;" width="100%">
+   <td><form method="post" action="/valida" onsubmit="true dialogo.close()">
+        <h4 class="sena-sombra">INGRESE LAS CREDENCIALES</h4>
+        <table class="table table-md   table-striped " style="margin: auto;">
+            <tr>
+                <td ><label class="form-label">Usuario:</label></td>
+                <td><input class="form-control" type="number" id="usua" title="Ingresar el usuario" name="usua" required value="1013106019"></td>
+            </tr>
+            <tr>
+                <td><label class="form-label">Clave:</label></td>
+                <td><input class="form-control" type="password"  id="pw" name="pw" value=""
+></td>
+            </tr>
+        <tr>
+            <td colspan="2"><input class="form-control btn btn-success ovalobtn" type="submit" value="Ingresar"></td>
+        </tr>    
+        </table>
+
+    </form>
+</div>
+</dialog>
+        <script>
+    const dialogo=document.getElementById("midialogo")
+    // const botonabrir=document.getElementById("abrir")
+    // const botoncerrar=document.getElementById("cerrar")
+    dialogo.showModal();
+    // setTimeout('Voy()',5000)
+    // botonabrir.addEventListener('click',function(){
+    //     dialogo.showModal();
+    // })
+    // botoncerrar.addEventListener('click',function(){
+    //     dialogo.close();
+    // })
+    
+            function Voy(){
+            {% if regreso %}
+            dialogo.close()
+            window.open("{{regreso}}","centro")
+            {% endif %}
+            }
+            // setTimeout('Voy()',5000)
+        </script>
+
+<br><br>
+
+{% endblock content %}

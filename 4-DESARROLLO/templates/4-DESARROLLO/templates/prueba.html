@@ -1,0 +1,48 @@
+<link href="../static/css/MiEstilo.css" rel="stylesheet">
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<script src='../static/js/MiJs.js'></script>
+
+
+<div class="menuf" id="miDiv">
+  <a onclick="achica('miDiv','uno','dos','cero')" style="cursor: pointer;"><i id="cero" class="fas fa-chevron-circle-left"></i></a>
+  <a id="dos">&nbsp; <i class="fas fa-plug" title="Desconectar"></i></a>
+  <a id="uno">&nbsp; <i class="fas fa-power-off" title="Salir"></i></a>
+</div>
+
+<script>
+let recortado = true;
+
+function achica(divId, unoId, dosId, iconoId) {
+  const div = document.getElementById(divId);
+  const ocultable = document.getElementById(unoId);
+  const botonDesconectar = document.getElementById(dosId);
+  const icono = document.getElementById(iconoId);
+
+  if (recortado) {
+    div.style.width = '60px';
+    ocultable.style.display = 'inline-block';
+    botonDesconectar.style.display = 'inline-block';
+    botonDesconectar.style.cursor = 'pointer';
+    ocultable.style.cursor = 'pointer';
+    
+    icono.classList.remove('fa-chevron-circle-left');
+    icono.classList.add('fa-chevron-circle-right');
+  } else {
+    
+    div.style.width = '10px';
+    ocultable.style.display = 'none';
+    botonDesconectar.style.display = 'none';
+
+    icono.classList.remove('fa-chevron-circle-right');
+    icono.classList.add('fa-chevron-circle-left');
+  }
+
+  recortado = !recortado;
+}
+
+</script>
+
+
+
+

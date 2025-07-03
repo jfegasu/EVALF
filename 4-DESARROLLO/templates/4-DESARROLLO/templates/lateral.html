@@ -1,0 +1,46 @@
+<div class="menuf" id="miDiv">
+  <a onclick="achica('miDiv','uno','dos','cero','regre')" class="mano"><i id="cero" class="fas fa-chevron-circle-left"></i></a>
+  <a onclick="window.open('/saliendo','centro')" class="mano" id="dos"><i class="fas fa-plug" title="Desconectar"></i></a>
+  <a onclick="window.open('/login','centro')" class="mano" id="uno"><i class="fas fa-power-off" title="Salir"></i></a>
+  <a onclick="javascript:history.back()" class="mano" id="regre"><i class="far fa-hand-point-left" title="Regresar"></i></a>
+</div>
+
+<script>
+let recortado = true;
+
+function achica(divId, unoId, dosId, iconoId,regreId) {
+  const div = document.getElementById(divId);
+  const ocultable = document.getElementById(unoId);
+  const botonDesconectar = document.getElementById(dosId);
+  const icono = document.getElementById(iconoId);
+  const regre = document.getElementById(regreId);
+
+  if (recortado) {
+    // alert("x")
+    div.style.width = '100px';
+    div.style.height = '60px';
+    ocultable.style.display = 'inline-block';
+    botonDesconectar.style.display = 'inline-block';
+    regre.style.display = 'inline-block';
+
+    botonDesconectar.style.cursor = 'pointer';
+    ocultable.style.cursor = 'pointer';
+    
+    icono.classList.remove('fa-chevron-circle-left');
+    icono.classList.add('fa-chevron-circle-right');
+  } else {
+    // alert("y")
+    div.style.width = '40px';
+    div.style.height = '60px';
+    ocultable.style.display = 'none';
+    botonDesconectar.style.display = 'none';
+    regre.style.display = 'none';
+
+    icono.classList.remove('fa-chevron-circle-right');
+    icono.classList.add('fa-chevron-circle-left');
+  }
+
+  recortado = !recortado;
+}
+
+</script>

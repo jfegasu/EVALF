@@ -1,0 +1,321 @@
+from flask import Flask, request, jsonify,session
+from peewee import *
+from peewee import fn
+from models import *
+from playhouse.shortcuts import model_to_dict
+from peewee import fn
+import os
+import sqlite3
+import json
+import sentry_sdk
+
+
+app = Flask(__name__) 
+app.secret_key = 'BAD_SECRET_KEY'
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+DATABASE = os.path.join(BASE_DIR,  'sena.db')
+
+# db = SqliteDatabase(DATABASE)
+def Consultar(db,sql):
+    conn = sqlite3.connect(db)
+    # conn.row_factory = sqlite3.Row  # Esto permite acceder a los resultados como diccionarios
+    cursor = conn.cursor()
+    cursor.execute(sql)
+    rows = cursor.fetchall()
+    conn.close()
+    return rows
+
+def ConsultarUno(db,sql):
+    conn = sqlite3.connect(db)
+    
+    cursor = conn.cursor()
+    cursor.execute(sql)
+    output = cursor.fetchone() 
+    conn.close()
+    return output 
+def Ejecutar(db,sql):
+    try:
+        conn = sqlite3.connect(db)
+        cursor = conn.cursor()
+        cursor.execute(sql)
+        conn.commit()
+        conn.close()
+        return '200' 
+    except Exception as e:
+        print(e)
+        return("ERROR:"+str(e))
+@app.route('/u/1/<id>', methods=['GET']) # Detemina tipo de usuario
+def TipoUsuario(id):
+    # cantidad = FichaAprendiz.select().where(FichaAprendiz.DNIA == id).count()
+    cantidad = (FichaAprendiz
+            .select(fn.COUNT(FichaAprendiz.id))
+            .where(FichaAprendiz.DNIA == str(id))
+            .scalar())
+    # return str(cantidad)
+    if cantidad:
+        return str(1)
+    cantidad = FichaInstructor.select().where(FichaInstructor.DNI == id).count()
+    if cantidad:
+        return str(2)
+    cantidad = Admin.select().where(Admin.NOM == id).count()
+    if cantidad:
+        return str(3)
+    
+    return str(0)
+@app.route('/u/datos/<id>')
+@app.route('/a/<id>')
+def UsuarioAprendiz(id):
+    try:
+        datos = FichaAprendiz.get(FichaAprendiz.DNIA == id)
+        aprendiz_data = {
+            "TIPO": 1,
+            "FICHA": datos.FICHA,
+            "DNI": datos.DNIA,
+            "NOMBRE": datos.NOMBREAP,
+            "ESTADOAP": datos.ESTADOAP,
+            "EMAIL": datos.EMAIL,
+            "TITULACION": datos.TITULACION
+        }
+        session['datos'] = aprendiz_data
+        return session['datos']
+    except FichaAprendiz.DoesNotExist:
+        return jsonify({"Error": f"Usuario {id} no encontrado"}), 401
+    except Exception as e:
+        # Puedes loguear `str(e)` aquí si deseas
+        return jsonify({"Error": "Error interno del servidor"}), 500
+    
+@app.route('/i/<id>', methods=['GET'])
+def UsuarioInstructor(id):
+    try:
+        datos=FichaInstructor.get(FichaInstructor.DNI==id)
+        return jsonify({"TIPO":2,"FICHA":datos.FICHA,"DNI":datos.DNI,"NOMBRE":datos.NOMINST,"EMAIL":datos.EMAIL})
+    except Exception as e:
+        print(e)
+        return jsonify({"Error":f"Usuario {id} no encontrado "})
+@app.route('/yyyy/<tipo>/<usuario>/<clave>', methods=['GET'])
+def ValidaClave(tipo, usuario, clave):
+    if tipo == "1":
+        cantidad = FichaAprendiz.select().where(
+            (FichaAprendiz.PWDAP == clave) & (FichaAprendiz.DNIA == usuario)
+        ).count()
+        if cantidad:
+            return "1"
+
+    elif tipo == "2":
+        cantidad = FichaInstructor.select().where(
+            (FichaInstructor.PWD == clave) & (FichaInstructor.DNI == usuario)
+        ).count()
+        if cantidad:
+            return "1"
+
+    elif tipo == "3":
+        cantidad = Admin.select().where(
+            (Admin.CLA == clave) & (Admin.NOM == usuario)
+        ).count()
+        if cantidad:
+            return "1"
+
+    return "0"
+
+
+@app.route('/u/<id>/<pwd>', methods=['GET'])  # Entrega Datos del Usuario
+def AllUsuario(id,pwd):
+    tipo = TipoUsuario(id)
+    # return tipo
+    # return tipo
+    if tipo == "1":
+        datos = UsuarioAprendiz(id)
+        entra= ValidaClave("1",id,pwd)
+        return entra
+    elif tipo == "2":    
+        datos = UsuarioInstructor(id)    
+        entra= ValidaClave("2",id,pwd)
+        return entra
+        return entra
+    elif tipo== "3":        
+        entra= ValidaClave(3,id,pwd)
+        return entra
+    else:
+        return jsonify({"Error": f"Usuario {id} no es un aprendiz autorizado"}), 403
+
+@app.route('/a/1/<id>', methods=['GET']) # Entrega ficha del aprendiz
+def FichaAprendiz1(id):
+    Aux=FichaAprendiz.get(FichaAprendiz.DNIA==id)
+    return str(Aux.FICHA)
+    
+@app.route('/a/2/<id>', methods=['GET']) # Entrega el DNI del aprendiz
+def DNIAprendiz(id):
+    Aux=FichaAprendiz.get(FichaAprendiz.DNIA==id)
+    return Aux.DNIA
+
+@app.route('/a/3/<id>', methods=['GET']) # Entrega el estado del aprendiz
+def EstaAprendiz(id):
+    Aux=FichaAprendiz.get(FichaAprendiz.DNIA==id)
+    return str(Aux.ESTADOAP)
+
+@app.route('/a/4/<id>', methods=['GET']) # Entrega el estado del aprendiz
+def NomAprendiz(id):
+    Aux=FichaAprendiz.get(FichaAprendiz.DNIA==id)
+    return Aux.NOMBREAP
+    
+@app.route('/u/2/<id>/<pwd>', methods=['GET']) # Valida clave de acceso a usuario
+def ValidaUsuario(id,pwd):
+    Tipo=TipoUsuario(id)
+    # return Tipo
+    # print("-->",Tipo)
+    if Tipo:
+        total = FichaAprendiz.select().where((FichaAprendiz.DNIA==id) and (FichaAprendiz.PWDAP==pwd)).count()
+        if total:
+            return "1"
+        else:
+            return "0"
+    if Tipo=="2":
+        total = FichaInstructor.select().where((FichaInstructor.DNI==id) and (FichaInstructor.PWD==pwd)).count()
+        if total:
+            return "1"
+        else:
+            return "0"
+    return jsonify({"ERROR":401})
+
+@app.route('/u/<id>', methods=['GET']) # Datos de usuario
+def DatosUsuario(id):
+    Tipo=TipoUsuario(id)
+    if Tipo=="1":
+        datos = FichaAprendiz.get(FichaAprendiz.DNIA==id)
+        return jsonify({"FICHA":datos.FICHA,"DNI":datos.DNIA,"NOM":datos.NOMBREAP,"EMAIL":datos.EMAIL,"ESTADO":datos.ESTADOAP,"TITULACION":datos.TITULACION,"TIPO":1})
+    if Tipo=="2":
+        sql=f"SELECT  * FROM FICHAINSTRUCTOR WHERE EMAIL='{id}'".format(id)
+        datos=ConsultarUno(DATABASE,sql)
+        datos = FichaInstructor.get(FichaInstructor.DNI==id)
+        return jsonify({"FICHA":datos.FICHA,"DNI":datos.DNI,"NOM":datos.NOMINST,"EMAIL":datos.EMAIL,"ESTADO":1, "TIPO":2})
+
+@app.route('/i/1/<id>', methods=['GET']) # Instructores por evaluar por el aprendiz (obsoleto)
+def InstructorUsuarioXEvaluar(id):
+    Ficha=FichaAprendiz1(id)
+    DNI=DNIAprendiz(id)
+    sql=f"SELECT * FROM FICHAINSTRUCTOR FI WHERE FI.FICHA={Ficha} AND FI.DNI NOT IN (SELECT idINSTRUCTOR FROM THEVAL WHERE IDFICHA={Ficha} AND idAPRENDIZ={DNI})".format(Ficha,DNI)
+    datos=Consultar(DATABASE,sql)
+    # return datos
+    subquery = TheVal.select(TheVal.idINSTRUCTOR).where(
+    (TheVal.idFICHA == Ficha) & (TheVal.idAPRENDIZ == DNI))
+    
+    
+    query = FichaInstructor.select().where(
+    (FichaInstructor.FICHA == Ficha) &
+    (FichaInstructor.DNI.not_in(subquery))
+    )
+    return str(query)
+
+@app.route('/p', methods=['GET']) # Instructores por evaluar por el aprendiz
+def Preguntas():
+    try:
+        datos = Pregunta.select().where(Pregunta.ESTADO==1)  # puedes agregar filtros si deseas
+
+        resultado = []
+        for fila in datos:
+            resultado.append({
+                "ID":fila.id,
+                "DESCRIPCION": fila.DESCRIPCION,
+                "VALORES": fila.VALORES
+            })
+
+        return jsonify(resultado)
+    except Exception as e:
+        return jsonify({"error": str(e)}), 400
+
+@app.route('/i/2a/<ficha>', methods=['GET']) # Instructores por evaluar por el aprendiz (obsoleto)
+def InstructoresXFicha(ficha):
+    sql=f"SELECT * FROM FICHAINSTRUCTOR WHERE FICHA={ficha}".format(ficha)
+    datos=Consultar(DATABASE,sql)
+    return datos
+import sqlite3
+
+@app.route('/act', methods=['POST','GET'])  # Instructores por evaluar por el aprendiz (obsoleto)
+def inserta():
+    datos = request.get_json()
+    a = datos['ACTIVIDAD']
+    b = datos['DNIA']
+    c = datos['DNII']
+    D = datos['FICHA']
+
+    print(a)
+    sql = "INSERT INTO ASISTENCIA(ACTIVIDAD, DNIA, DNII,FICHA) VALUES (?, ?, ?,?)"
+    print(DATABASE)
+    conn = sqlite3.connect(DATABASE)
+    cursor = conn.cursor()
+    cursor.execute(sql, (a, b, c))
+    conn.commit()
+    conn.close()
+    
+    return "200"
+
+# app.py (continuación)
+# from modelos import Asistencia
+
+from flask import Flask, request, jsonify
+
+@app.route('/act1', methods=['POST'])
+def insertar_asistencia():
+    try:
+        data = request.get_json()
+
+        asistencia = Asistencia.create(
+            actividad=data.get('actividad', 'BASE DE DATOS'),
+            dnia=data.get('dnia', '1234'),
+            dnii=data.get('dnii', '5678'),
+            ficha=data.get('ficha', '90'),
+            falla=str(data.get('falla', '1'))
+        )
+        return jsonify({"status": "ok", "id": asistencia.id}), 200
+    except Exception as e:
+        print("[ERROR]:", e)
+        return jsonify({"status": "error", "message": str(e)}), 400
+
+@app.route('/i/2/<pficha>/<paprendiz>', methods=['GET'])
+def noEvaluados(pficha, paprendiz):
+    datos = VInstructorEsp.select().where((VInstructorEsp.ficha==pficha) & (VInstructorEsp.dniap==paprendiz))
+    
+    resultado = [{
+        'titulacion': d.titulacion,
+        'ficha': d.ficha,
+        'dninst': d.dninst,
+        'emailinst': d.emailinst,
+        'nominst': d.nominst,
+        'dniap': d.dniap,
+        'nombreap': d.nombreap,
+        'emailap': d.emailap
+    } for d in datos]
+    return jsonify(resultado)
+
+
+
+
+
+# or, without the decorator
+
+
+@app.route('/i/e/<id>', methods=['GET'])
+def obtener_instructor_por_email(id):
+    # Consulta todos los instructores con el DNI
+    datos = FichaInstructor.select().where(FichaInstructor.DNI == id)
+    
+    if datos:
+        # Convertir los resultados en una lista de diccionarios
+        instructores = [model_to_dict(instructor) for instructor in datos]
+        return jsonify(instructores), 200
+    else:
+        return jsonify({'error': 'Instructor no encontrado'}), 404
+    
+def pagina_no_encontrada(error):
+    return "<h1>RUTA NO ENCONTRADA</h1>", 404
+def metodo_no_aceptado(error):
+    return "<h1>Este metodo no esta permitido para esta ruta</h1>", 423
+def servicio_no_dispoible(error):
+    return "<h1>Este metodo no esta permitido para esta ruta</h1>", 423
+
+if __name__ == '__main__':
+    app.register_error_handler(404, pagina_no_encontrada)
+    app.register_error_handler(405, metodo_no_aceptado)
+    app.register_error_handler(503, servicio_no_dispoible)
+    app.run(debug=True,port=5556)
+    

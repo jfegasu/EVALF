@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+{% block content %}
+<div id="contenido" class="sena d-flex  mx-auto" style="padding-left: 10px; cursor:default; width:380px;position: absolute;top: 5px;left: 10px;height: auto;"></div>
+<div id="contenido1" class=" d-flex  mx-auto" style="cursor:default; width:860px;position: absolute;top: 5px;left: 350px;height: auto;"></div>
+<script>
+    CargaHtml('contenido','/admin/menu1');
+  CargaHtml('contenido1','/centro');
+  CargaHtml('contenido2','/footer');
+</script>
+
+{% endblock content %}

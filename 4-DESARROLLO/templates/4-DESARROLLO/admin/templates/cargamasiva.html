@@ -1,0 +1,75 @@
+{% extends "base.html" %}
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+	<title>Cargas Masivas</title>
+	<link rel="stylesheet" href="font-awesome.css">
+	<link rel="stylesheet" href="{{url_for('admin.static',filename='css/estilos.css')}}">
+	
+	<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+	<script src="{{url_for('admin.static',filename='js/main.js')}}"></script>
+</head>
+<body>
+	<div id="contenidox" class="sena d-flex  mx-auto" style="padding-left: 5px; cursor:default; width:380px;position: absolute;top: 15px;left: 10px;height: auto;">
+	</div>	
+	<script>
+		// CargaHtml('tab1','/construir');
+		CargaHtml('contenido','/carga');
+
+	</script>
+
+
+	<div class="cpsi table" style="border:1px;text-align: center;">
+		<div class="div1 mx-auto">
+			<h3 class="sena-sombra">CENTRAL DE CARGA DE DATOS MASIVOS</h3>
+	<div class="wrap">
+		<ul class="tabs">
+			<li><a href="/login"><span class="fa fa-reply"></span><span class="tab-text"></span></a></li>
+			<li><a href="#tab1"><span class="fa fa-person"></span><span class="tab-text">Aprendices</span></a></li>
+			<li><a href="#tab2"><span class="fa fa-group"></span><span class="tab-text">Instructores</span></a></li>
+			<li><a href="#tab3"><span class="fa fa-question-circle"></span><span class="tab-text">Preguntas</span></a></li>
+		</ul>
+
+		<div class="secciones cpsi">
+			<article id="tab1">
+				<h1>Aprendices</h1>
+<div class="w3-container w3-center">
+         <form action = "/foto/success" method = "post" enctype="multipart/form-data"> 
+             
+          <hr>
+        <input  type="file" name="file" />   
+        <input class="btn btn-primary ovalobtn btn-success" type = "submit" value="Cargar archivo">  
+        <button type="button" class="btn btn-warning ovalobtn"  onclick="window.open('/login','centro')">cancelar</button>
+    </form>
+     <hr>
+    </div>				</article>
+			<article id="tab2">
+				<h1>Instructores</h1>
+<div class="w3-container w3-center">
+         <form action = "/foto/success" method = "post" enctype="multipart/form-data"> 
+             
+          <hr>
+        <input  type="file" name="file" />   
+        <input class="btn btn-primary ovalobtn btn-success" type = "submit" value="Cargar archivo">  
+        <button type="button" class="btn btn-warning ovalobtn"  onclick="window.open('/login','centro')">cancelar</button>
+    </form>
+				
+			</article>
+			<article id="tab3">
+				<h1>Preguntas</h1>
+<div class="w3-container w3-center">
+         <form action = "/foto/success" method = "post" enctype="multipart/form-data"> 
+             
+          <hr>
+        <input  type="file" name="file" />   
+        <input class="btn btn-primary ovalobtn btn-success" type = "submit" value="Cargar archivo">  
+        <button type="button" class="btn btn-warning ovalobtn"  onclick="window.open('/login','centro')">cancelar</button>
+    </form>
+			</article>
+		</div>
+	</div>
+</div>
+{% endblock content %}

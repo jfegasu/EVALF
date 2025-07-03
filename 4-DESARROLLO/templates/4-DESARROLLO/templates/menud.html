@@ -1,14 +1,13 @@
 
 
 <div  id="miDivd">
-  <a title="Doble click para ocultar el menu" onclick="achicame('contem','muno')"  ondblclick="achicams('contem','muno')" class="mano"><i id="muno" class="	fas fa-align-justify" style=" font-size:28px;color:black"></i></a>
+  <a title="Doble click para ocultar el menu" onclick="achicame('contem','muno')"  ondblclick="achicams('contem','muno')" class="mano"><i id="muno" class="fas fa-chevron-circle-left" style=" font-size:28px;color:rgba(0, 255, 0, 0.905)"></i></a>
 </div>
 <div id="contem" style="display:none;" class="sena d-flex  mx-auto menud "  >
 
 </div>
 <script>
    CargaHtml('contem','/menu1');
-   achicame('contem','muno');
 </script>
 <script>
 let recortadom = false;
@@ -28,7 +27,6 @@ function achicame(divId,iconoId) {
 
     icono.classList.remove('fa-chevron-circle-right');
     icono.classList.add('fa-chevron-circle-left');
-    div.style.color='black'
   } 
 
 
@@ -42,9 +40,8 @@ function achicams(divId,iconoId) {
     div.style.display = 'none';
     icono.title='click para ver menú'
     
-    icono.classList.remove('fa-chevron-circle-left');
+        icono.classList.remove('fa-chevron-circle-left');
     icono.classList.add('fa-chevron-circle-right');
-    div.style.color='white'
   }
 
 

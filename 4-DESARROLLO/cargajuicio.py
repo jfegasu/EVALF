@@ -144,7 +144,7 @@ Variables={
     "CENTRO":rutinas.Datos['Centro'],
 }
 data1=rutinas.workbook.drop(range(0,12),axis=0)
-data1.rename(columns={'Reporte de Juicios de Evaluación':'TDOC','Unnamed: 1':'DNI','Unnamed: 2':'NOMBRE','Unnamed: 3':'APELLIDOS','Unnamed: 4':'ESTADO','Unnamed: 5':'COMPETENCIA','Unnamed: 6':'RAP','Unnamed: 9':'JUICIO','Unnamed: 10':'INSTRUCTOR'},inplace=True)
+data1.rename(columns={'Reporte de Juicios de Evaluación':'TDOC','Unnamed: 1':'DNI','Unnamed: 2':'NOMBRE','Unnamed: 3':'APELLIDOS','Unnamed: 4':'ESTADO','Unnamed: 5':'COMPETENCIA','Unnamed: 6':'RAP','Unnamed: 7':'EVALUADO','Unnamed: 9':'JUICIO','Unnamed: 10':'INSTRUCTOR'},inplace=True)
 #data1.rename(columns={'Unnamed: 9':'FJUICIO','Unnamed: 10':'INSTRUCTOR'},inplace=True)
 cmalo=[':','\t','\n','\r','%','#']    
 rutinas.Cambiar(data1,'RAP',cmalo)
@@ -156,23 +156,39 @@ DM_COMPETENCIA['IDCOMPETENCIA']=range(1,len(DM_COMPETENCIA)+1)
 DM_RAP=pd.DataFrame(DM_COMPETENCIA,columns=['COMPETENCIA','RAP'])
 DM_RAP.drop_duplicates(inplace=True)
 
+
 DM_RAP=pd.merge(DM_COMPETENCIA, DM_RAP,left_on='COMPETENCIA',right_on='COMPETENCIA',how='right')
-del DM_COMPETENCIA['RAP']
+DM_COMPETENCIA= DM_COMPETENCIA[['IDCOMPETENCIA','COMPETENCIA']]
+
 del DM_RAP['COMPETENCIA']
 del DM_RAP['RAP_y']
 DM_RAP.rename(columns={'RAP_x': 'RAP'}, inplace=True)
+DM_RAP['IDRAP']=range(1,len(DM_RAP)+1)
+DM_RAP=DM_RAP[['IDRAP','IDCOMPETENCIA','RAP']]
 
 DM_APRENDIZ=pd.DataFrame(data1,columns=['DNI','NOMBRE','APELLIDOS','ESTADO'])
 DM_APRENDIZ.drop_duplicates(inplace=True)
 
-def obtener_trimestreT(fecha):
-    if isinstance(fecha, str):
-        fecha = datetime.strptime(fecha, '%Y-%m-%d')
+from datetime import datetime
+
+def obtener_trimestreT(fecha: str):
+    if fecha is None or fecha == '':
+        return '0'
     
-    mes = fecha.month
-    anual=fecha.year
-    trimestre = (mes - 1) // 3 + 1
-    return str(anual)+"-"+str(trimestre)
+    try:
+        if isinstance(fecha, str):
+            fecha = datetime.strptime(fecha, '%Y-%m-%d')
+        elif not isinstance(fecha, datetime):
+            return '0'  # Si no es str ni datetime, lo ignoramos
+
+        mes = fecha.month
+        anual = fecha.year
+        trimestre = (mes - 1) // 3 + 1
+        return f"{anual}-{trimestre}"
+    
+    except Exception:
+        return '0'  # Devuelve '0' si hay error al convertir la fecha
+
 
 
 DM_INSTRUCTOR=pd.DataFrame(data1,columns=['JUICIO','INSTRUCTOR'])
@@ -182,7 +198,13 @@ DM_INSTRUCTOR['TRIMESTRE']=DM_INSTRUCTOR['JUICIO'].apply(obtener_trimestreT)
 del DM_INSTRUCTOR['JUICIO']
 DM_INSTRUCTOR.drop_duplicates(inplace=True)
 
+DM_JUICIO=pd.DataFrame(data1,columns=['DNI','ESTADO','EVALUADO','COMPETENCIA', 'RAP', 'JUICIO','INSTRUCTOR'])
+DM_JUICIO['FICHA']=Variables['FICHA']
+DM_JUICIO.drop_duplicates(inplace=True)
+DM_JUICIO['TRIMESTRE']=DM_JUICIO['JUICIO'].apply(obtener_trimestreT)
+del DM_JUICIO['JUICIO']
 
+DM_JUICIO['INSTRUCTOR']=DM_JUICIO['INSTRUCTOR'].replace('  -   ','SIN EVALUAR')
 
 
     

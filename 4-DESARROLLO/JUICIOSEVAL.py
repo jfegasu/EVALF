@@ -4,7 +4,7 @@ import pandas as pd
 from pandasql import sqldf
 from tkinter import *
 from shutil import rmtree
-
+import glob
 import os
 os.system ("cls")
 
@@ -115,6 +115,8 @@ root.resizable(0,0)
 
 archi=""
 rutinas=rutinas()  
+def inicia():
+    pass
 
 def open_file_dialog():
     while len(rutinas.getArchivo())==0:

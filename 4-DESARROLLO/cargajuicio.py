@@ -7,6 +7,9 @@ Created on Thu Jul  3 18:58:21 2025
 
 import pandas as pd
 from funciones import *
+import hashlib
+from datetime import date
+import re
 class rutinas:
     __archi  =""  
     workbook=""
@@ -169,7 +172,13 @@ DM_RAP=DM_RAP[['IDRAP','IDCOMPETENCIA','FICHA', 'RAP']]
 
 DM_APRENDIZ=pd.DataFrame(data1,columns=['DNI','NOMBRE','APELLIDOS','ESTADO'])
 DM_APRENDIZ.drop_duplicates(inplace=True)
-
+DM_APRENDIZ['EMAIL']=None
+DM_APRENDIZ['FICHA']=Variables['FICHA']
+x=DM_APRENDIZ['DNI']
+x=str(x)[-4:]
+xx = hashlib.md5(x.encode()).hexdigest()
+DM_APRENDIZ['PWD']=xx
+DM_APRENDIZ['FECHA']=date.today()
 from datetime import datetime
 
 def obtener_trimestreT(fecha: str):
@@ -198,7 +207,18 @@ DM_INSTRUCTOR=DM_INSTRUCTOR.dropna()
 DM_INSTRUCTOR['TRIMESTRE']=DM_INSTRUCTOR['JUICIO'].apply(obtener_trimestreT)
 del DM_INSTRUCTOR['JUICIO']
 DM_INSTRUCTOR.drop_duplicates(inplace=True)
+DM_INSTRUCTOR['EMAIL']=None
 DM_INSTRUCTOR['FICHA']=Variables['FICHA']
+for a in DM_INSTRUCTOR['INSTRUCTOR']:
+    x=str(DM_INSTRUCTOR['INSTRUCTOR']).lstrip()
+    inicio=x.find('CC ')
+    fin=x.find("-")
+    inicio=4
+    # DM_INSTRUCTOR['ULTIMOS_4'] = DM_INSTRUCTOR['INSTRUCTOR'].apply(ultimos_4_digitos)
+    resultado = x[17:fin-1]
+    print(resultado)
+    DM_INSTRUCTOR['ULTIMOS_4'] = resultado
+DM_INSTRUCTOR['FECHA']=date.today()
 DM_JUICIO=pd.DataFrame(data1,columns=['DNI','ESTADO','EVALUADO','COMPETENCIA', 'RAP', 'JUICIO','INSTRUCTOR'])
 DM_JUICIO['FICHA']=Variables['FICHA']
 DM_JUICIO.drop_duplicates(inplace=True)

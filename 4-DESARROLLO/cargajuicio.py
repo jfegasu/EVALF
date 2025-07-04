@@ -152,19 +152,20 @@ rutinas.Cambiar(data1,'RAP',cmalo)
 DM_COMPETENCIA=pd.DataFrame(data1,columns=['COMPETENCIA','RAP'])
 DM_COMPETENCIA.drop_duplicates(inplace=True)
 DM_COMPETENCIA['IDCOMPETENCIA']=range(1,len(DM_COMPETENCIA)+1)
-
+DM_COMPETENCIA['FICHA']=Variables['FICHA']
 DM_RAP=pd.DataFrame(DM_COMPETENCIA,columns=['COMPETENCIA','RAP'])
 DM_RAP.drop_duplicates(inplace=True)
 
 
 DM_RAP=pd.merge(DM_COMPETENCIA, DM_RAP,left_on='COMPETENCIA',right_on='COMPETENCIA',how='right')
-DM_COMPETENCIA= DM_COMPETENCIA[['IDCOMPETENCIA','COMPETENCIA']]
+DM_COMPETENCIA= DM_COMPETENCIA[['IDCOMPETENCIA','FICHA', 'COMPETENCIA']]
 
 del DM_RAP['COMPETENCIA']
 del DM_RAP['RAP_y']
 DM_RAP.rename(columns={'RAP_x': 'RAP'}, inplace=True)
 DM_RAP['IDRAP']=range(1,len(DM_RAP)+1)
-DM_RAP=DM_RAP[['IDRAP','IDCOMPETENCIA','RAP']]
+DM_RAP['FICHA']=Variables['FICHA']
+DM_RAP=DM_RAP[['IDRAP','IDCOMPETENCIA','FICHA', 'RAP']]
 
 DM_APRENDIZ=pd.DataFrame(data1,columns=['DNI','NOMBRE','APELLIDOS','ESTADO'])
 DM_APRENDIZ.drop_duplicates(inplace=True)
@@ -197,7 +198,7 @@ DM_INSTRUCTOR=DM_INSTRUCTOR.dropna()
 DM_INSTRUCTOR['TRIMESTRE']=DM_INSTRUCTOR['JUICIO'].apply(obtener_trimestreT)
 del DM_INSTRUCTOR['JUICIO']
 DM_INSTRUCTOR.drop_duplicates(inplace=True)
-
+DM_INSTRUCTOR['FICHA']=Variables['FICHA']
 DM_JUICIO=pd.DataFrame(data1,columns=['DNI','ESTADO','EVALUADO','COMPETENCIA', 'RAP', 'JUICIO','INSTRUCTOR'])
 DM_JUICIO['FICHA']=Variables['FICHA']
 DM_JUICIO.drop_duplicates(inplace=True)

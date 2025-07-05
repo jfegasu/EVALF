@@ -175,9 +175,16 @@ DM_APRENDIZ.drop_duplicates(inplace=True)
 DM_APRENDIZ['EMAIL']=None
 DM_APRENDIZ['FICHA']=Variables['FICHA']
 x=DM_APRENDIZ['DNI']
-x=str(x)[-4:]
-xx = hashlib.md5(x.encode()).hexdigest()
-DM_APRENDIZ['PWD']=xx
+def SacaPWDA(valor):
+    x=valor[-4:]
+    xx = hashlib.md5(x.encode()).hexdigest()
+    return xx
+
+DM_APRENDIZ['PWD']=DM_APRENDIZ['DNI'].apply(SacaPWDA)
+
+# x=str(x)[-4:]
+# xx = hashlib.md5(x.encode()).hexdigest()
+# DM_APRENDIZ['PWD']=xx
 DM_APRENDIZ['FECHA']=date.today()
 from datetime import datetime
 
@@ -209,16 +216,32 @@ del DM_INSTRUCTOR['JUICIO']
 DM_INSTRUCTOR.drop_duplicates(inplace=True)
 DM_INSTRUCTOR['EMAIL']=None
 DM_INSTRUCTOR['FICHA']=Variables['FICHA']
-for a in DM_INSTRUCTOR['INSTRUCTOR']:
-    x=str(DM_INSTRUCTOR['INSTRUCTOR']).lstrip()
-    inicio=x.find('CC ')
-    fin=x.find("-")
-    inicio=4
-    # DM_INSTRUCTOR['ULTIMOS_4'] = DM_INSTRUCTOR['INSTRUCTOR'].apply(ultimos_4_digitos)
-    resultado = x[17:fin-1]
-    print(resultado)
-    DM_INSTRUCTOR['ULTIMOS_4'] = resultado
+def SacaDNI(valor):
+    x=valor.lstrip()
+    inicio = re.search(r'\d', valor).start()
+    fin=re.search(r'-', valor).start()
+    resultado = x[inicio:fin]
+    return resultado
+def SacaNOMI(valor):
+    x=valor.lstrip()
+    inicio = re.search(r'\d', valor).start()
+    inicio=re.search(r'-', valor).start()
+    resultado = x[inicio+2:]
+    return resultado
+
+DM_INSTRUCTOR['DNI']=DM_INSTRUCTOR['INSTRUCTOR'].apply(SacaDNI)
+DM_INSTRUCTOR['NOM']=DM_INSTRUCTOR['INSTRUCTOR'].apply(SacaNOMI)
+def SacaPWDI(valor):
+    x=valor[-5:]
+    xx = hashlib.md5(x.encode()).hexdigest()
+    return xx
+
+DM_INSTRUCTOR['PWD']=DM_INSTRUCTOR['DNI'].apply(SacaPWDI)
+
+del DM_INSTRUCTOR['INSTRUCTOR']
 DM_INSTRUCTOR['FECHA']=date.today()
+
+
 DM_JUICIO=pd.DataFrame(data1,columns=['DNI','ESTADO','EVALUADO','COMPETENCIA', 'RAP', 'JUICIO','INSTRUCTOR'])
 DM_JUICIO['FICHA']=Variables['FICHA']
 DM_JUICIO.drop_duplicates(inplace=True)

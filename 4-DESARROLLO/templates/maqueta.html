@@ -5,6 +5,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
 </head>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    function CargaHtml(contenido,clave){
+    $('#'+contenido).load(clave);
+
+}
+</script>
 <style>
 @import "https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700;800;900&display=swap";
 
@@ -12,6 +19,7 @@
     box-sizing: border-box;
     margin: 0;
     padding: 0;
+    background-color: antiquewhite;
 }
 
 body {
@@ -19,61 +27,92 @@ body {
     font-size: 1.2rem;
     min-height: 100vh;
     padding: 20px;
+    
 }
 
 .grid-container>* {
-    box-shadow: 10px 6px 37px -13px rgba(51, 51, 51, 0.74);
+    box-shadow: 10px 6px 37px -13px rgba(40, 40, 40, 0.74);
     border-radius: 10px;
     padding: 10px;
     text-align: center;
     font-weight: 500;
+    /* background-color: antiquewhite; */
+    border-color: black;
 }
 
 .grid-container {
+    background-color: antiquewhite;
     display: grid;
     gap: 20px;
     grid-template:
         "header" 200px
-        "navbar" 50px
+        "navbar"
         "main" 100px
         "sidebar"
-        "footer";
+        "footer" 100%;
 
     .header {
         grid-area: header;
-        background-color: rgba(103, 93, 241, 0.74);
+        /* background-color: whitesmoke; */
+        margin: 10px 15px 10px 10px;
+
     }
 
     .navbar {
         grid-area: navbar;
-        background-color: rgba(179, 46, 241, 0.74);
+        display: flex;
+        background-color: #f5f5f5;
+        margin-left: 10px;
+        text-align: left;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start; 
+  
+
+
     }
 
     .sidebar {
         grid-area: sidebar;
-        background-color: rgba(77, 237, 106, 0.74);
+        /* background-color: rgba(77, 237, 106, 0.74); */
+        background-color: #f5f5f5;
+        
+        margin-right: 15px;
     }
 
     .main {
         grid-area: main;
         background-color: #f5f5f5;
+        /* overflow: auto; */
     }
 
     .footer {
         grid-area: footer;
-        background-color: rgba(237, 123, 67, 0.74);
+        margin:auto;
+        padding: 10px;
+        width:100%;
+        background-color: #f5f5f5;
+        /* background-color: rgba(237, 123, 67, 0.74); */
     }
+    
 
     @media (min-width:768px) {
         grid-template:
             "header navbar" 50px
-            "header navbar" 50px
+            "navbar navbar" 50px
             "sidebar main" auto
             "footer footer" 100px/
-            200px auto;
-            
+            200px auto;   
+        
     }
     @media (min-width:992px) {
+        grid-template:
+            "header header header" 100px
+            "navbar main sidebar" auto
+            "footer footer footer" 100px/
+            200px auto 200px;
+    }
+    @media (min-width:1200px) {
         grid-template:
             "header header header" 100px
             "navbar main sidebar" auto
@@ -83,12 +122,33 @@ body {
     }
 }
 </style>
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Proyecto 01</title>
+</head>
 <body class="grid-container">
-    <header class="header"></header>
-    <nav class="navbar"></nav>
-    <aside class="sidebar"></aside>
-    <article class="main"></article>
-    <footer class="footer"></footer>
-    
+    <header class="header" id="marco1">HEADER</header>
+    <nav class="navbar"  id="marco2">NAVBAR*</nav>
+    <aside class="sidebar">SIDEBAR</aside>
+    <article class="main" id="marco3">MAIN</article>
+    <footer class="footer" id="marco4">FOOTER</footer>
+
+<script>
+    function CargaHtml(contenido,clave){
+    $('#'+contenido).load(clave);
+
+}
+</script>
+        <script>
+        CargaHtml("marco1","/banner")
+        CargaHtml("marco2","/menu")
+        CargaHtml("marco3","/centro")
+        CargaHtml("marco4","/footer")
+    </script>
 </body>
 </html>

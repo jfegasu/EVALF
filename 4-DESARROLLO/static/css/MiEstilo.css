@@ -12,6 +12,22 @@
 .danger {background-image: linear-gradient(to right, #dc3545, #e0666e);} 
 .danger:hover {background-image: linear-gradient(to right, #d32838, #e0666e);}
 
+@import "https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700;800;900&display=swap";
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: "Poppins", sans-serif;
+    font-size: 1.2rem;
+    min-height: 100vh;
+    padding: 20px;
+}
+
+
 .mano{
   cursor: pointer;
   text-decoration: none;
@@ -298,12 +314,7 @@ width: 40px;       /* asegúrate de que width = height */
 .icono1{
   content: '\1f1f1f';
 }
-.header {
-  position: relative;
-  width: 100%;
-  top: 0;
-  background: #015dca;
-}
+
 
 .sena-circulo{
   width: 10px;

@@ -253,6 +253,10 @@ def servicio_no_dispoible(error):
 def servicio_errado(error):
     msgito="500 ALGO SALIO MAL"
     return render_template("alertas.html",msgito=msgito,regreso='#')
+@app.route('/maqueta')
+def maqueta():
+    # au.registra(30,'ingresa menuadmin',session['usua'])
+    return render_template('maqueta.html')
 
 
 if __name__=='__main__':

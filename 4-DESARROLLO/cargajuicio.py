@@ -136,7 +136,7 @@ class rutinas:
 
 
 rutinas=rutinas() 
-rutinas.LeaArchivo('3147247Reporte de Juicios Evaluativos.xls')
+rutinas.LeaArchivo('2826505Reporte de Juicios Evaluativos.xls')
 rutinas.Encabezado()
 Variables={
     "TITULACION":rutinas.Datos['Programa'],
@@ -148,9 +148,11 @@ Variables={
 }
 data1=rutinas.workbook.drop(range(0,12),axis=0)
 data1.rename(columns={'Reporte de Juicios de Evaluación':'TDOC','Unnamed: 1':'DNI','Unnamed: 2':'NOMBRE','Unnamed: 3':'APELLIDOS','Unnamed: 4':'ESTADO','Unnamed: 5':'COMPETENCIA','Unnamed: 6':'RAP','Unnamed: 7':'EVALUADO','Unnamed: 9':'JUICIO','Unnamed: 10':'INSTRUCTOR'},inplace=True)
+del data1['Unnamed: 8']
 #data1.rename(columns={'Unnamed: 9':'FJUICIO','Unnamed: 10':'INSTRUCTOR'},inplace=True)
 cmalo=[':','\t','\n','\r','%','#']    
 rutinas.Cambiar(data1,'RAP',cmalo)
+
 
 DM_COMPETENCIA=pd.DataFrame(data1,columns=['COMPETENCIA','RAP'])
 DM_COMPETENCIA.drop_duplicates(inplace=True)
@@ -249,6 +251,104 @@ DM_JUICIO['TRIMESTRE']=DM_JUICIO['JUICIO'].apply(obtener_trimestreT)
 del DM_JUICIO['JUICIO']
 
 DM_JUICIO['INSTRUCTOR']=DM_JUICIO['INSTRUCTOR'].replace('  -   ','SIN EVALUAR')
+
+DM_APRENDIZ['ESTADO'] = DM_APRENDIZ['ESTADO'].astype(str).str.strip().str.upper()
+DM_FORMACION=sqldf("SELECT * FROM data1 where ESTADO='EN FORMACION' AND NOT ESTADO='RETIRO VOLUNTARIO'")
+
+# DM_RETIRO = data1[data1['ESTADO'].isin(['RETIRO VOLUNTARIO'])]
+
+DM_CANCELADO=data1[data1['ESTADO'] == 'CANCELADO']
+del DM_CANCELADO['JUICIO']
+del DM_CANCELADO['RAP']
+del DM_CANCELADO['INSTRUCTOR']
+del DM_CANCELADO['COMPETENCIA']
+del DM_CANCELADO['EVALUADO']
+
+DM_RETIROV=data1[data1['ESTADO'] == 'RETIRO VOLUNTARIO']
+del DM_RETIROV['JUICIO']
+del DM_RETIROV['RAP']
+del DM_RETIROV['INSTRUCTOR']
+del DM_RETIROV['COMPETENCIA']
+del DM_RETIROV['EVALUADO']
+
+
+DM_RETIROV.drop_duplicates(inplace=True)
+DM_CANCELADO.drop_duplicates(inplace=True)
+
+
+print(DM_APRENDIZ['ESTADO'].unique())
+print(len(DM_APRENDIZ['ESTADO']== 'CANCELADO'))
+# DM_CANCELADON=DM_JUICIO[['DNI']]
+# DM_CANCELADON=pd.merge(DM_APRENDIZ,DM_CANCELADO,left_on='DNI',right_on='DNI',how="left")
+# DM_CANCELADON.drop_duplicates(inplace=True)
+# del DM_CANCELADON['PWD']
+# del DM_CANCELADON['EMAIL']
+# del DM_CANCELADON['ESTADO_y']
+
+DM_XEVALUARXRAPXAPRENDIZ=data1[(data1['EVALUADO'] == 'POR EVALUAR')  & (data1['ESTADO'] == 'EN FORMACION') ]
+del DM_XEVALUARXRAPXAPRENDIZ['JUICIO']
+del DM_XEVALUARXRAPXAPRENDIZ['COMPETENCIA']
+del DM_XEVALUARXRAPXAPRENDIZ['INSTRUCTOR']
+del DM_XEVALUARXRAPXAPRENDIZ['EVALUADO']
+
+def ContarXEvaluar(que):
+    Hay = DM_JUICIO[(DM_JUICIO['DNI'] == que) & (DM_JUICIO['ESTADO'] == 'EN FORMACION') & (DM_JUICIO['INSTRUCTOR'] == 'SIN EVALUAR') ].shape[0]
+    return Hay
+def ContarAprobados(que):
+    Hay = DM_JUICIO[(DM_JUICIO['DNI'] == que) & (DM_JUICIO['ESTADO'] == 'EN FORMACION') & (DM_JUICIO['INSTRUCTOR'] != 'SIN EVALUAR') ].shape[0]
+    return Hay
+
+DM_XEVALUARXRAP=data1[(data1['EVALUADO'] == 'POR EVALUAR')  & (data1['ESTADO'] == 'EN FORMACION') ]
+del DM_XEVALUARXRAP['JUICIO']
+del DM_XEVALUARXRAP['COMPETENCIA']
+del DM_XEVALUARXRAP['INSTRUCTOR']
+del DM_XEVALUARXRAP['EVALUADO']
+del DM_XEVALUARXRAP['DNI']
+del DM_XEVALUARXRAP['NOMBRE']
+del DM_XEVALUARXRAP['APELLIDOS']
+del DM_XEVALUARXRAP['TDOC']
+
+
+DM_XEVALUARXCOMPETENCIA=data1[(data1['EVALUADO'] == 'POR EVALUAR')  & (data1['ESTADO'] == 'EN FORMACION') ]
+del DM_XEVALUARXCOMPETENCIA['JUICIO']
+del DM_XEVALUARXCOMPETENCIA['RAP']
+del DM_XEVALUARXCOMPETENCIA['INSTRUCTOR']
+del DM_XEVALUARXCOMPETENCIA['EVALUADO']
+DM_XEVALUARXCOMPETENCIA.drop_duplicates(inplace=True)
+
+DM_XEVALUARXAPRENDIZ=data1[(data1['EVALUADO'] == 'POR EVALUAR')  & (data1['ESTADO'] == 'EN FORMACION') ]
+DM_XEVALUARXAPRENDIZ['APRENDIZ']=DM_XEVALUARXAPRENDIZ['APELLIDOS']+DM_XEVALUARXAPRENDIZ['NOMBRE']
+# DM_XEVALUARXAPRENDIZ['DNI']=DM_XEVALUARXAPRENDIZ['TDOC']+DM_XEVALUARXAPRENDIZ['DNI']
+
+del DM_XEVALUARXAPRENDIZ['JUICIO']
+del DM_XEVALUARXAPRENDIZ['RAP']
+del DM_XEVALUARXAPRENDIZ['INSTRUCTOR']
+del DM_XEVALUARXAPRENDIZ['EVALUADO']
+del DM_XEVALUARXAPRENDIZ['COMPETENCIA']
+del DM_XEVALUARXAPRENDIZ['NOMBRE']
+del DM_XEVALUARXAPRENDIZ['APELLIDOS']
+
+DM_XEVALUARXAPRENDIZ['RAPSINEVALUAR'] = data1['DNI'].apply(ContarXEvaluar)
+DM_XEVALUARXAPRENDIZ['RAPAPROBADOS'] = data1['DNI'].apply(ContarAprobados)
+
+DM_XEVALUARXAPRENDIZ.drop_duplicates(inplace=True)
+
+with pd.ExcelWriter("./"+str(rutinas.Datos['Ficha'])+".xlsx") as writer:
+    DM_APRENDIZ.to_excel(writer,sheet_name="APRENDICES", index=False)
+    DM_CANCELADO.to_excel(writer,sheet_name="CANCELADOS", index=False)
+    DM_FORMACION.to_excel(writer,sheet_name="EN_FORMACION", index=False)
+    DM_RETIROV.to_excel(writer,sheet_name="RETIRO VOLUNTARIO", index=False)
+    DM_XEVALUARXRAP.to_excel(writer,sheet_name="XEVALUARXRAP", index=False)
+    DM_XEVALUARXAPRENDIZ.to_excel(writer,sheet_name="XEVALUARXAPRENDIZ", index=False)
+    DM_XEVALUARXCOMPETENCIA.to_excel(writer,sheet_name="XEVALUARXCOMPETENCIA", index=False)
+    
+    DM_JUICIO.to_excel(writer,sheet_name="JUICIOS", index=False)
+    DM_COMPETENCIA.to_excel(writer,sheet_name="COMPETENCIAS", index=False)
+    DM_RAP.to_excel(writer,sheet_name="RAP", index=False)
+    DM_INSTRUCTOR.to_excel(writer,sheet_name="INSTRUCTOR", index=False)
+    
+        
+
 
 
     

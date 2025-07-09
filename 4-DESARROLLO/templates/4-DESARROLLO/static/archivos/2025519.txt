@@ -1,4 +1,0 @@
-2025-05-19 07:22:00,597 WARNING  * Debugger is active! 
-2025-05-19 07:22:00,631 WARNING 127.0.0.1 Inicia Aplicacion - 
-2025-05-19 07:24:55,410 WARNING  * Debugger is active! 
-2025-05-19 07:37:21,244 WARNING  * Debugger is active! 

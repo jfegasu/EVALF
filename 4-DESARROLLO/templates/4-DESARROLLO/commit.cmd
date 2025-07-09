@@ -1,1 +1,0 @@
-start https://www.conventionalcommits.org/es/v1.0.0-beta.2/

@@ -333,19 +333,19 @@ DM_XEVALUARXAPRENDIZ['RAPAPROBADOS'] = data1['DNI'].apply(ContarAprobados)
 
 DM_XEVALUARXAPRENDIZ.drop_duplicates(inplace=True)
 
-with pd.ExcelWriter("./"+str(rutinas.Datos['Ficha'])+".xlsx") as writer:
+with pd.ExcelWriter("./static/archivos/fichas/"+str(rutinas.Datos['Ficha'])+".xlsx") as writer:
     DM_APRENDIZ.to_excel(writer,sheet_name="APRENDICES", index=False)
     DM_CANCELADO.to_excel(writer,sheet_name="CANCELADOS", index=False)
     DM_FORMACION.to_excel(writer,sheet_name="EN_FORMACION", index=False)
     DM_RETIROV.to_excel(writer,sheet_name="RETIRO VOLUNTARIO", index=False)
+    DM_COMPETENCIA.to_excel(writer,sheet_name="COMPETENCIAS", index=False)
+    DM_RAP.to_excel(writer,sheet_name="RAP", index=False)
+    DM_INSTRUCTOR.to_excel(writer,sheet_name="INSTRUCTOR", index=False)
     DM_XEVALUARXRAP.to_excel(writer,sheet_name="XEVALUARXRAP", index=False)
     DM_XEVALUARXAPRENDIZ.to_excel(writer,sheet_name="XEVALUARXAPRENDIZ", index=False)
     DM_XEVALUARXCOMPETENCIA.to_excel(writer,sheet_name="XEVALUARXCOMPETENCIA", index=False)
     
     DM_JUICIO.to_excel(writer,sheet_name="JUICIOS", index=False)
-    DM_COMPETENCIA.to_excel(writer,sheet_name="COMPETENCIAS", index=False)
-    DM_RAP.to_excel(writer,sheet_name="RAP", index=False)
-    DM_INSTRUCTOR.to_excel(writer,sheet_name="INSTRUCTOR", index=False)
     
         
 

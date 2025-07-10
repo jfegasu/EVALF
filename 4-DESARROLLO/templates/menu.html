@@ -15,23 +15,24 @@
     </span><p style="text-align: right;">&nbsp;[{{session['server_ip']}}]</p>
   </form>
 </nav> -->
-<div style="padding: 10px;">
-  <table style="text-align: justify;">
+  <table class="form-inline d-flex" >
     <tr>
-      <td valign="top">
-        <p class="sena-sombra">MENU PRINCIPAL</p>
+      <td>
 <span   style="  font-weight: bold;font-size: 1rem; cursor: pointer;color:rgb(18, 18, 18);"
     onclick="window.open('/login','centro')">
     <i class="fa fa-home" style="padding-left: 30px;  font-size:2rem; border:none;" aria-hidden="true"></i>
-    &nbsp;<font color= gray ><b>INICIO</b></font></span><hr>
-    <span  style="display: flex; margin-left: auto; text-align: right; font-weight: bold;font-size: 1rem; cursor: pointer;color:rgb(202, 199, 199);"
+    &nbsp;<font color= gray ><b>INICIO</b></font></span>
+      </td>
+    </tr>
+    <tr>
+      <td>
+<span  style="display: flex; margin-left: auto; text-align: right; font-weight: bold;font-size: 1rem; cursor: pointer;color:rgb(202, 199, 199);"
     onclick="window.open('/acerca','centro')">
     <i class="fa fa-group " style="padding-left: 30px; color:black; font-size:2rem; border:none;" aria-hidden="true"></i>
     &nbsp;<font color= gray ><b style="text-align: right;">ACERCA DE....</b></font>
     </span>
-
       </td>
-    </tr>
+    </tr> 
   </table>
-</div>
+
 {%endblock%}

@@ -255,8 +255,8 @@ def servicio_errado(error):
     return render_template("alertas.html",msgito=msgito,regreso='#')
 @app.route('/maqueta')
 def maqueta():
-    # au.registra(30,'ingresa menuadmin',session['usua'])
-    return render_template('maqueta.html')
+    # au.registra(30,'ingresa menuadmin',session['usua'])   
+    return render_template('maqueta.html',usua=session['usua'])
 
 
 if __name__=='__main__':

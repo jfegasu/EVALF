@@ -13,113 +13,128 @@
 }
 </script>
 <style>
-@import "https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700;800;900&display=swap";
+@import url("https://fonts.googleapis.com/css2?family=Public+Sans&display=swap");
 
 * {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-    background-color: antiquewhite;
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  height: 100%;
 }
 
 body {
-    font-family: "Poppins", sans-serif;
-    font-size: 1.2rem;
-    min-height: 100vh;
-    padding: 20px;
-    
+  font-family: "Public Sans", sans-serif;
+  font-size: 1.2rem;
+  min-height: 100%;
 }
 
-.grid-container>* {
-    box-shadow: 10px 6px 37px -13px rgba(40, 40, 40, 0.74);
-    border-radius: 10px;
-    padding: 10px;
-    text-align: center;
-    font-weight: 500;
-    /* background-color: antiquewhite; */
-    border-color: black;
+.grid-container > * {
+justify-content: center;
+  box-shadow: -1px 1px 7px 0px rgba(0, 0, 0, 0.75);
+  border-radius: 4px;
+  padding: 10px;
+  text-align: center;
+
+}
+
+.header {
+  grid-area: header;
+  background-color: white;
+  /* width: 120%; */
+}
+
+.navbar {
+  grid-area: navbar;
+  background-color: white;
+}
+
+.sidebar {
+  grid-area: sidebar;
+  background-color: white;
+  text-align: left;
+  gap: 20px;
+  width: auto;
+  overflow:auto;
+}
+
+.main {
+  grid-area: main;
+  background-color: #f5f5f5;
+  /* width: 125%; */
+  height: auto;
+  overflow:auto;
+}
+
+.footer {
+  grid-area: footer;
+  background-color:white;
+  text-align: center;
+  /* margin: auto; */
+  margin:auto;
+  padding: 5px;
+  padding-bottom: 10px;
+  width: 100%;
 }
 
 .grid-container {
-    background-color: antiquewhite;
-    display: grid;
-    gap: 20px;
+  display: grid;
+  margin:1px;
+  gap: 10px;
+  justify-content: center;
+  grid-template:
+    "header"  100px
+    "main"    auto
+    "sidebar" 100px
+    "footer"  100px;
+}
+div {
+  scrollbar-color: red green; /*  thumb: rojo, track: verde */
+  scrollbar-width: thin; /* Ancho de la barra de desplazamiento */
+}
+.grid-container::-webkit-scrollbar {
+  width: 8px; /* Ancho de la barra */
+  height: 8px; /* Alto de la barra */
+}
+
+.grid-container::-webkit-scrollbar-thumb {
+  background-color: #ccc; /* Color de la miniatura */
+  border-radius: 4px; /* Bordes redondeados */
+}
+
+.grid-container::-webkit-scrollbar-thumb:hover {
+  background-color: #b3b3b3; /* Color al pasar el cursor */
+  box-shadow: 0 0 2px 1px rgba(0, 0, 0, 0.2); /* Sombra */
+}
+@media (min-width: 600px) {
+  .grid-container {
+    /* grid-template-columns: 200px auto;
+    grid-template-rows: 100px 50px auto 100px;
+    grid-template-areas: 
+    "header  header"
+    "navbar  navbar"
+    "sidebar main"
+    "footer  footer"; */
+
     grid-template:
-        "header" 200px
-        "navbar"
-        "main" 100px
-        "sidebar"
-        "footer" 100%;
+      "header  header" 100px
+      /* "navbar  navbar" 50px */
+      "sidebar main"   auto
+      "footer  footer" 100px /
+      200px    auto;
+  }
+}
 
-    .header {
-        grid-area: header;
-        /* background-color: whitesmoke; */
-        margin: 10px 15px 10px 10px;
-
-    }
-
-    .navbar {
-        grid-area: navbar;
-        display: flex;
-        background-color: #f5f5f5;
-        margin-left: 10px;
-        text-align: left;
-        display: flex;
-        flex-direction: column;
-        justify-content: flex-start; 
-  
-
-
-    }
-
-    .sidebar {
-        grid-area: sidebar;
-        /* background-color: rgba(77, 237, 106, 0.74); */
-        background-color: #f5f5f5;
-        
-        margin-right: 15px;
-    }
-
-    .main {
-        grid-area: main;
-        background-color: #f5f5f5;
-        /* overflow: auto; */
-    }
-
-    .footer {
-        grid-area: footer;
-        margin:auto;
-        padding: 10px;
-        width:100%;
-        background-color: #f5f5f5;
-        /* background-color: rgba(237, 123, 67, 0.74); */
-    }
-    
-
-    @media (min-width:768px) {
-        grid-template:
-            "header navbar" 50px
-            "navbar navbar" 50px
-            "sidebar main" auto
-            "footer footer" 100px/
-            200px auto;   
-        
-    }
-    @media (min-width:992px) {
-        grid-template:
-            "header header header" 100px
-            "navbar main sidebar" auto
-            "footer footer footer" 100px/
-            200px auto 200px;
-    }
-    @media (min-width:1200px) {
-        grid-template:
-            "header header header" 100px
-            "navbar main sidebar" auto
-            "footer footer footer" 100px/
-            200px auto 200px;
-            
-    }
+@media (min-width: 900px) {
+  .grid-container {
+    grid-template:
+      "header  header"  100px 1200px
+      "sidebar main" auto
+      "footer  footer"  100px /
+      200px    auto   200px;
+  }
 }
 </style>
 <!DOCTYPE html>
@@ -131,24 +146,28 @@ body {
 
     <title>Proyecto 01</title>
 </head>
-<body class="grid-container">
-    <header class="header" id="marco1">HEADER</header>
-    <nav class="navbar"  id="marco2">NAVBAR*</nav>
-    <aside class="sidebar">SIDEBAR</aside>
-    <article class="main" id="marco3">MAIN</article>
-    <footer class="footer" id="marco4">FOOTER</footer>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Grid</title>
+</head>
+<body class="grid-container" style="justify-content: center;">
 
-<script>
-    function CargaHtml(contenido,clave){
-    $('#'+contenido).load(clave);
+  <header class="header" id="marco1">HEADER</header>
+  <!-- <nav class="navbar" id="marco2">NAVBAR</nav> -->
+  <aside class="sidebar" id="marco2">SIDEBAR</aside>
+  <article class="main" id="marco3">MAIN</article>
+  <footer class="footer" id="marco4">FOOTER</footer>
 
-}
-</script>
+
         <script>
         CargaHtml("marco1","/banner")
-        CargaHtml("marco2","/menu")
+        CargaHtml("marco2","/menu1")
         CargaHtml("marco3","/centro")
         CargaHtml("marco4","/footer")
+        CargaHtml("marco5","/menu")
     </script>
 </body>
 </html>

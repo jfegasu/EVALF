@@ -7,7 +7,7 @@
 {% if datos|length>0%}
 <br>
 
-<div class="cpsi d-flex justify-content-center align-items-center  mx-auto" style="width:120%; height:auto;">
+<div class="cpsi " style="display: flex; justify-content: center; width: 5cm;margin: auto;">
 <table class="table table-striped ">
 <th  style="color:black;font-size: 12px;"><span class="sena-sombra">INSTRUCTORES DE LA FICHA: {{apr.FICHA}}, APRENDIZ: {{apr.NOMBRE}}, TITULACION: {{apr.TITULACION}}</span>
  </th>
@@ -18,8 +18,8 @@
 <tr>
     <td colspan="2">
     {% with im = url_for('foto.static', filename='images/dni/' ~ data['dninst'] ~ '.png') %}
-<span style="cursor: pointer;margin: 10px;" onclick="window.open('/evalu/2/{{data.dninst}}/{{data.ficha}}/{{data.dniap}}','centro')">
-<img class="imgfull ovalo" src="{{ im }}"
+<span style="cursor: pointer;margin: 10px;" onclick="window.open('/evalu/2/{{data.dninst}}/{{data.ficha}}/{{data.dniap}}','marco3','width=100px')">
+<img class="imgfull" src="{{ im }}"
      onerror="this.onerror=null; this.src='{{ url_for('foto.static', filename='images/dni/silueta.png') }}';"
      style="width: 40px; border: 1px solid black;">
 
@@ -42,16 +42,17 @@
 <h1>NO HAY INSTRUCTORES PARA EVALUAR</h1>
 <script>
     function Ir(){
-        window.open("/login",'centro')
+        window.open("/login",'_self')
     }
-    setTimeout("Ir()",5000)
+    // setTimeout("Ir()",5000)
+    window.close()
 </script>
 </div>
 {% endif%}
 {% endif%}
 
 {% if N==2 %}
-<div class="cpsi d-flex justify-content-center align-items-center mx-auto" style="padding-top: 2px; width: 60%;padding: 15px;padding-right: 20px;">
+<div class="cpsi " style="padding-top: 2px; width: auto;padding: 15px;padding-right: 20px;">
     <table class=" table table-striped" style="width: auto;">
         <th colspan="3" ><h4 style="text-align:center;font-family: 'Caprasimo', serif;">RESPUESTAS ENCUESTA</h4></th></tR>
         <th colspan="3"  style="color:black;font-size: 10px;font-family: 'Caprasimo', serif;"><b>FICHA: {{apr.FICHA}}
@@ -66,7 +67,7 @@
             </td>
             <td width=50% style="font-family: 'Caprasimo', serif;">RESPUESTAS</td>
         </tr>
-        <form action="/evalu/3/{{datos[2]}}" method="post">     
+        <form action="/evalu/3/{{datos[2]}}"  target="_self" method="post">     
 
             {%for data in preg%}
 
@@ -92,7 +93,7 @@
         
         <input type="submit" class="btn btn-primary ovalobtn" style="width:50%;" value="ENVIAR">
         <!-- <button class="btn btn-warning ovalo" style="width:50%;" onclick="','centro')">ENVIAR</button> -->
-        <!-- <button type="button" class="btn btn-warning ovalobtn" style="width:49%;" onclick="window.close('/login','xxx')"><b>CANCELAR</b></button> -->
+        <button type="button" class="btn btn-warning ovalobtn" style="width:39%;" onclick="window.close()"><b>CANCELAR</b></button>
 
     </td>
 </tr>

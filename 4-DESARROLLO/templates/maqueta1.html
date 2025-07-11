@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    function CargaHtml(contenido,clave){
+    $('#'+contenido).load(clave);
+
+}
+</script>
+<style>
+@import url("https://fonts.googleapis.com/css2?family=Public+Sans&display=swap");
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  height: 100%;
+}
+
+body {
+  font-family: "Public Sans", sans-serif;
+  font-size: 1.2rem;
+  /* min-height: 10%; */
+  background-image: url('../../static/images/logosena.png');
+   
+}
+
+.grid-container > * {
+  box-shadow: -1px 1px 7px 0px rgba(0, 0, 0, 0.75);
+  border-radius: 4px;
+  margin-left: 1px;
+  padding: 10px;
+  text-align: center;
+
+}
+
+.header {
+  grid-area: header;
+  background-color: white;
+  /* width: 120%; */
+}
+
+.navbar {
+  grid-area: navbar;
+  background-color: white;
+}
+
+.sidebar {
+  grid-area: sidebar;
+  background-color: white;
+  text-align: left;
+  gap: 20px;
+  overflow:auto;
+}
+
+.main {
+  grid-area: main;
+  background-color: #f5f5f5;
+  background-color: white;
+  /* width: 125%; */
+  height: auto;
+  overflow:auto;
+}
+
+.footer {
+  grid-area: footer;
+  background-color:white;
+  text-align: center;
+  /* margin: auto; */
+  margin:auto;
+  padding: 5px;
+  padding-bottom: 10px;
+  width: 100%;
+}
+
+.grid-container {
+  
+  display: grid;
+  margin:1px;
+  gap: 2rem;
+
+  grid-auto-rows: 32rem;
+  /* justify-content: center; */
+  grid-template-columns: repeat(auto-fit,minmax((80%,35rem),1fr));
+  grid-auto-flow: dense;
+  grid-template:
+    "header header"  100px
+    "sidebar main"    auto
+    "footer footer"  100px;
+}
+
+</style>
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Proyecto 01</title>
+</head>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Grid</title>
+</head>
+<body class="grid-container" style="justify-content: center;">
+
+  <header class="header" id="marco1">HEADER</header>
+  <!-- <nav class="navbar" id="marco2">NAVBAR</nav> -->
+  <aside class="sidebar" id="marco2">SIDEBAR</aside>
+  <article class="main" id="marco3">MAIN</article>
+  <footer class="footer" id="marco4">FOOTER</footer>
+
+
+        <script>
+        CargaHtml("marco1","/banner")
+        CargaHtml("marco2","/menu1")
+        CargaHtml("marco3","/centro")
+        CargaHtml("marco4","/footer")
+        CargaHtml("marco5","/menu")
+    </script>
+</body>
+</html>

@@ -91,7 +91,7 @@ transition: all 2.5s ease, background-color 2.5s ease;
 .cpsi{
     font-size: 10px;
     font-weight: bold;
-    align-items: center;
+    align-items: left;
     height: auto;
 }
 .menuf2{
@@ -156,6 +156,8 @@ border-radius: 95px 10px 10px 80px;
     text-transform: uppercase;
     font-family: "Oswald", sans-serif;
     transition: background-color 1.5 ease;
+    gap: 5px;
+  margin: 2px;
 }
 .cpsi button:hover{
   background-color: black;
@@ -183,6 +185,8 @@ color:yellow;
 font-size: 12pt;
 }
 .cpsi .ovalobtn{
+    padding: 10px;
+    margin: 5px;
     border-radius: 34px 34px 34px 34px;
     -moz-border-radius: 34px 34px 34px 34px;
     -webkit-border-radius: 34px 34px 34px 34px;
@@ -191,6 +195,9 @@ font-size: 12pt;
     font-size: 10pt;
     text-transform: uppercase;
     transition: background-color 1.5 ease;
+    gap: 10px;
+    width: auto;
+  margin: 10px; 
   }
 .cpsi .ovalo{
 width: 40px;       /* asegúrate de que width = height */
@@ -201,18 +208,21 @@ width: 40px;       /* asegúrate de que width = height */
   font-size: 10pt;
   text-transform: uppercase;
   transition: background-color 1.5 ease;
+  
   }
   .cpsi .ovalo:hover{
   background-color: black;
   color:yellow;
   font-weight: bold;
   font-size: 12pt;
+  padding: 10px;
+    margin: 5px;
   }
   .cpsi .ovalobtn:hover{
   background-color: black;
   color:yellow;
   font-weight: bold;
-  font-size: 12pt;
+  font-size: 10px;
   }
 .cpsi .imgfull{
   transform:scale(1);

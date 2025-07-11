@@ -228,7 +228,7 @@ def aprendiz():
 def construir():
     msgito="401 - PAGINA EN CONSTRUCCION"
     
-    return render_template("alertas.html",msgito=msgito,regreso='/login')
+    return render_template("alertas.html",msgito=msgito,regreso='#')
 @app.route('/salir')
 def salir():
     msgito="SALIENDO DEL APLICATIVO"

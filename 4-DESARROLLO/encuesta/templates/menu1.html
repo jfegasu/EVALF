@@ -1,32 +1,16 @@
 {% extends "base.html" %}
 {% block content %}
 {% set menu = session['menu']%}
-<h4 class="sena-sombra">📁 MENU PRINCIPAL EVAL</h4>
-<ul id="myUL">
-{% for i in menu %}
-  <li><span class="caret">{{ i.titulo }}</span>
-  <ul class="nested">
-  {% for y in i["items"] %}
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
-      <li>
-        <a style="text-decoration: none;"
-       {% if y.url %}
-        href="{{ y.url }}" 
-       {% else %}
-        href="#"
-       {%endif%}
-       >
-        {%if y.svg%}
-        &#{{y.svg}};
-        {%endif%} 
-        {%if y.fa%}
-        <i class="{{y.fa}}"></i>
-        {%endif%} 
-        {{ y.texto }}</a></li>
-    {% endfor %}
-    </ul>
-{% endfor %}
-
+<h4 class="sena-sombra">MENU</h4>
+<div class="cpsi">
+      <button onclick='CargaHtml("marco3","/centro")' class="btn btn-primary ovalbtn"  style="width: 100%;text-align: left;"><i class='fas fa-archive'></i>&nbsp;DATOS PERSONALES</button> 
+      <button onclick='CargaHtml("marco3","/encuesta")' class="btn btn-primary ovalbtn" style="width: 100%;text-align: left;"><i class='fas fa-edit'></i>&nbsp;REALIZAR ENCUESTA</button> 
+      <button onclick='CargaHtml("marco3","/centro")' class="btn btn-primary ovalbtn" style="width: 100%;text-align: left;"><i class='fas fa-user-tie'></i>&nbsp;PORTAFOLIO DE EVIDENCIAS</button> 
+      <button onclick='CargaHtml("marco3","/centro")' class="btn btn-primary ovalbtn" style="width: 100%;text-align: left;"><i class='far fa-calendar-alt'></i>&nbsp;MI HORARIO</button> 
+   
+</div>
 
 
 {% endblock content %}

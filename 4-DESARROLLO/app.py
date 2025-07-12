@@ -54,13 +54,14 @@ au=Auditor(BASE_DIR)
 
 @app.route('/') 
 def raiz():   
-    return render_template('inicio.html')
+    return render_template('indexppal.html')
 @app.route('/0') 
 def indexppal():  
     server_ip = socket.gethostbyname(socket.gethostname())
     session['server_ip']=server_ip
     au.registra(30,'Inicia Aplicacion') 
     # return render_template('login.html',server_ip=session['server_ip'])
+    return redirect('/login')
     return render_template('indexppal.html',server_ip=session['server_ip'])
 @app.route('/banner') 
 def banner():  
@@ -72,6 +73,9 @@ def footer():
 @app.route('/centro') 
 def centro():   
     return render_template('centro.html')
+@app.route('/nada') 
+def nada():   
+    return render_template('nada.html')
 
 @app.route('/menu') 
 def menu():   
@@ -130,7 +134,7 @@ def valida():
        aa=f'{apidb}/u/{usua}' 
        daticos=requests.get(aa).json()
        session['Datos']=daticos
-       return redirect('/evalu') 
+       return redirect('/maqueta') 
     elif Tipo == 2:
         # return "2"
         aa=f'{apidb}/u/{usua}' 

@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% block content %}
 {%include 'banner.html'%}
-{%include 'menu.html'%}
+<button class="btn btn-outline-dark ovalobtn">Ingresar</button>
 <script>
 function Ir(){
     let ventanahija=window.open(
@@ -11,6 +11,7 @@ function Ir(){
     );
     self.close();
 }
+
 document.addEventListener("click", function() {
     // Llamar a la función para abrir la ventana hija
     
@@ -23,13 +24,5 @@ document.addEventListener("click", function() {
             setTimeout('Ir()',2000)
 
 </script>
-<div class="cpsi mx-auto" style="width: 80%; text-align:center;">
-    <img  src="{{url_for('static',filename='images/CGMLTIA.png')}}" 
-alt="Gov Co" style="width: 100%;height: 200px;">
-
-
-    
-<button class="btn btn-primary btn-block " style="border-color:black;"><h4><b>De click para comenzar</b></h4></button></center>
-</div>
 <br>
 {% endblock content %}

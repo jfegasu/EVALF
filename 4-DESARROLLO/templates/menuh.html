@@ -1,0 +1,104 @@
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+  <meta charset="UTF-8">
+  <style>
+    /* Estilos base del menú */
+    ul.menu-horizontal {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      background-color: #333;
+    }
+
+    ul.menu-horizontal li {
+      position: relative;
+    }
+
+    ul.menu-horizontal > li {
+      padding: 0;
+    }
+
+    ul.menu-horizontal > li > a {
+      display: block;
+      padding: 14px 20px;
+      color: white;
+      text-decoration: none;
+    }
+
+    ul.menu-horizontal > li > a:hover {
+      background-color: #444;
+    }
+
+    /* Submenús */
+    ul.submenu, ul.submenu-nivel2 {
+      display: none;
+      position: absolute;
+      background-color: #444;
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      min-width: 300px;
+      z-index: 1000;
+    }
+
+    ul.submenu li a, ul.submenu-nivel2 li a {
+      color: white;
+      padding: 10px 15px;
+      display: block;
+      text-decoration: none;
+    }
+
+    ul.submenu li a:hover, ul.submenu-nivel2 li a:hover {
+      background-color: #555;
+    }
+
+    /* Mostrar submenu al pasar el mouse */
+    ul.menu-horizontal li:hover > ul.submenu {
+      display: block;
+    }
+
+    /* Submenú de segundo nivel */
+    ul.submenu li:hover > ul.submenu-nivel2 {
+      display: block;
+      left: 100%;
+      top: 0;
+    }
+    i{
+      margin-right: 5px;
+    }
+  </style>
+</head>
+<body>
+
+  <img src="{{url_for('static',filename='images/CGMLTIA.png')}}" alt="" class="src">
+
+<ul class="menu-horizontal">
+  <li><a><i class="fa fa-mortar-board"></i>A</a></li>
+    <li><a href="/maqueta"><i class="fas fa-landmark"></i>INICIO</a></li>
+    <li>
+      <a href="/maqueta"><i class="fa fa-child"></i>APRENDIZ</a>
+      <ul class="submenu">
+        <li><a href="#"><i class="fas fa-paperclip"></i>PORTAFOLIO DE EVIDENCIAS</a></li>
+        <li>
+          <a href="#"><i class="fas fa-briefcase"></i>DISEÑO</a>
+          <ul class="submenu-nivel2">
+            <li><a class="X" href="#"><i class="far fa-calendar-alt"></i>PROGRAMA DE FORMACION</a></li>
+            <li><a href="#"><i class="fas fa-certificate"></i>PROYECTO FORMATIVO</a></li>
+            <li><a href="#"><i class="fas fa-business-time"></i>PLANEACION PEDAGOGICA</a></li>
+            
+          </ul>
+        </li>
+        <li><a href="#"><i class="fas fa-edit"></i>ACTIVIDAD DE APRENDIZAJE</a>
+        <ul class="submenu-nivel2">
+          <li><a href="#"><i class="	fas fa-comments"></i>NOTIFICACIONES</a></li>
+          <li><a href="#"><i class="fas fa-calendar-alt"></i>HORARIO</a></li>
+          <li><a href="#"><i class="fas fa-calendar-alt"></i>GUIAS DE APRENDIZAJE</a></li>
+        </ul>
+      </ul>
+    </li>
+    <li><a href="/encuesta"><i class="fa fa-list"></i> ENCUESTA</a></li>
+   <li><a href="/acerca"><i class="fa fa-list"></i> ACERCA</a></li>
+  </ul>
+</div>

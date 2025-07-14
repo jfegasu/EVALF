@@ -62,10 +62,15 @@ def eval2a(I,F,A):
     # hay=len(preg)
     preg=requests.get(f'{apidb}/p').json()
     hay=len(preg)
-
+    usua=session['usua']
+    
     NOMI=requests.get(f'{apidb}/i/e/{I}').json()
+    # return NOMI
+    datos1=requests.get(f'{apidb}/u/datos/{usua}').json()
+    
+    # return datos1
     # return NOMI[0]['NOMINST']
-    return render_template('carga.html',N=2,datos=datos,hay=hay,preg=preg,nomi=NOMI[0]['NOMINST'],apr=session['datos'])
+    return render_template('carga.html',N=2,datos=datos,hay=hay,preg=preg,nomi=NOMI[0]['NOMINST'],apr=datos1)
 
 @eval_bp.route('/3/<I>' ,methods=['POST','GET']) 
 def eval(I):  

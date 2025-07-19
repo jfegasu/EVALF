@@ -57,6 +57,7 @@ def eval2a(I,F,A):
     # N=2
 
     datos=[2,F,I,A]
+    session['F']=F
     # print("__________________________>",N)
     # preg=Consultar(DATABASE,'SELECT * FROM PREGUNTA WHERE ESTADO=1')
     # hay=len(preg)
@@ -75,9 +76,12 @@ def eval2a(I,F,A):
 @eval_bp.route('/3/<I>' ,methods=['POST','GET']) 
 def eval(I):  
     # return session['datos']['FICHA']
-    F=session['datos']['FICHA']
-    A=session['datos']['DNI']
-    T=session['datos']['TITULACION']
+    # return F
+    F=request.form.get('F')
+    I=request.form.get('I')
+    A=request.form.get('A')
+    T=request.form.get('T')
+    # T=session['datos']['TITULACION']
     TRIMESTRE=obtener_trimestreT(datetime.now())
     
     

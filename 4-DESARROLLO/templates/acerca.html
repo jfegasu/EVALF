@@ -1,6 +1,19 @@
 {% extends "base.html" %}
 {% block content %}
-{% include 'menuh.html' %}
+<link rel="stylesheet" href="MiEstilo.css">
+
+<img src="{{url_for('static',filename='images/CGMLTIA.png')}}" alt="" class="src">
+<div class="menum">
+<ul class="menu-horizontal">
+  <li><a><i class="fa fa-mortar-board"></i>APRENDIZ</a></li>
+    <li><a href="/login"><i class="fas fa-landmark"></i>INICIO</a></li>
+       <li><a href="/acerca"><i class="fa fa-list"></i> ACERCA</a></li>
+  </ul>
+</div>
+</div>
+
+
+
     <div class="cpsi mx-auto" style="width:60%">
     <div style="width:70%;overflow:auto" class="w3-w3-green mx-auto">
         <br>
@@ -28,4 +41,5 @@
         }
         //setTimeout('Voy()',5000)
     </script>
-    {% endblock content %}
+ 
+{% endblock content %}

@@ -1,6 +1,5 @@
 
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-
   <meta charset="UTF-8">
   <style>
     /* Estilos base del menú */
@@ -98,3 +97,40 @@ border: 1px solid #ff6550;
     }
   </style>
 </head>
+<body>
+
+  <img src="{{url_for('static',filename='images/CGMLTIA.png')}}" alt="" class="src">
+<div class="menum">
+<ul class="menu-horizontal">
+  <li><a><i class="fa fa-mortar-board"></i>APRENDIZ</a></li>
+    <li><a href="/maqueta"><i class="fas fa-landmark"></i>INICIO</a></li>
+    <li>
+      <a href="/maqueta"><i class="fa fa-child"></i>APRENDIZ</a>
+      <ul class="submenu">
+        <li><a href="#"><i class="fas fa-paperclip"></i>PORTAFOLIO DE EVIDENCIAS</a></li>
+        <li>
+          <a href="#"><i class="fas fa-briefcase"></i>DISEÑO</a>
+          <ul class="submenu-nivel2">
+            <li><a class="X" href="#"><i class="far fa-calendar-alt"></i>PROGRAMA DE FORMACION</a></li>
+            <li><a href="#"><i class="fas fa-certificate"></i>PROYECTO FORMATIVO</a></li>
+            <li><a href="#"><i class="fas fa-business-time"></i>PLANEACION PEDAGOGICA</a></li>
+            
+          </ul>
+        </li>
+        <li><a href="#"><i class="fas fa-edit"></i>ACTIVIDAD DE APRENDIZAJE</a>
+        <ul class="submenu-nivel2">
+          <li><a href="#"><i class="	fas fa-comments"></i>NOTIFICACIONES</a></li>
+          <li><a href="#"><i class="fas fa-calendar-alt"></i>HORARIO</a></li>
+          <li><a href="#"><i class="fas fa-calendar-alt"></i>GUIAS DE APRENDIZAJE</a></li>
+        </ul>
+      </ul>
+    </li>
+    <li><a href="/encuesta"><i class="fa fa-list"></i> ENCUESTA</a></li>
+   <li><a href="/acerca"><i class="fa fa-list"></i> ACERCA</a></li>
+  </ul>
+</div>
+</div>
+
+</body>
+</html>
+

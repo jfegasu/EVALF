@@ -19,6 +19,7 @@ from config import apidb
 from datetime import datetime
 import shutil
 import os
+from menus.menucfg import *
 app = Flask(__name__) 
 # Ruta al directorio de la app
 APP_ROOT = os.path.dirname(os.path.abspath(__file__))
@@ -91,7 +92,8 @@ def login():
 
 @app.route('/acerca') 
 def acerca():   
-    return render_template('acerca.html')
+    menux=getMenu(session['Tipo'])
+    return render_template('acerca.html',menu=menux)
 def tipoUsuario(id):
     aa=f'{apidb}/u/datos/{id}'
     bb=requests.get(aa).json()
@@ -179,7 +181,8 @@ def encuesta():
     a=f'{apidb}/i/2/{ficha}/{usua}'
     
     datos=requests.get(a).json()
-    return render_template("carga.html",N=1,datos=datos,apr=datos)
+    menux=getMenu("1")
+    return render_template("carga.html",N=1,datos=datos,apr=datos,menu=getMenu("1"))
 @app.route('/descargar')
 def descargar():
     # au.registra(30,"Descarga Respuestas")

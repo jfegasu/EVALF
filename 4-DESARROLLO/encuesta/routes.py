@@ -5,6 +5,8 @@ from config import apidb,BASE_DIR
 import os
 from utils.Utilitarios import *
 from utils.menus import *
+from menus.menucfg import *
+
 
 # BASE_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
 
@@ -25,8 +27,8 @@ def index():
     aa=f'{apidb}/i/2/{ficha}/{usua}'
     # return aa
     datos=requests.get(aa).json()
-    session['menu']=miMenu(1)
-    return render_template("evalmenu.html",menu=miMenu(1)    )
+    session['menu']=getMenu(1)
+    return render_template("evalmenu.html",menu=getMenu("1")    )
 
     return render_template('carga.html',N=1,datos=datos,apr=session['datos'])
 @eval_bp.route('/menu1', methods = ['GET'])   

@@ -1,16 +1,7 @@
+
 {% extends "base.html" %}
 {% block content %}
-<link rel="stylesheet" href="MiEstilo.css">
-
-<img src="{{url_for('static',filename='images/CGMLTIA.png')}}" alt="" class="src">
-<div class="menum">
-<ul class="menu-horizontal">
-  <li><a><i class="fa fa-mortar-board"></i>APRENDIZ</a></li>
-    <li><a href="/login"><i class="fas fa-landmark"></i>INICIO</a></li>
-       <li><a href="/acerca"><i class="fa fa-list"></i> ACERCA</a></li>
-  </ul>
-</div>
-</div>
+{% include 'banner.html'%}
 
 
 

@@ -1,1 +1,7 @@
-<img class="sena" loading="lazy" src="{{url_for('static',filename='images/construir.png')}}" style="border:true;width:100%;">
+{% extends "base.html" %}
+{% block content %}
+{% include 'banner.html'%}
+<div class="container">
+<img class="sena" loading="lazy" src="{{url_for('static',filename='images/nofound.png')}}" style="border:true;width:100%;">
+</div>
+{% endblock content%}

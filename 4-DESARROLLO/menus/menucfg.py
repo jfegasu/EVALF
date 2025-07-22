@@ -145,10 +145,91 @@ menuins = [
     }
 ]
 
+menuadm = [
+    {
+        "titulo": "INICIO",
+        "icono": "fas fa-landmark",
+        "url": "/login"
+    },
+    {
+        "titulo": "ADMINISTRACION",
+        "icono": "fa fa-child",
+        "url": "/maqueta",
+        "submenu": [
+            {
+                "titulo": "CONFIGURACION",
+                "icono": "fas fa-briefcase",
+                "url": "#",
+                "submenu": [
+                    {
+                        "titulo": "USUARIOS",
+                        "icono": "far fa-calendar-alt",
+                        "url": "#"
+                    },
+                    {
+                        "titulo": "CARGA DE DATOS",
+                        "icono": "fas fa-certificate",
+                        "url": "#",
+                    },
+                    {
+                        "titulo": "COMITE DE SEGUIMIENTO",
+                        "icono": "fas fa-business-time",
+                        "url": "#"
+                    }
+                ]
+            },
+            {
+                "titulo": "MODULOS",
+                "icono": "fas fa-edit",
+                "url": "#",
+                "submenu": [
+                    {
+                        "titulo": "INASISTENCIAS",
+                        "icono": "fas fa-comments",
+                        "url": "#"
+                    },
+                    {
+                        "titulo": "NOVEDADES APRENDICES",
+                        "icono": "fas fa-calendar-alt",
+                        "url": "#"
+                    },
+                    {
+                        "titulo": "COMITE DE SEGUIMIENTO",
+                        "icono": "fas fa-calendar-alt",
+                        "url": "#"
+                    },
+                    {
+                        "titulo": "AMBIENTES DE FORMACION",
+                        "icono": "fas fa-calendar-alt",
+                        "url": "#"
+                    },
+                    {
+                        "titulo": "HORARIOS",
+                        "icono": "fas fa-calendar-alt",
+                        "url": "#"
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "titulo": "AUDITORIA",
+        "icono": "fa fa-list",
+        "url": "/nada"
+    },
+    {
+        "titulo": "ACERCA",
+        "icono": "fa fa-list",
+        "url": "/acerca"
+    }
+]
+
 def getMenu(Cual):
     if Cual == "1":
         return menuap
     if Cual == "2":
         return menuins
+    if Cual == "3":
+        return menuadm
     return None
         

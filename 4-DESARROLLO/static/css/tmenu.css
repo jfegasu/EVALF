@@ -1,50 +1,13 @@
-ul, #myUL {
-  list-style-type: none;
-  font-weight: bold;
-}
 
-#myUL {
-  margin: 0;
-  padding: 0;
-font-size: 12px;  
-font-weight: bold;
-}
+@import url('https://fonts.googleapis.com/css2?family=Caprasimo&family=Oswald:wght@200..700&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
 
-.caret {
-  cursor: pointer;
-  -webkit-user-select: none; /* Safari 3.1+ */
-  -moz-user-select: none; /* Firefox 2+ */
-  -ms-user-select: none; /* IE 10+ */
-  user-select: none;
-}
-
-.caret::before {
-  content: "\271A";
-  color: black;
-  display: inline-block;
-  margin-right: 6px;
-}
-
-.caret-down::before {
-  content: "\2689";
-}
-
-.nested {
-  display: none;
-  
-}
-
-.active {
-  display: block;
-  content: "\22c6";
-  
-}
-
- /* Estilos base del menú */
-    .menum{
+ .menum{
       font-size: 12px;
       font-weight: bold;
       color: white;
+      font-weight: bold;
+      font-family: "Oswald", sans-serif;
+  font-optical-sizing: auto;
     }
     .menum ul.menu-horizontal {
       list-style: none;
@@ -57,7 +20,7 @@ font-weight: bold;
       border-radius: 10px 62px 65px 10px;
       -webkit-border-radius: 10px 62px 65px 10px;
       -moz-border-radius: 10px 62px 65px 10px; 
-      border: 1px solid #ff6550; 
+      border: 1px solid black;
     }
 
     .menum ul.menu-horizontal li {
@@ -65,17 +28,18 @@ font-weight: bold;
     }
 
     .menum ul.menu-horizontal > li {
-      padding: 0;
+      padding: 10px;
     }
 
     .menum ul.menu-horizontal > li > a {
       display: block;
-      padding: 14px 20px;
+      padding: 10px 10px;
       color: black;
       text-decoration: none;
-      border-radius: 10px 62px 65px 10px;
+      border-radius: 10px 12px 65px 10px;
       -webkit-border-radius: 10px 62px 65px 10px;
       -moz-border-radius: 10px 62px 65px 10px;
+      padding: 10px;  
     }
 
     .menum ul.menu-horizontal > li > a:hover {
@@ -97,7 +61,7 @@ font-weight: bold;
       z-index: 1000;
       margin: 1px;
       /*border-radius: 10px 62px 65px 10px; */
-      border: 1px solid #ff6550;
+      border: 1px solid #ccc;
     }
 
     .menum ul.submenu li a, ul.submenu-nivel2 li a {
@@ -106,17 +70,14 @@ font-weight: bold;
       display: block;
       text-decoration: none;
       margin: 1px;
-      
+      /* width: auto; */
     }
 
     .menum ul.submenu li a:hover, ul.submenu-nivel2 li a:hover {
-      background-color:yellow;
-      color:black;
-      width: 90%;
-      /* border-radius: 63px 63px 63px 63px;
--webkit-border-radius: 63px 63px 63px 63px;
--moz-border-radius: 63px 63px 63px 63px; */
-border: 1px solid #ff6550;
+      background-color:green;
+      color:white;
+      border: 1px solid #ccc;
+      padding: 10px;
     }
 
     /* Mostrar submenu al pasar el mouse */
@@ -128,6 +89,7 @@ border: 1px solid #ff6550;
     .menum ul.submenu li:hover > ul.submenu-nivel2 {
       display: block;
       left: 100%;
+      padding: 10px;
       top: 0;
     }
     i{

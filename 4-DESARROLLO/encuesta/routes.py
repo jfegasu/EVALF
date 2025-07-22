@@ -33,7 +33,8 @@ def index():
     return render_template('carga.html',N=1,datos=datos,apr=session['datos'])
 @eval_bp.route('/menu1', methods = ['GET'])   
 def menu1():
-    return render_template("menu1.html",menu=menus)
+    menux=getMenu("1")
+    return render_template("menu1.html",menu=menux)
 
 @eval_bp.route('/1/<I>' ,methods=['POST','GET']) 
 def eval1(I):  

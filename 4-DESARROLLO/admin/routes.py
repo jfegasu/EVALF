@@ -4,6 +4,7 @@ from config import apidb
 import os
 from utils.menus import *
 from utils.Utilitarios import *
+from menus.menucfg import *
 import shutil
 admin = Blueprint('admin', __name__, template_folder='templates',static_folder='static',
     static_url_path='/admin/static')
@@ -15,9 +16,9 @@ def index():
     usua=session['usua']
     
     au.registra(30,'Inicia un administrador',usua) 
-    session['menu']=miMenu(3)
+    session['menu']=getMenu("3")
 
-    return render_template("/menuadmin.html",menu=miMenu(3))
+    return render_template("/menuadmin.html",menu=getMenu("3"))
 @admin.route('/menu1', methods = ['GET'])   
 def menu1():
     return render_template("menu1.html",menu=miMenu(3))

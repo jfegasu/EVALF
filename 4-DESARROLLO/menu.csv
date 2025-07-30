@@ -1,0 +1,5 @@
+id;nombre;url;padre;clave;visible;icono;submenu
+1;INICIO;/login;0;INA;0
+2;TOMAR ASISTENCIA;#;0;INA;0
+3;REPORTE INASISTENCIA;#;0;INA;0
+4;NO ASISTE;#;3;INA;1

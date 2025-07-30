@@ -1,3 +1,4 @@
+from flask import session
 menuap = [
     {
         "titulo": "INICIO",
@@ -186,7 +187,7 @@ menuadm = [
                     {
                         "titulo": "INASISTENCIAS",
                         "icono": "fas fa-comments",
-                        "url": "#"
+                        "url": "/asiste"
                     },
                     {
                         "titulo": "NOVEDADES APRENDICES",
@@ -224,12 +225,33 @@ menuadm = [
     }
 ]
 
+menuasisteadm = [
+    {
+        "titulo": "INICIO",
+        "icono": "fas fa-landmark",
+        "url": "/login"
+    },
+    {
+        "titulo": "TOMAR ASISTENCIA",
+        "icono": "fa fa-child",
+        "url": "#"
+    },
+    {
+        "titulo": "REPORTE ASISTENCIA",
+        "icono": "fa fa-child",
+        "url": "#"
+    }
+]
 def getMenu(Cual):
+    if session['Tipo'] == None:
+        return  menuap
     if Cual == "1":
         return menuap
     if Cual == "2":
         return menuins
     if Cual == "3":
         return menuadm
+    if Cual == "asistena":
+        return menuasisteadm
     return None
         

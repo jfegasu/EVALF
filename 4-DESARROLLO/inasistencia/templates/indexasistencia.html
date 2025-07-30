@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% block content %}
+{% include 'banner.html'%}
+<datalist id="opciones-ficha">
+        <option value="314173">
+        <option value="314151">
+        <option value="314152">
+        <option value="314153">
+        <option value="314154">
+    </datalist>
+<article >
+<h1><b class="sena-sombra">LISTA DE ASISTENCIA</b></h1>
+<b>FICHA:</b> <input class="sena-sombra" type="text" id="ficha" name="ficha" list="opciones-ficha">
+<b>FECHA:</b> <input class="sena-sombra" type="date" id="fecha" name="fecha">
+<a href="#"><i class="fa fa-pencil-square-o"></i></a>
+</article>
+
+
+
+{% endblock content %}

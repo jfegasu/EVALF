@@ -3,8 +3,6 @@
 {% block content %}
 {% include 'banner.html'%}
 
-
-
     <div class="cpsi mx-auto" style="width:60%">
     <div style="width:70%;overflow:auto" class="w3-w3-green mx-auto">
         <br>
@@ -24,13 +22,14 @@
     
     <script>
         function Voy(){
-        {% if regreso%}
-        location.href="/login"
-        {% else %}
-        window.open("/login","xxx")
-        {% endif %}
-        }
-        //setTimeout('Voy()',5000)
+        // {% if regreso%}
+        // location.href="/login"
+        // {% else %}
+        // window.open("/login","_self")
+        // {% endif %}
+        window.open("/login","_self")
+         }
+        setTimeout('Voy()',2000)
     </script>
  
 {% endblock content %}

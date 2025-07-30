@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="menum">
+    <ul class="menu-horizontal">
+  {% for item in menu %}
+    <li>
+      <a href="{{ item.url }}"><i class="{{ item.icono }}"></i>{{ item.titulo }}</a>
+      {% if item.submenu %}
+        <ul class="submenu">
+          {% for sub in item.submenu %}
+            <li>
+              <a href="{{ sub.url }}"><i class="{{ sub.icono }}"></i>{{ sub.titulo }}</a>
+              {% if sub.submenu %}
+                <ul class="submenu-nivel2">
+                  {% for sub2 in sub.submenu %}
+                    <li><a href="{{ sub2.url }}"><i class="{{ sub2.icono }}"></i>{{ sub2.titulo }}</a></li>
+                  {% endfor %}
+                </ul>
+              {% endif %}
+            </li>
+          {% endfor %}
+        </ul>
+      {% endif %}
+    </li>
+  {% endfor %}
+</ul>
+</div>
+
+{% endblock content%}

@@ -13,6 +13,7 @@ import logging
 from foto.routes import foto
 from encuesta.routes import eval_bp
 from admin.routes import admin
+from inasistencia.routes import asiste
 
 from config import DevelopmentConfig 
 from config import apidb
@@ -20,6 +21,7 @@ from datetime import datetime
 import shutil
 import os
 from menus.menucfg import *
+import csv
 app = Flask(__name__) 
 # Ruta al directorio de la app
 APP_ROOT = os.path.dirname(os.path.abspath(__file__))
@@ -49,6 +51,7 @@ app.config['apidb'] =  "http://127.0.0.1:5556"
 app.register_blueprint(foto, url_prefix='/foto')
 app.register_blueprint(eval_bp, url_prefix='/evalu')
 app.register_blueprint(admin, url_prefix='/admin')
+app.register_blueprint(asiste, url_prefix='/asiste')
 
 # app.config.from_object(DevelopmentConfig) 
 au=Auditor(BASE_DIR)
@@ -170,8 +173,7 @@ def getAprendiz(id):
 @app.route('/encuesta')
 def encuesta():
     usua=session["usua"]
-    # usua=id
-    # 
+    
 
     apr=requests.get(f'{apidb}/u/datos/{usua}')
     # session["ficha"]=apr['FICHA']
@@ -260,10 +262,42 @@ def servicio_no_dispoible(error):
 def servicio_errado(error):
     msgito="500 ALGO SALIO MAL"
     return render_template("alertas.html",msgito=msgito,regreso='#')
+def leer_menu_csv(ruta_csv):
+    menu_items = []
+    with open(ruta_csv, newline='', encoding='utf-8') as csvfile:
+        reader = csv.DictReader(csvfile, delimiter=';')
+        for row in reader:
+            menu_items.append({
+                "id": int(row['id']),
+                "titulo": row['nombre'],
+                "url": row['url'],
+                "padre": int(row['padre']),
+                "clave": row['clave'],
+                "visible": int(row['visible']),
+                "icono": "",  # Puedes agregar íconos si quieres
+                "submenu": []
+            })
+    return menu_items
+
+def construir_menu_jerarquico(menu_items):
+    menu_dict = {item['id']: item for item in menu_items if item['visible'] == 0}
+
+    for item in menu_items:
+        if item['visible'] != 0:
+            continue
+        if item['padre'] != 0 and item['padre'] in menu_dict:
+            menu_dict[item['padre']]['submenu'].append(menu_dict[item['id']])
+    
+    menu = [item for item in menu_dict.values() if item['padre'] == 0]
+    return menu
+
 @app.route('/maqueta')
 def maqueta():
+    items = leer_menu_csv('menu.csv')
+    menu = construir_menu_jerarquico(items)
+    # return menu
     # au.registra(30,'ingresa menuadmin',session['usua'])   
-    return render_template('menuh0.html')
+    return render_template('menuh1.html',menu=menu)
 
 
 if __name__=='__main__':

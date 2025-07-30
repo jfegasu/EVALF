@@ -347,6 +347,10 @@ with pd.ExcelWriter("./static/archivos/fichas/"+str(rutinas.Datos['Ficha'])+".xl
     
     DM_JUICIO.to_excel(writer,sheet_name="JUICIOS", index=False)
     
+    DM_NCLRAP=pd.DataFrame(data1,columns=['COMPETENCIA','RAP'])
+    DM_NCLRAP.drop_duplicates(inplace=True)
+    
+    
         
 
 

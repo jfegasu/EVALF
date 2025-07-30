@@ -526,6 +526,15 @@ border-radius:.25rem;
 .select-izquierda{
   align:left;
 }
+.sena-centrar{
+display: flex;
+flex-wrap: wrap;
+flex-direction: row;
+text-align: center;
+justify-content: center; 
+border: 1px solid #cccc;
+
+}
 select{
   background-color:rgba(255, 255, 255, 0.822);
   font-weight: bold;

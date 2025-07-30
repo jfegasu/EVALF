@@ -1,0 +1,151 @@
+Para generar ese menú dinámicamente en un template de Flask con `render_template`, puedes pasar un JSON (o un diccionario de Python) desde tu backend y construir el HTML dinámicamente en el Jinja2.
+
+---
+
+### ✅ **1. Estructura del JSON / Diccionario**
+
+Supón que tu menú tiene esta estructura anidada:
+
+```python
+menu = [
+    {
+        "titulo": "INICIO",
+        "icono": "fas fa-landmark",
+        "url": "/maqueta"
+    },
+    {
+        "titulo": "APRENDIZ",
+        "icono": "fa fa-child",
+        "url": "/maqueta",
+        "submenu": [
+            {
+                "titulo": "PORTAFOLIO DE EVIDENCIAS",
+                "icono": "fas fa-paperclip",
+                "url": "#"
+            },
+            {
+                "titulo": "DISEÑO",
+                "icono": "fas fa-briefcase",
+                "url": "#",
+                "submenu": [
+                    {
+                        "titulo": "PROGRAMA DE FORMACION",
+                        "icono": "far fa-calendar-alt",
+                        "url": "#"
+                    },
+                    {
+                        "titulo": "PROYECTO FORMATIVO",
+                        "icono": "fas fa-certificate",
+                        "url": "#"
+                    },
+                    {
+                        "titulo": "PLANEACION PEDAGOGICA",
+                        "icono": "fas fa-business-time",
+                        "url": "#"
+                    }
+                ]
+            },
+            {
+                "titulo": "ACTIVIDAD DE APRENDIZAJE",
+                "icono": "fas fa-edit",
+                "url": "#",
+                "submenu": [
+                    {
+                        "titulo": "NOTIFICACIONES",
+                        "icono": "fas fa-comments",
+                        "url": "#"
+                    },
+                    {
+                        "titulo": "HORARIO",
+                        "icono": "fas fa-calendar-alt",
+                        "url": "#"
+                    },
+                    {
+                        "titulo": "GUIAS DE APRENDIZAJE",
+                        "icono": "fas fa-calendar-alt",
+                        "url": "#"
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "titulo": "ENCUESTA",
+        "icono": "fa fa-list",
+        "url": "/encuesta"
+    },
+    {
+        "titulo": "ACERCA",
+        "icono": "fa fa-list",
+        "url": "/acerca"
+    }
+]
+```
+
+---
+
+### ✅ **2. Código Flask**
+
+```python
+from flask import Flask, render_template
+
+app = Flask(__name__)
+
+@app.route('/')
+def index():
+    return render_template('menu.html', menu=menu)
+```
+
+---
+
+### ✅ **3. Template `menu.html` con Jinja2**
+
+Aquí usas bucles recursivos de Jinja2:
+
+```html
+<ul class="menu-horizontal">
+  {% for item in menu %}
+    <li>
+      <a href="{{ item.url }}"><i class="{{ item.icono }}"></i>{{ item.titulo }}</a>
+      {% if item.submenu %}
+        <ul class="submenu">
+          {% for sub in item.submenu %}
+            <li>
+              <a href="{{ sub.url }}"><i class="{{ sub.icono }}"></i>{{ sub.titulo }}</a>
+              {% if sub.submenu %}
+                <ul class="submenu-nivel2">
+                  {% for sub2 in sub.submenu %}
+                    <li><a href="{{ sub2.url }}"><i class="{{ sub2.icono }}"></i>{{ sub2.titulo }}</a></li>
+                  {% endfor %}
+                </ul>
+              {% endif %}
+            </li>
+          {% endfor %}
+        </ul>
+      {% endif %}
+    </li>
+  {% endfor %}
+</ul>
+```
+
+💡 **Nota**: Este código solo soporta hasta 2 niveles de submenús (`submenu` y `submenu-nivel2`). Si necesitas algo más genérico y recursivo, se puede adaptar.
+
+---
+
+### ✅ **4. Recomendación adicional**
+
+Para mantener tu menú organizado, podrías cargar el JSON desde un archivo si es muy largo:
+
+```python
+import json
+
+@app.route('/')
+def index():
+    with open('menu.json', 'r') as f:
+        menu = json.load(f)
+    return render_template('menu.html', menu=menu)
+```
+
+---
+
+¿Te gustaría que te entregue este ejemplo como proyecto mínimo funcional o te ayudo a integrarlo en el tuyo actual?

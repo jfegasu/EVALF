@@ -1,8 +1,9 @@
 id;nombre;url;padre;clave;visible;icono;submenu
 1;INICIO;/login;0;INA;0;fa fa-home;0
-10;DATOS PERSONALES;#;0;INA;0;fa fa-user-circle;0
-11;REGISTRO;#;10;INA;0;fa fa-vcard-o;0
+10;DATOS INSTRUCTOR;#;0;INA;0;fa fa-user-circle;0
+11;PERFIL;#;10;INA;0;fa fa-vcard-o;0
 12;FOTO;#;10;INA;0;fa fa-camera;0
+16;FICHAS ASIGNADAS;#;10;INA;0;fa fa-camera;0
 15;HORARIO;#;0;INA;0;fa fa-qrcode;0
 2;ASISTENCIA;#;0;INA;0;fa fa-pencil-square-o;0
 3;TOMAR ASISTENCIA;#;2;INA;0;fa fa-pencil-square;0

@@ -1,5 +1,16 @@
 id;nombre;url;padre;clave;visible;icono;submenu
-1;INICIO;/login;0;INA;0
-2;TOMAR ASISTENCIA;#;0;INA;0
-3;REPORTE INASISTENCIA;#;0;INA;0
-4;NO ASISTE;#;3;INA;1
+1;INICIO;/login;0;INA;0;fa fa-home;0
+10;DATOS PERSONALES;#;0;INA;0;fa fa-user-circle;0
+11;REGISTRO;#;10;INA;0;fa fa-vcard-o;0
+12;FOTO;#;10;INA;0;fa fa-camera;0
+15;HORARIO;#;0;INA;0;fa fa-qrcode;0
+2;ASISTENCIA;#;0;INA;0;fa fa-pencil-square-o;0
+3;TOMAR ASISTENCIA;#;2;INA;0;fa fa-pencil-square;0
+4;REPORTE INASISTENCIA;#;2;INA;0;fa fa-tasks;0
+5;NO ASISTE;#;4;INA;0;fa fa-thumbs-down;0
+6;CON EXCUSA;#;4;INA;0;fa fa-thumb-tack;0
+7;PORTAFOLIO DE EVIDENCIAS;#;0;INA;0;fa fa-camera;0
+9;DESERCION;#;4;INA;0;fa fa-bell-slash;0
+13;NOTIFICACIONES;#;0;INA;0;fa fa-bullhorn;0
+14;NOVEDADES;#;0;INA;0;fa fa-bomb;0
+

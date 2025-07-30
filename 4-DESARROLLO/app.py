@@ -274,7 +274,7 @@ def leer_menu_csv(ruta_csv):
                 "padre": int(row['padre']),
                 "clave": row['clave'],
                 "visible": int(row['visible']),
-                "icono": "",  # Puedes agregar íconos si quieres
+                "icono": row['icono'],  # Puedes agregar íconos si quieres
                 "submenu": []
             })
     return menu_items
